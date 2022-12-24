@@ -1,0 +1,1 @@
+{"monday":[{"from":"12:00","to":"13:00","name":"Test Kurs"}],"tuesday":null,"wednesday":null,"thursday":null,"friday":null,"saturday":null,"sunday":null}

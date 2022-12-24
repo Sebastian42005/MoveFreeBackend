@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="44d19041-bdec-4dbc-a2b8-2137490fa977" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Kotlin Object" />
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2H5kuTd6WfrpOPXXigi1wYXpLnF" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/sebastian/IdeaProjects/MoveFreeBackend&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;5548572911ec13d6c2ed5cfe10335eaf&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ],
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JSON&quot;,
+      &quot;JavaScript&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/timetable" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/authentication" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/movefree" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/spotmap" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/spotmap" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.movefree.request.body" />
+      <recent name="com.example.spotmap" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.example.movefree.controller.company.company" />
+      <recent name="com.example.movefree.controller.authentication" />
+      <recent name="com.example.movefree.controller.admin" />
+      <recent name="com.example.movefree.controller.spot" />
+      <recent name="com.example.movefree.controller.company.member" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.movefree.file" />
+      <recent name="com.example.movefree.role" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.Backend">
+    <configuration name="All in MoveFreeBackend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MoveFreeBackend" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="MoveFreeBackend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="MoveFreeBackend" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Backend" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
+      <module name="MoveFreeBackend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.movefree.SpotMapApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.Angular Application" />
+      <item itemvalue="JUnit.All in MoveFreeBackend" />
+      <item itemvalue="Spring Boot.Backend" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in MoveFreeBackend" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="44d19041-bdec-4dbc-a2b8-2137490fa977" name="Changes" comment="" />
+      <created>1667582557049</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1667582557049</updated>
+      <workItem from="1667582560302" duration="27188000" />
+      <workItem from="1667815759214" duration="1024000" />
+      <workItem from="1667823543432" duration="364000" />
+      <workItem from="1667828316072" duration="3055000" />
+      <workItem from="1667897011257" duration="85000" />
+      <workItem from="1667905742684" duration="68000" />
+      <workItem from="1667983324016" duration="2567000" />
+      <workItem from="1667999488299" duration="2633000" />
+      <workItem from="1668063688295" duration="4922000" />
+      <workItem from="1668071529861" duration="6961000" />
+      <workItem from="1668097381677" duration="6240000" />
+      <workItem from="1668424999357" duration="2355000" />
+      <workItem from="1668454792407" duration="290000" />
+      <workItem from="1668510161509" duration="8611000" />
+      <workItem from="1668582336427" duration="424000" />
+      <workItem from="1668582952845" duration="14008000" />
+      <workItem from="1668668613027" duration="11301000" />
+      <workItem from="1668755152577" duration="16243000" />
+      <workItem from="1669017449636" duration="3087000" />
+      <workItem from="1669100566230" duration="70000" />
+      <workItem from="1669122620147" duration="152000" />
+      <workItem from="1669122776139" duration="4309000" />
+      <workItem from="1669273700696" duration="1664000" />
+      <workItem from="1669284574048" duration="368000" />
+      <workItem from="1669562112335" duration="2283000" />
+      <workItem from="1669755735336" duration="7256000" />
+      <workItem from="1670077836428" duration="3804000" />
+      <workItem from="1670229839927" duration="1709000" />
+      <workItem from="1670236911930" duration="468000" />
+      <workItem from="1670243821006" duration="2290000" />
+      <workItem from="1670255012086" duration="406000" />
+      <workItem from="1670313744857" duration="71000" />
+      <workItem from="1670321023391" duration="1262000" />
+      <workItem from="1670401854277" duration="2729000" />
+      <workItem from="1670413410360" duration="10176000" />
+      <workItem from="1670435004436" duration="30000" />
+      <workItem from="1670435047250" duration="9328000" />
+      <workItem from="1670829450435" duration="537000" />
+      <workItem from="1670831389499" duration="726000" />
+      <workItem from="1670851174193" duration="82000" />
+      <workItem from="1670922254606" duration="177000" />
+      <workItem from="1670939338671" duration="2128000" />
+      <workItem from="1670951731853" duration="23970000" />
+      <workItem from="1671177308719" duration="4008000" />
+      <workItem from="1671185835335" duration="28774000" />
+      <workItem from="1671436195827" duration="4698000" />
+      <workItem from="1671460737145" duration="32000" />
+      <workItem from="1671536213722" duration="1236000" />
+      <workItem from="1671544656866" duration="23206000" />
+      <workItem from="1671692499381" duration="15913000" />
+      <workItem from="1671781987590" duration="1355000" />
+      <workItem from="1671793242943" duration="891000" />
+      <workItem from="1671872235401" duration="357000" />
+      <workItem from="1671872822812" duration="1200000" />
+      <workItem from="1671876689308" duration="27000" />
+      <workItem from="1671876728718" duration="19000" />
+    </task>
+    <task id="LOCAL-00001" summary="changed stucture&#10;added company request">
+      <created>1668070592445</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1668070592445</updated>
+    </task>
+    <task id="LOCAL-00002" summary="changed stucture&#10;added company request">
+      <created>1668070623666</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1668070623666</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added all company request requests">
+      <created>1668074170537</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1668074170537</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added company request">
+      <created>1668077149063</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1668077149064</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added check if request already sent">
+      <created>1668083710455</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668083710455</updated>
+    </task>
+    <task id="LOCAL-00006" summary="little change">
+      <created>1668083746545</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1668083746545</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fixed bug">
+      <created>1668090486824</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1668090486824</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added new features">
+      <created>1669910327244</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1669910327244</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="changed stucture&#10;added company request" />
+    <MESSAGE value="added all company request requests" />
+    <MESSAGE value="added company request" />
+    <MESSAGE value="added check if request already sent" />
+    <MESSAGE value="little change" />
+    <MESSAGE value="fixed bug" />
+    <MESSAGE value="added new features" />
+    <option name="LAST_COMMIT_MESSAGE" value="added new features" />
+  </component>
+</project>
