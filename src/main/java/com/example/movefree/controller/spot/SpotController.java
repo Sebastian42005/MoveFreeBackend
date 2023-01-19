@@ -1,5 +1,7 @@
 package com.example.movefree.controller.spot;
 
+import com.example.movefree.database.spot.image.SpotPictureDTO;
+import com.example.movefree.database.spot.image.SpotPictureRepository;
 import com.example.movefree.database.spot.location.LocationDTO;
 import com.example.movefree.database.spot.location.LocationRepository;
 import com.example.movefree.database.spot.rating.RatingDTO;
@@ -12,6 +14,7 @@ import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +26,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Api(tags = "Spot")
 @RestController
-@RequestMapping("/spot")
+@RequestMapping("/api/spot")
 public class SpotController {
     @Autowired
     SpotRepository spotRepository;
@@ -99,5 +104,11 @@ public class SpotController {
         spotDTO.getRatings().add(savedRating);
         spotRepository.save(spotDTO);
         return savedRating;
+    }
+
+    private SpotDTO getSpot(int id, String username) {
+        SpotDTO spotDTO = spotRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!spotDTO.getUser().getUsername().equals(username)) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        return spotDTO;
     }
 }

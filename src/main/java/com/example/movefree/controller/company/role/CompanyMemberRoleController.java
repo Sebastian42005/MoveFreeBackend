@@ -8,6 +8,7 @@ import com.example.movefree.database.company.member.role.CompanyMemberRoleDTO;
 import com.example.movefree.database.company.member.role.CompanyMemberRoleRepository;
 import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 
+@Api(tags = "Company Member Role")
 @RestController
-@RequestMapping("/company/members/roles")
+@RequestMapping("/api/company/members/roles")
 public class CompanyMemberRoleController {
     @Autowired
     CompanyMemberRoleRepository roleRepository;

@@ -1,5 +1,7 @@
 package com.example.movefree.database.spot.spot;
 
+import com.example.movefree.database.company.picture.PictureDTO;
+import com.example.movefree.database.spot.image.SpotPictureDTO;
 import com.example.movefree.database.spot.location.LocationDTO;
 import com.example.movefree.database.spot.rating.RatingDTO;
 import com.example.movefree.database.spot.spotType.SpotType;
@@ -60,4 +62,7 @@ public class SpotDTO {
     @JsonIgnore
     private List<SpotDTO> savedBy = new ArrayList<>();
 
+    @JsonManagedReference("spot_pictures")
+    @OneToMany(mappedBy = "spot")
+    private List<SpotPictureDTO> pictures;
 }

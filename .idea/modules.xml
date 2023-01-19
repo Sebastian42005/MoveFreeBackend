@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MoveFreeBackend.iml" filepath="$PROJECT_DIR$/MoveFreeBackend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../MoveFreeFrontend/MoveFreeFrontend.iml" filepath="$PROJECT_DIR$/../MoveFreeFrontend/MoveFreeFrontend.iml" />
     </modules>
   </component>
 </project>

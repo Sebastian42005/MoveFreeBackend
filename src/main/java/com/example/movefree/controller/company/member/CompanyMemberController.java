@@ -6,6 +6,7 @@ import com.example.movefree.database.company.member.member.CompanyMemberDTO;
 import com.example.movefree.database.company.member.member.CompanyMemberRepository;
 import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,8 +24,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.security.Principal;
 
+@Api(tags = "Company Member")
 @RestController
-@RequestMapping("/company/members")
+@RequestMapping("/api/company/members")
 public class CompanyMemberController {
 
     @Autowired
@@ -45,7 +47,7 @@ public class CompanyMemberController {
     }
 
     @PutMapping("/{id}/profile")
-    public ResponseEntity<byte[]> setProfilePicture(@PathVariable int id, @RequestParam MultipartFile image, Principal principal) throws IOException {
+    public ResponseEntity<byte[]> setProfilePicture(@PathVariable int id, @RequestParam("image") MultipartFile image, Principal principal) throws IOException {
         checkForAuthorization(principal.getName(), id);
         CompanyMemberDTO companyMemberDTO = getCompanyMember(id);
         companyMemberDTO.setProfilePicture(image.getBytes());

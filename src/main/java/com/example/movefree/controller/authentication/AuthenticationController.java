@@ -8,6 +8,7 @@ import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.role.Role;
 import com.example.movefree.service.JwtUserDetailsService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.regex.Pattern;
 
+@Api(tags = "Authentication")
 @RestController
-@RequestMapping("/authentication")
+@RequestMapping("/api/authentication")
 public class AuthenticationController {
 
     //Repositories

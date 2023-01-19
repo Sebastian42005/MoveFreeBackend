@@ -45,8 +45,8 @@ class CompanyControllerTest {
     @Test
     void editCompany() throws Exception {
         PostSpotRequestBody.CompanyEditRequestBody requestBody = new PostSpotRequestBody.CompanyEditRequestBody("randomAddress", "+123456789");
-        this.mockMvc.perform(put("/company/edit")
-                        .header("Authorization", "Bearer " + Tokens.companyToken)
+        this.mockMvc.perform(put("/api/company/edit")
+                        .header("Authorization", "Bearer " + Tokens.COMPANY_TOKEN)
                         .content(objectMapper.writeValueAsString(requestBody))
                         .contentType("application/json")
                         .with(user("Company").roles(Role.COMPANY)))
@@ -57,18 +57,17 @@ class CompanyControllerTest {
     void requestCompany_and_deleteRequest() throws Exception{
         CompanyRequestDTO.Request requestBody = new CompanyRequestDTO.Request();
         requestBody.setMessage("Become Company Test");
-        MockHttpServletResponse response = this.mockMvc.perform(post("/company/request")
+        MockHttpServletResponse response = this.mockMvc.perform(post("/api/company/request")
                         .with(user("Sebastian").roles(Role.USER))
                         .content(objectMapper.writeValueAsString(requestBody))
                         .contentType("application/json"))
                 .andReturn().getResponse();
 
-        System.out.println(response.getStatus());
         CompanyRequestDTO requestDTO = objectMapper.readValue(response.getContentAsString(), CompanyRequestDTO.class);
-        Assertions.assertEquals(response.getStatus(), 200);
+        Assertions.assertEquals(200, response.getStatus());
 
-        this.mockMvc.perform(delete("/admin/company-requests/" + requestDTO.getId() + "/decline")
-                        .header("Authorization", "Bearer " + Tokens.adminToken))
+        this.mockMvc.perform(delete("/api/admin/company-requests/" + requestDTO.getId() + "/decline")
+                        .header("Authorization", "Bearer " + Tokens.ADMIN_TOKEN))
                 .andExpect(status().is(200));
     }
 }

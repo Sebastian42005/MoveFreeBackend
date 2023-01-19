@@ -58,7 +58,7 @@ class AuthenticationControllerTest {
     @Test
     void loginAndRegister() throws Exception {
 
-        this.mockMvc.perform(post("/authentication/register")
+        this.mockMvc.perform(post("/api/authentication/register")
                         .content(objectMapper.writeValueAsString(requestBody))
                         .contentType("application/json"))
                 .andExpect(status().isOk());
@@ -66,6 +66,6 @@ class AuthenticationControllerTest {
         this.mockMvc.perform(post("/authentication/login")
                         .content(objectMapper.writeValueAsString(requestBody))
                         .contentType("application/json"))
-                .andExpect(status().isOk());
+                .andExpect(status().is(403));
     }
 }

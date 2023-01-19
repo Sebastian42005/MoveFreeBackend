@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserDTO, Integer> {
 
-    @Query(value = "SELECT username FROM users u WHERE lower(u.username) LIKE lower(concat('%', :search,'%')) LIMIT :max", nativeQuery = true)
-    List<String> search(String search, int max);
+    @Query(value = "SELECT * FROM users u WHERE lower(u.username) LIKE lower(concat('%', :search,'%')) LIMIT :max", nativeQuery = true)
+    List<UserDTO> search(String search, int max);
 
     Optional<UserDTO> findByUsername(String username);
 

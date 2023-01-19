@@ -2,7 +2,6 @@ package com.example.movefree.controller.admin;
 
 import com.example.movefree.Tokens;
 import com.example.movefree.role.Role;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,28 +38,28 @@ class AdminControllerTest {
 
     @Test
     void getAllRequests() throws Exception {
-        this.mockMvc.perform(get("/admin/company-requests")
+        this.mockMvc.perform(get("/api/admin/company-requests")
                         .with(user("Admin").roles(Role.ADMIN)))
                 .andExpect(status().is(200));
     }
 
     @Test
     void declineRequest() throws Exception {
-        this.mockMvc.perform(delete("/admin/company-requests/999/decline")
-                        .header("Authorization", "Bearer " + Tokens.adminToken))
+        this.mockMvc.perform(delete("/api/admin/company-requests/999/decline")
+                        .header("Authorization", "Bearer " + Tokens.ADMIN_TOKEN))
                 .andExpect(status().is(404));
     }
 
     @Test
     void acceptRequest() throws Exception {
-        this.mockMvc.perform(patch("/admin/company-requests/999/accept")
-                        .header("Authorization", "Bearer " + Tokens.adminToken))
+        this.mockMvc.perform(patch("/api/admin/company-requests/999/accept")
+                        .header("Authorization", "Bearer " + Tokens.ADMIN_TOKEN))
                 .andExpect(status().is(404));
     }
 
     @Test
     void getAllRequests_asUser() throws Exception {
-        this.mockMvc.perform(get("/admin/company-requests")
+        this.mockMvc.perform(get("/api/admin/company-requests")
                         .with(user("Sebastian").roles(Role.USER)))
                 .andExpect(status().is(403));
     }
@@ -68,6 +67,6 @@ class AdminControllerTest {
     @Test
     void getAllRequests_noUser() throws Exception {
         this.mockMvc.perform(get("/admin/company-requests"))
-                .andExpect(status().is(401));
+                .andExpect(status().is(403));
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -19,6 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
     @Bean
@@ -28,25 +31,33 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        String allSpots = "/spot/**";
+        String allSpots = "/api/spot/**";
         return httpSecurity
-                .csrf().disable()
+                .cors().disable().csrf().disable()
                 .authorizeRequests(auth -> {
+                    auth.antMatchers("/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/v2/api-docs/**",
+                            "/swagger-resources/**").permitAll();
                     //Authentication
-                    auth.antMatchers("/authentication/**").permitAll();
+                    auth.antMatchers("/api/authentication/**").permitAll();
                     //Only for Admins
-                    auth.antMatchers("/admin/**").hasRole(Role.ADMIN);
+                    auth.antMatchers("/api/admin/**").hasRole(Role.ADMIN);
                     //User -> Company
-                    auth.antMatchers("/company/request").hasRole(Role.USER);
+                    auth.antMatchers("/api/company/request").hasRole(Role.USER);
                     //Only for Companies
-                    auth.antMatchers(HttpMethod.GET, "/company/*").permitAll();
-                    auth.antMatchers("/company/**").hasRole(Role.COMPANY);
+                    auth.antMatchers(HttpMethod.GET, "/api/company/**").permitAll();
+                    auth.antMatchers("/api/company/**").hasRole(Role.COMPANY);
                     //Security for Spot requests
                     auth.antMatchers(HttpMethod.POST, allSpots).hasRole(Role.USER);
                     auth.antMatchers(HttpMethod.PUT, allSpots).hasRole(Role.USER);
                     auth.antMatchers(allSpots).permitAll();
+                    auth.antMatchers("/api/user/profile").hasRole(Role.USER);
+                    auth.antMatchers("/api/user/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
+                .exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .httpBasic().authenticationEntryPoint(authenticationEntryPoint).and()
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

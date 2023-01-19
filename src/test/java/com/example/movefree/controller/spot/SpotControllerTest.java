@@ -57,68 +57,68 @@ class SpotControllerTest {
 
     @Test
     void getRatings() throws Exception {
-        this.mockMvc.perform(get("/spot/1/ratings")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/spot/1/ratings")).andExpect(status().isOk());
     }
 
     @Test
     void postSpot_asUser() throws Exception {
-        this.mockMvc.perform(post("/spot/post")
+        this.mockMvc.perform(post("/api/spot/post")
                         .content(objectMapper.writeValueAsString(spotRequestBody))
                         .contentType("application/json")
-                        .header("Authorization", "Bearer " + Tokens.userToken))
+                        .header("Authorization", "Bearer " + Tokens.USER_TOKEN))
                 .andExpect(status().isOk());
     }
 
     @Test
     void postSpot_noUser() throws Exception {
-        this.mockMvc.perform(post("/spot/post")
+        this.mockMvc.perform(post("/api/spot/post")
                         .content(objectMapper.writeValueAsString(spotRequestBody)))
-                .andExpect(status().is(401));
+                .andExpect(status().is(403));
     }
 
     @Test
     void postSpot_asCompany() throws Exception {
-        this.mockMvc.perform(post("/spot/post")
+        this.mockMvc.perform(post("/api/spot/post")
                         .content(objectMapper.writeValueAsString(spotRequestBody))
-                        .header("Authorization", "Bearer " + Tokens.companyToken))
+                        .header("Authorization", "Bearer " + Tokens.COMPANY_TOKEN))
                 .andExpect(status().is(403));
     }
 
     @Test
     void rateSpot_asUser() throws Exception {
         postSpot_asUser();
-        this.mockMvc.perform(put("/spot/1/rate")
+        this.mockMvc.perform(put("/api/spot/1/rate")
                         .content(objectMapper.writeValueAsString(rateSpotRequestBody))
                         .contentType("application/json")
-                        .header("Authorization", "Bearer " + Tokens.userToken))
+                        .header("Authorization", "Bearer " + Tokens.USER_TOKEN))
                 .andExpect(status().isOk());
     }
 
     @Test
     void rateSpot_noUser() throws Exception {
-        this.mockMvc.perform(put("/spot/1/rate")
+        this.mockMvc.perform(put("/api/spot/1/rate")
                         .content(objectMapper.writeValueAsString(rateSpotRequestBody)))
-                .andExpect(status().is(401));
+                .andExpect(status().is(403));
     }
 
     @Test
     void rateSpot_asCompany() throws Exception {
-        this.mockMvc.perform(put("/spot/1/rate")
+        this.mockMvc.perform(put("/api/spot/1/rate")
                         .content(objectMapper.writeValueAsString(rateSpotRequestBody))
                         .contentType("application/json")
-                        .header("Authorization", "Bearer " + Tokens.companyToken))
+                        .header("Authorization", "Bearer " + Tokens.COMPANY_TOKEN))
                 .andExpect(status().is(403));
     }
 
     @Test
     void searchSpot_limit() throws Exception {
-        List list = objectMapper.readValue(this.mockMvc.perform(get("/spot/all?limit=5")).andReturn().getResponse().getContentAsString(), List.class);
+        List list = objectMapper.readValue(this.mockMvc.perform(get("/api/spot/all?limit=5")).andReturn().getResponse().getContentAsString(), List.class);
         Assertions.assertTrue(list.size() <= 5);
     }
 
     @Test
     void searchSpot_onlyParkour() throws Exception {
-        List<SpotDTOResponse> list = objectMapper.readValue(this.mockMvc.perform(get("/spot/all?spotType=parkour"))
+        List<SpotDTOResponse> list = objectMapper.readValue(this.mockMvc.perform(get("/api/spot/all?spotType=parkour"))
                 .andReturn()
                 .getResponse()
                 .getContentAsString(), new TypeReference<>() {
@@ -127,7 +127,7 @@ class SpotControllerTest {
     }
     @Test
     void searchSpot_onlyFromVienna() throws Exception {
-        List<SpotDTOResponse> list = objectMapper.readValue(this.mockMvc.perform(get("/spot/all?city=vienna"))
+        List<SpotDTOResponse> list = objectMapper.readValue(this.mockMvc.perform(get("/api/spot/all?city=vienna"))
                 .andReturn()
                 .getResponse()
                 .getContentAsString(), new TypeReference<>() {
@@ -137,6 +137,6 @@ class SpotControllerTest {
 
     @Test
     void searchSpot_noParams() throws Exception {
-        this.mockMvc.perform(get("/spot/all")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/spot/all")).andExpect(status().isOk());
     }
 }

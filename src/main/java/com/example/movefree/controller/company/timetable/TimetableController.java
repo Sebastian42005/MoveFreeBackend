@@ -5,6 +5,7 @@ import com.example.movefree.database.timetable.TimeTable;
 import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.file.FileHandler;
+import io.swagger.annotations.Api;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 
+@Api(tags = "Company Timetable")
 @RestController
-@RequestMapping("/company/timetable")
+@RequestMapping("/api/company/timetable")
 public class TimetableController {
 
     @Autowired

@@ -7,6 +7,7 @@ import com.example.movefree.database.company.requests.CompanyRequestRepository;
 import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.role.Role;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
+@Api(tags = "Admin")
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
     @Autowired
     CompanyRequestRepository companyRequestRepository;

@@ -3,6 +3,7 @@ package com.example.movefree.database.user;
 import com.example.movefree.database.company.company.CompanyDTO;
 import com.example.movefree.database.spot.rating.RatingDTO;
 import com.example.movefree.database.spot.spot.SpotDTO;
+import com.example.movefree.database.spot.spot.SpotDTOResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;

@@ -4,7 +4,143 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44d19041-bdec-4dbc-a2b8-2137490fa977" name="Changes" comment="" />
+    <list default="true" id="44d19041-bdec-4dbc-a2b8-2137490fa977" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_dataformat_jackson_dataformat_yaml_2_13_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_swagger_core_v3_swagger_models_2_1_12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_12_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springdoc_springdoc_openapi_common_1_6_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springdoc_springdoc_openapi_ui_1_6_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springdoc_springdoc_openapi_webmvc_core_1_6_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_swagger_ui_4_1_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_webjars_locator_core_0_50.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/b/0b05e5ff16730a447b9b5e2594a7c8f5f206e886" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/0/10ae3b08392389e2394e1facb34821efd7e17e19" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/9/19b36992f53f0a670859abe3f30a447a117358e3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/d/2d85767acdfcc5a939fa9ce6d07a94e0261380eb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/1/5141fb0595de37dc9e3b1d61cd065f7dbd5266b3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/3/5374951818c04847139b365f81476fe849f65a19" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/e/8ed6459aa74e3a7a25eabecb312f9883aab62ad9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/f/8f6c1a0332551c7c64e0aa1e2e2be56bea9ed3e4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/e/9e3417566db3279e13c2369d78890fb72e72b945" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/4/a4690772893dfcab5bb9c4ba2eb01a68413befb5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/6/b692a6fc4f791a337e80e0309eac74bc1e125321" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/a/ba1819f5a84a762425771a7975d24f931e5bbbcb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/0/c023a23cf5efff03d1183e8c7a9f5171df06ad90" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/2/c235f08a540fec6a054a51db066001e1bc054ec5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/5/c50a7c8ee1d32f6b554375781d55a87d5e526d6c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/b/db351ed62e2c20f9949beb7a84c3201f1548f27b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/d/dd675c407ae2ac3d71b4f237193ba9e999b86f7d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/b/ebb1de91a590bd1652cb4946281d243475288da3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/0/f0fa1bc9e0c5ba456b8cdb57bf6259561a8973c5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/f/ff637e8207d73d5ebe63c5ce6df2089eb25a377e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/MoveFreeApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/config/CustomAuthenticationEntryPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/spot/picture/SpotPictureController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/user/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/company/company/CompanyDTOResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/company/member/member/CompanyMemberDTOResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/company/member/role/CompanyMemberRoleDTOResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/spot/image/SpotPictureDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/spot/image/SpotPictureRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/user/UserDTOResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/MoveFreeFrontend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/api/api.service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/api/api.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/api/dataclasses/LoginResponse.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/api/dataclasses/Spot.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/api/dataclasses/User.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/home/home.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/home/home.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/home/home.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/home/home.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/login/login.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/login/login.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/login/login.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/login/login.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/map/map.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/map/map.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/map/map.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/map/map.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/profile/profile.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/profile/profile.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/profile/profile.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/profile/profile.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/assets/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/assets/hide.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/assets/password-show.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/assets/show.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/assets/wood.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/assets/wood.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/assets/world.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/theme.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_classgraph_classgraph_4_8_83.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_classgraph_classgraph_4_8_138.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_bean_validators_3_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_boot_starter_3_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_data_rest_3_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_oas_3_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_swagger_core_v3_swagger_models_2_1_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_swagger_core_v3_swagger_core_2_1_12.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MoveFreeBackend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MoveFreeBackend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/SpotMapApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/config/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/config/JwtTokenUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/admin/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/admin/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/authentication/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/authentication/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/company/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/company/CompanyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/member/CompanyMemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/member/CompanyMemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/role/CompanyMemberRoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/role/CompanyMemberRoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/timetable/TimetableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/timetable/TimetableController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/spot/SpotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/spot/SpotController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/spot/spot/SpotDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/spot/spot/SpotDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/spot/spot/SpotDTOResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/spot/spot/SpotDTOResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/user/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/user/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/movefree/database/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/movefree/Tokens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/movefree/Tokens.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/movefree/controller/admin/AdminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/movefree/controller/admin/AdminControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/movefree/controller/authentication/AuthenticationControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/movefree/controller/authentication/AuthenticationControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/movefree/controller/company/company/CompanyControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/movefree/controller/company/company/CompanyControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/movefree/controller/spot/SpotControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/movefree/controller/spot/SpotControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/SpotMapApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/config/JwtTokenUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/config/JwtTokenUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/admin/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/admin/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/authentication/AuthenticationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/authentication/AuthenticationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/company/company/CompanyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/company/company/CompanyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/company/member/CompanyMemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/company/member/CompanyMemberController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/company/role/CompanyMemberRoleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/company/role/CompanyMemberRoleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/company/timetable/TimetableController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/company/timetable/TimetableController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/spot/SpotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/controller/spot/SpotController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/database/spot/spot/SpotDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/database/spot/spot/SpotDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/database/spot/spot/SpotDTOResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/database/spot/spot/SpotDTOResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/database/user/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/database/user/UserDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/movefree/database/user/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/movefree/database/user/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/movefree/Tokens.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/example/movefree/Tokens.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/movefree/controller/admin/AdminControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/example/movefree/controller/admin/AdminControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/movefree/controller/authentication/AuthenticationControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/example/movefree/controller/authentication/AuthenticationControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/movefree/controller/company/company/CompanyControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/example/movefree/controller/company/company/CompanyControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/movefree/controller/spot/SpotControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/example/movefree/controller/spot/SpotControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MoveFreeFrontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/../MoveFreeFrontend/src/styles.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,10 +149,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Kotlin Object" />
         <option value="Interface" />
         <option value="JUnit5 Test Class" />
+        <option value="TypeScript File" />
+        <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -73,17 +211,21 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/sebastian/IdeaProjects/MoveFreeBackend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/sebastian/IdeaProjects/MoveFreeFrontend/src/assets&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;5548572911ec13d6c2ed5cfe10335eaf&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/sebastian/IdeaProjects/MoveFreeFrontend/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -98,12 +240,15 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../MoveFreeFrontend/src/assets" />
       <recent name="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/company/timetable" />
       <recent name="$PROJECT_DIR$/src/main/java/com/example/movefree/controller/authentication" />
       <recent name="$PROJECT_DIR$/src/main/java/com/example/movefree" />
       <recent name="$PROJECT_DIR$/src/main/java/com/example/spotmap" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../MoveFreeFrontend/src/app/api" />
+      <recent name="$PROJECT_DIR$/../MoveFreeFrontend/src/assets" />
       <recent name="$PROJECT_DIR$/src/main/java/com/example/spotmap" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
@@ -121,6 +266,7 @@
       <recent name="com.example.movefree.controller.company.member" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.movefree.config" />
       <recent name="com.example.movefree.file" />
       <recent name="com.example.movefree.role" />
     </key>
@@ -137,30 +283,28 @@
     <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="MoveFreeBackend" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="MoveFreeBackend" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Backend" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="ACTIVE_PROFILES" />
       <module name="MoveFreeBackend" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.movefree.SpotMapApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.movefree.MoveFreeApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="Angular CLI Server" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/../MoveFreeFrontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="/usr/local/bin/node" />
+      <envs />
+      <method v="2" />
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Angular Application" />
       <item itemvalue="JUnit.All in MoveFreeBackend" />
+      <item itemvalue="npm.Angular CLI Server" />
       <item itemvalue="Spring Boot.Backend" />
     </list>
     <recent_temporary>
@@ -233,6 +377,23 @@
       <workItem from="1671872822812" duration="1200000" />
       <workItem from="1671876689308" duration="27000" />
       <workItem from="1671876728718" duration="19000" />
+      <workItem from="1671876778368" duration="6262000" />
+      <workItem from="1673251681444" duration="7252000" />
+      <workItem from="1673265769368" duration="9612000" />
+      <workItem from="1673333973781" duration="13550000" />
+      <workItem from="1673356035182" duration="1242000" />
+      <workItem from="1673371059413" duration="8169000" />
+      <workItem from="1673462880548" duration="8387000" />
+      <workItem from="1673522470309" duration="32438000" />
+      <workItem from="1673855510043" duration="13000" />
+      <workItem from="1673951334183" duration="1691000" />
+      <workItem from="1673957598563" duration="941000" />
+      <workItem from="1673965792717" duration="1497000" />
+      <workItem from="1673975668987" duration="14241000" />
+      <workItem from="1674067529575" duration="3404000" />
+      <workItem from="1674127085000" duration="68000" />
+      <workItem from="1674127160062" duration="10000" />
+      <workItem from="1674127230350" duration="1019000" />
     </task>
     <task id="LOCAL-00001" summary="changed stucture&#10;added company request">
       <created>1668070592445</created>
