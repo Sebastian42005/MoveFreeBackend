@@ -1,12 +1,11 @@
 package com.example.movefree.controller.user;
 
 import com.example.movefree.database.user.UserDTO;
-import com.example.movefree.database.user.UserDTOResponse;
-import com.example.movefree.database.user.UserRepository;
+import com.example.movefree.exception.IdNotFoundException;
+import com.example.movefree.exception.InvalidMultipartFileException;
+import com.example.movefree.port.user.UserPort;
+import com.example.portclass.Picture;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.Max;
 import java.io.IOException;
@@ -26,50 +24,92 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+    final UserPort userPort;
 
-    @Autowired
-    UserRepository userRepository;
-
-    @GetMapping("/{username}")
-    public ResponseEntity<UserDTOResponse> getUser(@PathVariable String username) {
-        return ResponseEntity.ok(new UserDTOResponse(findUser(username)));
+    public UserController(UserPort userPort) {
+        this.userPort = userPort;
     }
 
+    /**
+     * 200 - Success
+     * 404 - User not found
+     */
+    @GetMapping("/{username}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
+        try {
+            return ResponseEntity.ok(userPort.getUser(username));
+        }catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
+    }
+
+    /**
+     * 200 - Success
+     */
     @GetMapping("/search")
-    public ResponseEntity<List<UserDTOResponse>> searchUser(
+    public ResponseEntity<List<UserDTO>> searchUser(
             @RequestParam(defaultValue = "") String search,
             @RequestParam(defaultValue = "5") @Max(99) int limit) {
-        return ResponseEntity.ok(userRepository.search(search, limit).stream().map(UserDTOResponse::new).toList());
+        return ResponseEntity.ok(userPort.searchUsers(search, limit));
     }
 
+    /**
+     * 200 - Success
+     * 404 - User not found
+     * 400 - Image invalid
+     */
     @PutMapping("/profile")
     public ResponseEntity<byte[]> setProfilePicture(@RequestParam("image") MultipartFile image, Principal principal) throws IOException {
-        UserDTO userDTO = findUser(principal.getName());
-        userDTO.setProfilePicture(image.getBytes());
-        userDTO.setContentType(image.getContentType());
-        userRepository.save(userDTO);
-        return ResponseEntity.ok()
-                .contentType(MediaType.valueOf(userDTO.getContentType()))
-                .body(userDTO.getProfilePicture());
+        try {
+            Picture profilePicture = userPort.setProfilePicture(image, principal.getName());
+            return ResponseEntity.ok().contentType(profilePicture.contentType()).body(profilePicture.content());
+        }catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }catch (InvalidMultipartFileException e) {
+            return e.getResponseEntity();
+        }
     }
 
-    //get profile picture of company member
+    /**
+     * 200 - Success
+     * 404 - User not found
+     */
     @GetMapping("/{username}/profile")
     public ResponseEntity<byte[]> getProfilePicture(@PathVariable String username) {
-        UserDTO userDTO = findUser(username);
-        if (userDTO.getProfilePicture() == null) return ResponseEntity.ok(null);
-        return ResponseEntity.ok()
-                .contentType(MediaType.valueOf(userDTO.getContentType()))
-                .body(userDTO.getProfilePicture());
+        Picture profilePicture;
+        try {
+            profilePicture = userPort.getProfilePicture(username);
+            return ResponseEntity.ok().contentType(profilePicture.contentType()).body(profilePicture.content());
+        } catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<UserDTOResponse> getUser(Principal principal) {
-        UserDTO userDTO = findUser(principal.getName());
-        return ResponseEntity.ok(new UserDTOResponse(userDTO));
+    /**
+     * 200 - Success
+     * 404 - User not found
+     */
+    @GetMapping("/own/profile")
+    public ResponseEntity<byte[]> getOwnProfilePicture(Principal principal) {
+        Picture profilePicture;
+        try {
+            profilePicture = userPort.getProfilePicture(principal.getName());
+            return ResponseEntity.ok().contentType(profilePicture.contentType()).body(profilePicture.content());
+        } catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
     }
 
-    private UserDTO findUser(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    /**
+     * 200 - Success
+     * 404 - User not found
+     */
+    @GetMapping("/own")
+    public ResponseEntity<UserDTO> getUser(Principal principal) {
+        try {
+            return ResponseEntity.ok(userPort.getUser(principal.getName()));
+        }catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
     }
 }

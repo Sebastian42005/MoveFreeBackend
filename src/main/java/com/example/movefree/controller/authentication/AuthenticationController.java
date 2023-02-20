@@ -1,15 +1,14 @@
 package com.example.movefree.controller.authentication;
 
-import com.example.movefree.ShaUtils;
+import com.example.movefree.config.ShaUtils;
 import com.example.movefree.config.JwtTokenUtil;
 import com.example.movefree.database.authentication.AuthenticationRequest;
 import com.example.movefree.database.authentication.AuthenticationResponse;
-import com.example.movefree.database.user.UserDTO;
+import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.role.Role;
 import com.example.movefree.service.JwtUserDetailsService;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.regex.Pattern;
 
 @Api(tags = "Authentication")
@@ -25,12 +25,15 @@ import java.util.regex.Pattern;
 public class AuthenticationController {
 
     //Repositories
-    @Autowired
-    JwtTokenUtil tokenUtil;
-    @Autowired
-    JwtUserDetailsService userDetailsService;
-    @Autowired
-    UserRepository userRepository;
+    final JwtTokenUtil tokenUtil;
+    final JwtUserDetailsService userDetailsService;
+    final UserRepository userRepository;
+
+    public AuthenticationController(JwtTokenUtil tokenUtil, JwtUserDetailsService userDetailsService, UserRepository userRepository) {
+        this.tokenUtil = tokenUtil;
+        this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
@@ -43,7 +46,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity register(@RequestBody UserDTO user) {
+    public ResponseEntity<Object> register(@RequestBody User user) {
         //check if user already exists
         if (userRepository.findByUsername(user.getUsername()).isPresent()) return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
         //check if email is valid

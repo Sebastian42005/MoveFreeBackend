@@ -1,6 +1,5 @@
 package com.example.movefree.service;
 
-import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -17,14 +16,14 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDTO user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No user found with username: " + username));
+        com.example.movefree.database.user.User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No user found with username: " + username));
         return User.withUsername(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRole()).build();
     }
 
     public UserDetails verifyUser(String username, String password) throws UsernameNotFoundException {
-        UserDTO user = userRepository.login(username, password).orElseThrow(() -> new UsernameNotFoundException("Wrong login credentials"));
+        com.example.movefree.database.user.User user = userRepository.login(username, password).orElseThrow(() -> new UsernameNotFoundException("Wrong login credentials"));
         return User.withUsername(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRole()).build();

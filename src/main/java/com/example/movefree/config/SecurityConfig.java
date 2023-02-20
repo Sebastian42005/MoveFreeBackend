@@ -1,7 +1,6 @@
 package com.example.movefree.config;
 
 import com.example.movefree.role.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @ComponentScan("com.example.movefree")
 public class SecurityConfig {
 
-    @Autowired
-    private CustomAuthenticationEntryPoint authenticationEntryPoint;
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtRequestFilter jwtRequestFilter;
+
+    public SecurityConfig(CustomAuthenticationEntryPoint authenticationEntryPoint, JwtRequestFilter jwtRequestFilter) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
 
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
@@ -33,12 +35,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         String allSpots = "/api/spot/**";
         return httpSecurity
-                .cors().disable().csrf().disable()
+                .cors().and().csrf().disable()
                 .authorizeRequests(auth -> {
-                    auth.antMatchers("/v3/api-docs/**",
-                            "/swagger-ui/**",
-                            "/v2/api-docs/**",
-                            "/swagger-resources/**").permitAll();
                     //Authentication
                     auth.antMatchers("/api/authentication/**").permitAll();
                     //Only for Admins
@@ -52,8 +50,16 @@ public class SecurityConfig {
                     auth.antMatchers(HttpMethod.POST, allSpots).hasRole(Role.USER);
                     auth.antMatchers(HttpMethod.PUT, allSpots).hasRole(Role.USER);
                     auth.antMatchers(allSpots).permitAll();
-                    auth.antMatchers("/api/user/profile").hasRole(Role.USER);
+                    //Get Own profile as user
+                    auth.antMatchers("/api/user/own/*").hasRole(Role.USER);
+                    //Request to get User
                     auth.antMatchers("/api/user/**").permitAll();
+                    //Swagger
+                    auth.antMatchers("/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/v2/api-docs/**",
+                            "/swagger-resources/**").permitAll();
+                    auth.antMatchers("/api/authentication/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

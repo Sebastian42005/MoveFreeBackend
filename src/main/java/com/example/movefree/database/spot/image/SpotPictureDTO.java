@@ -1,8 +1,7 @@
 package com.example.movefree.database.spot.image;
 
-import com.example.movefree.database.spot.spot.SpotDTO;
+import com.example.movefree.database.spot.spot.Spot;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,5 +29,5 @@ public class SpotPictureDTO {
 
     @JsonBackReference("spot_pictures")
     @ManyToOne
-    private SpotDTO spot;
+    private Spot spot;
 }

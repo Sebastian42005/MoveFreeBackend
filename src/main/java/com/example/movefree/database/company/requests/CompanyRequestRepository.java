@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface CompanyRequestRepository extends JpaRepository<CompanyRequestDTO, Integer> {
+public interface CompanyRequestRepository extends JpaRepository<CompanyRequest, Integer> {
 
-    Optional<CompanyRequestDTO> findByUsername(String username);
+    Optional<CompanyRequest> findByUsername(String username);
 }

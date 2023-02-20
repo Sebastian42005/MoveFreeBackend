@@ -5,13 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserDTO, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM users u WHERE lower(u.username) LIKE lower(concat('%', :search,'%')) LIMIT :max", nativeQuery = true)
-    List<UserDTO> search(String search, int max);
+    List<User> search(String search, int max);
 
-    Optional<UserDTO> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     @Query(value = "SELECT * FROM users u where u.username = :username and u.password = :password", nativeQuery = true)
-    Optional<UserDTO> login(String username, String password);
+    Optional<User> login(String username, String password);
 }

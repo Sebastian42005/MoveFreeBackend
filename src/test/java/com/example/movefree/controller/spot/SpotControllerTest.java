@@ -1,7 +1,7 @@
 package com.example.movefree.controller.spot;
 
 import com.example.movefree.Tokens;
-import com.example.movefree.database.spot.spot.SpotDTOResponse;
+import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.database.spot.spotType.SpotType;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
@@ -118,7 +118,7 @@ class SpotControllerTest {
 
     @Test
     void searchSpot_onlyParkour() throws Exception {
-        List<SpotDTOResponse> list = objectMapper.readValue(this.mockMvc.perform(get("/api/spot/all?spotType=parkour"))
+        List<SpotDTO> list = objectMapper.readValue(this.mockMvc.perform(get("/api/spot/all?spotType=parkour"))
                 .andReturn()
                 .getResponse()
                 .getContentAsString(), new TypeReference<>() {
@@ -127,7 +127,7 @@ class SpotControllerTest {
     }
     @Test
     void searchSpot_onlyFromVienna() throws Exception {
-        List<SpotDTOResponse> list = objectMapper.readValue(this.mockMvc.perform(get("/api/spot/all?city=vienna"))
+        List<SpotDTO> list = objectMapper.readValue(this.mockMvc.perform(get("/api/spot/all?city=vienna"))
                 .andReturn()
                 .getResponse()
                 .getContentAsString(), new TypeReference<>() {

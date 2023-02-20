@@ -1,13 +1,13 @@
 package com.example.movefree.controller.company.member;
 
-import com.example.movefree.database.company.company.CompanyDTO;
-import com.example.movefree.database.company.company.CompanyRepository;
+import com.example.movefree.database.company.member.member.CompanyMember;
 import com.example.movefree.database.company.member.member.CompanyMemberDTO;
-import com.example.movefree.database.company.member.member.CompanyMemberRepository;
-import com.example.movefree.database.user.UserDTO;
-import com.example.movefree.database.user.UserRepository;
+import com.example.movefree.exception.IdNotFoundException;
+import com.example.movefree.exception.NoCompanyException;
+import com.example.movefree.exception.UserForbiddenException;
+import com.example.movefree.port.company.CompanyMemberPort;
+import com.example.portclass.Picture;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
+
 import java.io.IOException;
 import java.security.Principal;
 
@@ -29,54 +29,62 @@ import java.security.Principal;
 @RequestMapping("/api/company/members")
 public class CompanyMemberController {
 
-    @Autowired
-    CompanyRepository companyRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    CompanyMemberRepository memberRepository;
+    final CompanyMemberPort memberPort;
 
+    public CompanyMemberController(CompanyMemberPort memberPort) {
+        this.memberPort = memberPort;
+    }
+
+    private record CompanyMemberRequest(String name) {}
+
+    /**
+     * 200 - Success
+     * 403 - User is forbidden
+     */
     @PostMapping("/create")
-    public CompanyMemberDTO createMember(@RequestBody CompanyMemberDTO memberDTO, Principal principal) {
-        UserDTO userDTO = getUser(principal.getName());
-        CompanyDTO companyDTO = userDTO.getCompany();
-        memberDTO.setCompany(companyDTO);
-        CompanyMemberDTO savedMember = memberRepository.save(memberDTO);
-        companyDTO.getMembers().add(savedMember);
-        return savedMember;
+    public ResponseEntity<CompanyMemberDTO> createMember(@RequestBody CompanyMemberRequest companyMemberRequest, Principal principal) {
+        try {
+            return ResponseEntity.ok(memberPort.createMember(companyMemberRequest.name, principal));
+        } catch (UserForbiddenException e) {
+            return e.getResponseEntity();
+        }
     }
 
+    /**
+     * 200 - Success
+     * 404 - Member not found
+     */
     @PutMapping("/{id}/profile")
-    public ResponseEntity<byte[]> setProfilePicture(@PathVariable int id, @RequestParam("image") MultipartFile image, Principal principal) throws IOException {
-        checkForAuthorization(principal.getName(), id);
-        CompanyMemberDTO companyMemberDTO = getCompanyMember(id);
-        companyMemberDTO.setProfilePicture(image.getBytes());
-        companyMemberDTO.setContentType(image.getContentType());
-        memberRepository.save(companyMemberDTO);
-        return ResponseEntity.ok()
-                .contentType(MediaType.valueOf(companyMemberDTO.getContentType()))
-                .body(companyMemberDTO.getProfilePicture());
+    public ResponseEntity<byte[]> setProfilePicture(@PathVariable int id, @RequestParam("image") MultipartFile image, Principal principal) {
+        try {
+            Picture picture = memberPort.setProfilePicture(id, image, principal);
+            return ResponseEntity.ok()
+                    .contentType(picture.contentType())
+                    .body(picture.content());
+        } catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        } catch (NoCompanyException e) {
+            return e.getResponseEntity();
+        } catch (UserForbiddenException e) {
+            return e.getResponseEntity();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    //get profile picture of company member
+    /**
+     * 200 - Success
+     * 404 - Member not found
+     */
     @GetMapping("/{id}/profile")
     public ResponseEntity<byte[]> getProfilePicture(@PathVariable int id) {
-        CompanyMemberDTO companyMemberDTO = getCompanyMember(id);
-        if (companyMemberDTO.getProfilePicture() == null) return null;
-        return ResponseEntity.ok()
-                .contentType(MediaType.valueOf(companyMemberDTO.getContentType()))
-                .body(companyMemberDTO.getProfilePicture());
-    }
-    private void checkForAuthorization(String username, int memberId) {
-        UserDTO userDTO = getUser(username);
-        if (userDTO.getCompany().getMembers().stream().noneMatch(member -> member.getId() == memberId)) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-    }
-
-    private UserDTO getUser(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-    }
-
-    private CompanyMemberDTO getCompanyMember(int id) {
-        return memberRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Member not found"));
+        try {
+            Picture picture = memberPort.getProfilePicture(id);
+            return ResponseEntity.ok()
+                    .contentType(picture.contentType())
+                    .body(picture.content());
+        } catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
     }
 }

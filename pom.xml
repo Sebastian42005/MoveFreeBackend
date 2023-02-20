@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <repackage.classifier/>
         <spring-native.version>0.12.1</spring-native.version>
+        <logstash-encoder.version>7.2</logstash-encoder.version>
     </properties>
     <dependencies>
         <dependency>
@@ -53,7 +54,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash-encoder.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

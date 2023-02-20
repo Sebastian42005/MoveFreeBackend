@@ -1,22 +1,11 @@
 package com.example.movefree.controller.authentication;
 
-import com.example.movefree.config.JwtTokenUtil;
-import com.example.movefree.database.user.UserDTO;
-import com.example.movefree.database.user.UserRepository;
-import com.example.movefree.role.Role;
-import com.example.movefree.service.JwtUserDetailsService;
+import com.example.movefree.database.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -38,7 +27,7 @@ class AuthenticationControllerTest {
     @Autowired
     private WebApplicationContext context;
     private MockMvc mockMvc;
-    private UserDTO requestBody = new UserDTO();
+    private User requestBody = new User();
 
     private ObjectMapper objectMapper = new ObjectMapper();
 

@@ -1,10 +1,10 @@
 package com.example.movefree.controller.admin;
 
-import com.example.movefree.database.company.company.CompanyDTO;
+import com.example.movefree.database.company.company.Company;
 import com.example.movefree.database.company.company.CompanyRepository;
-import com.example.movefree.database.company.requests.CompanyRequestDTO;
+import com.example.movefree.database.company.requests.CompanyRequest;
 import com.example.movefree.database.company.requests.CompanyRequestRepository;
-import com.example.movefree.database.user.UserDTO;
+import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.role.Role;
 import io.swagger.annotations.Api;
@@ -33,7 +33,7 @@ public class AdminController {
 
     //get all company requests
     @GetMapping("/company-requests")
-    public List<CompanyRequestDTO> getAllRequests() {
+    public List<CompanyRequest> getAllRequests() {
         return companyRequestRepository.findAll();
     }
 
@@ -41,29 +41,29 @@ public class AdminController {
     @DeleteMapping("/company-requests/{id}/decline")
     public ResponseEntity<String> declineRequest(@PathVariable int id) {
         //get company request by id
-        CompanyRequestDTO companyRequestDTO = companyRequestRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Request not found"));
+        CompanyRequest companyRequest = companyRequestRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Request not found"));
         //delete company request
         companyRequestRepository.deleteById(id);
         //return message
-        return ResponseEntity.ok("Declined Request from " + companyRequestDTO.getUsername());
+        return ResponseEntity.ok("Declined Request from " + companyRequest.getUsername());
     }
 
     //accept company request
     @PatchMapping("/company-requests/{id}/accept")
     public ResponseEntity<String> acceptRequest(@PathVariable int id) {
         //get company request by id
-        CompanyRequestDTO companyRequestDTO = companyRequestRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Request not found"));
+        CompanyRequest companyRequest = companyRequestRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Request not found"));
         //get user from request
-        UserDTO userDTO = userRepository.findByUsername(companyRequestDTO.getUsername()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User user = userRepository.findByUsername(companyRequest.getUsername()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         //create company
-        CompanyDTO companyDTO = companyRepository.save(new CompanyDTO());
+        Company company = companyRepository.save(new Company());
         //set role of user to company
-        userDTO.setRole(Role.COMPANY);
+        user.setRole(Role.COMPANY);
         //add company to user
-        userDTO.setCompany(companyDTO);
+        user.setCompany(company);
         //delete request
         companyRequestRepository.deleteById(id);
 
-        return ResponseEntity.ok("Created Company for user " + userDTO.getUsername());
+        return ResponseEntity.ok("Created Company for user " + user.getUsername());
     }
 }

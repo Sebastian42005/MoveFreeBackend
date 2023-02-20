@@ -1,7 +1,7 @@
 package com.example.movefree.controller.company.company;
 
 import com.example.movefree.Tokens;
-import com.example.movefree.database.company.requests.CompanyRequestDTO;
+import com.example.movefree.database.company.requests.CompanyRequest;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.role.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,7 +55,7 @@ class CompanyControllerTest {
 
     @Test
     void requestCompany_and_deleteRequest() throws Exception{
-        CompanyRequestDTO.Request requestBody = new CompanyRequestDTO.Request();
+        CompanyRequest.Request requestBody = new CompanyRequest.Request();
         requestBody.setMessage("Become Company Test");
         MockHttpServletResponse response = this.mockMvc.perform(post("/api/company/request")
                         .with(user("Sebastian").roles(Role.USER))
@@ -63,7 +63,7 @@ class CompanyControllerTest {
                         .contentType("application/json"))
                 .andReturn().getResponse();
 
-        CompanyRequestDTO requestDTO = objectMapper.readValue(response.getContentAsString(), CompanyRequestDTO.class);
+        CompanyRequest requestDTO = objectMapper.readValue(response.getContentAsString(), CompanyRequest.class);
         Assertions.assertEquals(200, response.getStatus());
 
         this.mockMvc.perform(delete("/api/admin/company-requests/" + requestDTO.getId() + "/decline")
