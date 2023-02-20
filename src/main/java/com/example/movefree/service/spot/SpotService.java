@@ -11,8 +11,8 @@ import com.example.movefree.database.spot.spot.SpotRepository;
 import com.example.movefree.database.spot.spotType.SpotType;
 import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
-import com.example.movefree.exception.enums.enums.NotFoundType;
 import com.example.movefree.exception.IdNotFoundException;
+import com.example.movefree.exception.enums.enums.NotFoundType;
 import com.example.movefree.port.spot.SpotPort;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
@@ -86,10 +86,10 @@ public class SpotService implements SpotPort {
     public List<SpotDTO> searchSpot(List<String> cities, List<SpotType> spotTypes, int limit) {
         List<Spot> spotDTOList;
         if (cities.isEmpty()) {
-            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithoutFilter(limit);
-            else spotDTOList = spotRepository.searchWithSpotType(spotTypes.stream().map(Enum::ordinal).toList(), limit);
+            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithoutFilter();
+            else spotDTOList = spotRepository.searchWithSpotType(spotTypes.stream().map(Enum::ordinal).toList());
         }else {
-            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithCity(cities.stream().map(String::toLowerCase).toList(), limit);
+            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithCity(cities.stream().map(String::toLowerCase).toList());
 
             else spotDTOList = spotRepository.searchWithFilter(cities.stream().map(String::toLowerCase).toList(), spotTypes.stream().map(Enum::ordinal).toList());
         }

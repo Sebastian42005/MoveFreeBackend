@@ -11,11 +11,11 @@ public interface SpotRepository extends JpaRepository<Spot, Integer> {
     List<Spot> searchWithFilter(List<String> cities, List<Integer> spotTypes);
 
     @Query("select spot from Spot spot WHERE spot.spotType in (:spotTypes)")
-    List<Spot> searchWithSpotType(List<Integer> spotTypes, int limit);
+    List<Spot> searchWithSpotType(List<Integer> spotTypes);
 
-    @Query("select spot from Spot spot WHERE lower(spot.location.city) = in (:cities)")
-    List<Spot> searchWithCity(List<String> cities, int limit);
+    @Query("select spot from Spot spot WHERE lower(spot.location.city) in (:cities)")
+    List<Spot> searchWithCity(List<String> cities);
 
     @Query("select spot from Spot spot")
-    List<Spot> searchWithoutFilter(int limit);
+    List<Spot> searchWithoutFilter();
 }
