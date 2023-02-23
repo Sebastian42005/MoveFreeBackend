@@ -23,7 +23,7 @@ public class UserService implements UserPort {
 
     final UserRepository userRepository;
 
-    UserDTOMapper userDTOMapper = new UserDTOMapper();
+    final UserDTOMapper userDTOMapper = new UserDTOMapper();
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;

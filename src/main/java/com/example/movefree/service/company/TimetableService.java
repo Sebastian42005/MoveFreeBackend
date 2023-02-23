@@ -1,6 +1,5 @@
 package com.example.movefree.service.company;
 
-import com.example.movefree.database.company.company.CompanyRepository;
 import com.example.movefree.database.timetable.TimeTable;
 import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
@@ -13,14 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class TimetableService implements TimetablePort {
 
-    final CompanyRepository companyRepository;
 
     final UserRepository userRepository;
 
     private final FileHandler<TimeTable> fileHandler = FileHandler.getInstance();
 
-    public TimetableService(CompanyRepository companyRepository, UserRepository userRepository) {
-        this.companyRepository = companyRepository;
+    public TimetableService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

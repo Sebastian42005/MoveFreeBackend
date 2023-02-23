@@ -41,11 +41,7 @@ public class SpotPictureController {
         try {
             spotPicturePort.uploadPicture(id, images, principal.getName());
             return ResponseEntity.ok().build();
-        }catch (IdNotFoundException e) {
-            return e.getResponseEntity();
-        }catch (UserForbiddenException e) {
-            return e.getResponseEntity();
-        } catch (PictureOverflowException e) {
+        }catch (IdNotFoundException | UserForbiddenException | PictureOverflowException e) {
             return e.getResponseEntity();
         }
     }

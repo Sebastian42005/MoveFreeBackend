@@ -1,7 +1,6 @@
 package com.example.movefree.service.company;
 
 import com.example.movefree.database.company.company.Company;
-import com.example.movefree.database.company.company.CompanyRepository;
 import com.example.movefree.database.company.member.member.CompanyMember;
 import com.example.movefree.database.company.member.member.CompanyMemberDTO;
 import com.example.movefree.database.company.member.member.CompanyMemberDTOMapper;
@@ -25,14 +24,12 @@ import java.security.Principal;
 @Service
 public class CompanyMemberService implements CompanyMemberPort {
 
-    final CompanyRepository companyRepository;
     final UserRepository userRepository;
     final CompanyMemberRepository memberRepository;
 
-    CompanyMemberDTOMapper companyMemberDTOMapper = new CompanyMemberDTOMapper();
+    final CompanyMemberDTOMapper companyMemberDTOMapper = new CompanyMemberDTOMapper();
 
-    public CompanyMemberService(CompanyRepository companyRepository, UserRepository userRepository, CompanyMemberRepository memberRepository) {
-        this.companyRepository = companyRepository;
+    public CompanyMemberService(UserRepository userRepository, CompanyMemberRepository memberRepository) {
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
     }

@@ -3,9 +3,9 @@ package com.example.movefree.database.spot.rating;
 import com.example.movefree.database.spot.spot.Spot;
 import com.example.movefree.database.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +16,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
-@Data
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "ratings")
 public class Rating {

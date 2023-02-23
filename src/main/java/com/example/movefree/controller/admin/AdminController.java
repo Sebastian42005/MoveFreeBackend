@@ -8,7 +8,6 @@ import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.role.Role;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,12 +23,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    @Autowired
-    CompanyRequestRepository companyRequestRepository;
-    @Autowired
-    CompanyRepository companyRepository;
-    @Autowired
-    UserRepository userRepository;
+    final CompanyRequestRepository companyRequestRepository;
+    final CompanyRepository companyRepository;
+    final UserRepository userRepository;
+
+    public AdminController(CompanyRequestRepository companyRequestRepository, CompanyRepository companyRepository, UserRepository userRepository) {
+        this.companyRequestRepository = companyRequestRepository;
+        this.companyRepository = companyRepository;
+        this.userRepository = userRepository;
+    }
 
     //get all company requests
     @GetMapping("/company-requests")

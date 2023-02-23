@@ -6,6 +6,8 @@ import com.example.movefree.exception.MemberAlreadyHasRoleException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.port.company.CompanyMemberRolePort;
 import io.swagger.annotations.Api;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,13 +23,15 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api/company/members/roles")
 public class CompanyMemberRoleController {
-    CompanyMemberRolePort companyMemberRolePort;
+    final CompanyMemberRolePort companyMemberRolePort;
 
     public CompanyMemberRoleController(CompanyMemberRolePort companyMemberRolePort) {
         this.companyMemberRolePort = companyMemberRolePort;
     }
 
-    private record CompanyMemberRoleRequest(String name) {}
+    @NoArgsConstructor
+    @Getter
+    private static class CompanyMemberRoleRequest {String name;}
 
     /**
      * 200 - Success
@@ -37,10 +41,8 @@ public class CompanyMemberRoleController {
     @PostMapping("/create")
     public ResponseEntity<CompanyMemberRoleDTO> createRole(@RequestBody CompanyMemberRoleRequest companyMemberRole, Principal principal) {
         try {
-            return ResponseEntity.ok(companyMemberRolePort.createRole(companyMemberRole.name(), principal));
-        } catch (IdNotFoundException e) {
-            return e.getResponseEntity();
-        } catch (UserForbiddenException e) {
+            return ResponseEntity.ok(companyMemberRolePort.createRole(companyMemberRole.getName(), principal));
+        } catch (IdNotFoundException | UserForbiddenException e) {
             return e.getResponseEntity();
         }
     }
@@ -56,12 +58,8 @@ public class CompanyMemberRoleController {
         try {
             companyMemberRolePort.addRoleToMember(id, memberId, principal);
             return ResponseEntity.ok("Added Role to Member");
-        } catch (IdNotFoundException e) {
+        } catch (IdNotFoundException | MemberAlreadyHasRoleException | UserForbiddenException e) {
             return e.getResponseEntityWithMessage();
-        } catch (MemberAlreadyHasRoleException e) {
-            return e.getResponseEntity();
-        } catch (UserForbiddenException e) {
-            return e.getResponseEntity();
         }
     }
 
@@ -75,10 +73,8 @@ public class CompanyMemberRoleController {
     public ResponseEntity<String> deleteRole(@PathVariable int id, Principal principal) {
         try {
             companyMemberRolePort.deleteRole(id, principal);
-        } catch (UserForbiddenException e) {
+        } catch (UserForbiddenException | IdNotFoundException e) {
             return e.getResponseEntity();
-        } catch (IdNotFoundException e) {
-            return e.getResponseEntityWithMessage();
         }
         return ResponseEntity.ok("Deleted Role");
     }
@@ -93,10 +89,8 @@ public class CompanyMemberRoleController {
     public ResponseEntity<String> removeMemberRole(@PathVariable int id, @PathVariable int memberId, Principal principal) {
         try {
             companyMemberRolePort.removeMemberRole(id, memberId, principal);
-        } catch (IdNotFoundException e) {
+        } catch (IdNotFoundException | UserForbiddenException e) {
             return e.getResponseEntityWithMessage();
-        } catch (UserForbiddenException e) {
-            return e.getResponseEntity();
         }
         return ResponseEntity.ok("Removed");
     }

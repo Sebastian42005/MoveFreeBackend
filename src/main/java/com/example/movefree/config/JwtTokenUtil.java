@@ -19,7 +19,7 @@ public class JwtTokenUtil {
 
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // 5 Stunden
 
-    Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
+    final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
 
     @Value("${jwt.secret}")
     private String secret;

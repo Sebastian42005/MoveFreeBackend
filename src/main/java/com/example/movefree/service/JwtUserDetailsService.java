@@ -1,7 +1,7 @@
 package com.example.movefree.service;
 
 import com.example.movefree.database.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.movefree.exception.WrongLoginCredentialsException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    final UserRepository userRepository;
+
+    public JwtUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -22,8 +25,8 @@ public class JwtUserDetailsService implements UserDetailsService {
                 .roles(user.getRole()).build();
     }
 
-    public UserDetails verifyUser(String username, String password) throws UsernameNotFoundException {
-        com.example.movefree.database.user.User user = userRepository.login(username, password).orElseThrow(() -> new UsernameNotFoundException("Wrong login credentials"));
+    public UserDetails verifyUser(String username, String password) throws WrongLoginCredentialsException {
+        com.example.movefree.database.user.User user = userRepository.login(username, password).orElseThrow(WrongLoginCredentialsException::new);
         return User.withUsername(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRole()).build();

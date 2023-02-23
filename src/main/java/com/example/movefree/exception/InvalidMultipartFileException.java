@@ -9,10 +9,8 @@ import org.springframework.http.ResponseEntity;
 @Slf4j
 public class InvalidMultipartFileException extends Exception implements CustomHttpException {
 
-    MultipartFileExceptionType multipartFileExceptionType;
     public InvalidMultipartFileException(MultipartFileExceptionType multipartFileExceptionType) {
         super(multipartFileExceptionType.equals(MultipartFileExceptionType.NO_CONTENT) ? "MultipartFile has no content" : "MultipartFile is not an image");
-        this.multipartFileExceptionType = multipartFileExceptionType;
         log.warn(getMessage());
     }
 

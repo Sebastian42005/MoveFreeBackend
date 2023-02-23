@@ -10,11 +10,9 @@ import java.util.function.Supplier;
 
 @Slf4j
 public class IdNotFoundException extends Exception implements CustomHttpException {
-    final NotFoundType notFoundType;
 
     public IdNotFoundException(NotFoundType notFoundType) {
         super(notFoundType.getName() + " not found");
-        this.notFoundType = notFoundType;
         log.warn(getMessage());
     }
 

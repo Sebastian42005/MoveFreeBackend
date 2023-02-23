@@ -27,7 +27,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
     final UserRepository userRepository;
     final CompanyMemberRepository memberRepository;
 
-    CompanyMemberRoleDTOMapper companyMemberRoleDTOMapper = new CompanyMemberRoleDTOMapper();
+    final CompanyMemberRoleDTOMapper companyMemberRoleDTOMapper = new CompanyMemberRoleDTOMapper();
 
     public CompanyMemberRoleService(CompanyMemberRoleRepository roleRepository, CompanyRepository companyRepository, UserRepository userRepository, CompanyMemberRepository memberRepository) {
         this.roleRepository = roleRepository;

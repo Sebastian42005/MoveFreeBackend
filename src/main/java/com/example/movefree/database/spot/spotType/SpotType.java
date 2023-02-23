@@ -6,12 +6,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
 public enum SpotType {
-    parkour("parkour"),
-    freerunning("freerunning"),
-    calisthenics("calisthenics"),
-    all("all");
+    PARKOUR("parkour"),
+    FREERUNNING("freerunning"),
+    CALISTHENICS("calisthenics"),
+    ALL("all");
 
-    private String value;
+    private final String value;
 
     SpotType(String value) { this.value = value; }
 

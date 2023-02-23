@@ -1,7 +1,0 @@
-package com.example.movefree;
-
-public interface Tokens {
-    String USER_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTZWJhc3RpYW4iLCJleHAiOjE4MjkyOTQ4NjcsImlhdCI6MTY3MTYxNDg2N30.hClvTm9DPIsRG-GAaomzxQqQECcsxFpRzfxpqKNRjg8sZdWuksqTHot4Ql_UlsS18Rv-lo5FfosYIyvjUMKqLQ";
-    String COMPANY_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBcGUgQWNhZGVteSIsImV4cCI6MTgyOTI5NDg4MSwiaWF0IjoxNjcxNjE0ODgxfQ.eghg5IXlnnkNAMy_-LelA7rIui4VaerrQxsxJRg-Prn8_S-0NRSBcJxDzs4fuBf1MkayTXI8q9NX5IdxxLtlvw";
-    String ADMIN_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKdWxpYW4iLCJleHAiOjE4MjkyOTQ4OTgsImlhdCI6MTY3MTYxNDg5OH0.LVr-uWKiI-3VCgckQ1-qpgIjQLL1VK9nKwQ85kllLZWJtfqK41gDRh6NRujKwi8Hu6WmbraYmwdQtX3N_uQmlg";
-}

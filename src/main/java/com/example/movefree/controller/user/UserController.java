@@ -63,9 +63,7 @@ public class UserController {
         try {
             Picture profilePicture = userPort.setProfilePicture(image, principal.getName());
             return ResponseEntity.ok().contentType(profilePicture.contentType()).body(profilePicture.content());
-        }catch (IdNotFoundException e) {
-            return e.getResponseEntity();
-        }catch (InvalidMultipartFileException e) {
+        }catch (IdNotFoundException | InvalidMultipartFileException e) {
             return e.getResponseEntity();
         }
     }

@@ -25,7 +25,6 @@ import java.util.Optional;
 @Service
 public class SpotService implements SpotPort {
 
-
     final SpotRepository spotRepository;
     final UserRepository userRepository;
     final LocationRepository locationRepository;

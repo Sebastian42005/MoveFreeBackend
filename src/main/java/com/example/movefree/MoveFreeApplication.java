@@ -12,7 +12,7 @@ public class MoveFreeApplication {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@SuppressWarnings("NullableProblems") CorsRegistry registry) {
                 registry.addMapping("/*").allowedHeaders("*").allowedOrigins("*").allowCredentials(true);
             }
         };

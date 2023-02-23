@@ -1,11 +1,12 @@
-package com.example.movefree.database.spot.image;
+package com.example.movefree.database.company.post.picture;
 
-import com.example.movefree.database.spot.spot.Spot;
+import com.example.movefree.database.company.post.CompanyPost;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,19 +18,21 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "spot_images")
-public class SpotPictureDTO {
-
+@Table(name = "company_post_pictures")
+public class CompanyPostPicture {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    private byte[] picture;
+    @Column(nullable = false)
+    byte[] content;
 
-    private String contentType;
+    @Column(nullable = false)
+    String contentType;
 
-    @JsonBackReference("spot_pictures")
+    @JsonBackReference("post_pictures")
     @ManyToOne
-    private Spot spot;
+    private CompanyPost post;
+
 }
