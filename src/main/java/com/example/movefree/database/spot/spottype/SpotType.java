@@ -1,4 +1,4 @@
-package com.example.movefree.database.spot.spotType;
+package com.example.movefree.database.spot.spottype;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -8,8 +8,7 @@ import java.util.Locale;
 public enum SpotType {
     PARKOUR("parkour"),
     FREERUNNING("freerunning"),
-    CALISTHENICS("calisthenics"),
-    ALL("all");
+    CALISTHENICS("calisthenics");
 
     private final String value;
 

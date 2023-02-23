@@ -22,6 +22,6 @@ public interface CompanyPort {
 
     void uploadPost(Principal principal, List<MultipartFile> images, String description) throws UserForbiddenException, InvalidMultipartFileException, NoCompanyException;
 
-    Picture getPicture(int id) throws UserForbiddenException, IdNotFoundException;
+    Picture getPicture(int id) throws IdNotFoundException;
 
 }

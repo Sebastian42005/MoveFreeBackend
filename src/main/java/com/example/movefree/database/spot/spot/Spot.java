@@ -3,7 +3,7 @@ package com.example.movefree.database.spot.spot;
 import com.example.movefree.database.spot.image.SpotPictureDTO;
 import com.example.movefree.database.spot.location.LocationDTO;
 import com.example.movefree.database.spot.rating.Rating;
-import com.example.movefree.database.spot.spotType.SpotType;
+import com.example.movefree.database.spot.spottype.SpotType;
 import com.example.movefree.database.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;

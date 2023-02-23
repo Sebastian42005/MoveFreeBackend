@@ -2,7 +2,6 @@ package com.example.movefree.database.company.post;
 
 import com.example.movefree.database.company.company.Company;
 import com.example.movefree.database.company.post.picture.CompanyPostPicture;
-import com.example.movefree.database.spot.spot.Spot;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;

@@ -8,14 +8,17 @@ import com.example.movefree.database.spot.spot.Spot;
 import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.database.spot.spot.SpotDTOMapper;
 import com.example.movefree.database.spot.spot.SpotRepository;
-import com.example.movefree.database.spot.spotType.SpotType;
+import com.example.movefree.database.spot.spottype.SpotType;
 import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
+import com.example.movefree.exception.InvalidInputException;
 import com.example.movefree.exception.enums.enums.NotFoundType;
 import com.example.movefree.port.spot.SpotPort;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -82,16 +85,38 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public List<SpotDTO> searchSpot(List<String> cities, List<SpotType> spotTypes, int limit) {
+    public List<SpotDTO> searchSpot(List<String> cities, List<String> spotTypesAsString, int limit) throws InvalidInputException {
+        List<SpotType> spotTypes = getSpotTypeList(spotTypesAsString);
+        Pageable pageable = PageRequest.of(0, limit);
         List<Spot> spotDTOList;
         if (cities.isEmpty()) {
-            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithoutFilter();
-            else spotDTOList = spotRepository.searchWithSpotType(spotTypes.stream().map(Enum::ordinal).toList());
+            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithoutFilter(pageable);
+            else spotDTOList = spotRepository.findSpotBySpotTypes(spotTypes, pageable);
         }else {
-            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithCity(cities.stream().map(String::toLowerCase).toList());
+            if (spotTypes.isEmpty()) spotDTOList = spotRepository.findSpotByCities(cities.stream().map(String::toLowerCase).toList(), pageable);
 
-            else spotDTOList = spotRepository.searchWithFilter(cities.stream().map(String::toLowerCase).toList(), spotTypes.stream().map(Enum::ordinal).toList());
+            else spotDTOList = spotRepository.findSpotByFilter(cities.stream().map(String::toLowerCase).toList(), spotTypes.stream().map(Enum::ordinal).toList());
         }
         return spotDTOList.stream().map(spotDTOMapper).toList();
+    }
+
+    private List<SpotType> getSpotTypeList(List<String> spotTypesAsString) throws InvalidInputException {
+        List<SpotType> spotTypes = new ArrayList<>();
+        for (String spotType : spotTypesAsString) {
+            spotTypes.add(getSpotType(spotType));
+        }
+        return spotTypes;
+    }
+    private SpotType getSpotType(String spotType) throws InvalidInputException {
+        switch (spotType.trim().toLowerCase()) {
+            case "calisthenics":
+                return SpotType.CALISTHENICS;
+            case "parkour":
+                return SpotType.PARKOUR;
+            case "freerunning":
+                return SpotType.FREERUNNING;
+            default:
+                throw new InvalidInputException("Invalid SpotType");
+        }
     }
 }

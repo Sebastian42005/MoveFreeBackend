@@ -15,7 +15,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="entityManagerFactory" />
+          <factory-entry name="entityManagerFactory" value="99d82b88-5584-4f66-8efb-2c994fab3d1d" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
@@ -32,6 +32,52 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/1/6" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/1/8" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/1/a" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/1/c" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/1/e" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/0" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/2" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/3" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/4" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/5" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/7" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/8" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/9" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/c" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/e" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/5/f" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/a/0" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/a/2" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/a/5" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/a/6" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/a/8" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/a/a" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/a/b" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/a/e" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/d/2" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/d/4" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/d/5" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/d/6" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/d/7" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/d/8" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/d/a" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/d/d" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/0" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/2" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/3" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/4" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/6" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/7" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/8" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/9" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/b" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/c" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/e" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint/issuestore/f" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/inspectionProfiles" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

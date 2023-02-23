@@ -1,6 +1,6 @@
 package com.example.movefree.request_body;
 
-import com.example.movefree.database.spot.spotType.SpotType;
+import com.example.movefree.database.spot.spottype.SpotType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

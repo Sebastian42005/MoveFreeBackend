@@ -24,7 +24,11 @@ import java.util.List;
 @RequestMapping("/api/company/post")
 public class CompanyPostController {
 
-    CompanyPort companyPort;
+    final CompanyPort companyPort;
+
+    public CompanyPostController(CompanyPort companyPort) {
+        this.companyPort = companyPort;
+    }
 
     @PostMapping
     public ResponseEntity<String> createCompanyPost(@RequestParam("description") String description,
@@ -44,7 +48,7 @@ public class CompanyPostController {
             return ResponseEntity.ok()
                     .contentType(picture.contentType())
                     .body(picture.content());
-        } catch (UserForbiddenException | IdNotFoundException e) {
+        } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }
