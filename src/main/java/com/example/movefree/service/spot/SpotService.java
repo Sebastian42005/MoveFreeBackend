@@ -108,15 +108,11 @@ public class SpotService implements SpotPort {
         return spotTypes;
     }
     private SpotType getSpotType(String spotType) throws InvalidInputException {
-        switch (spotType.trim().toLowerCase()) {
-            case "calisthenics":
-                return SpotType.CALISTHENICS;
-            case "parkour":
-                return SpotType.PARKOUR;
-            case "freerunning":
-                return SpotType.FREERUNNING;
-            default:
-                throw new InvalidInputException("Invalid SpotType");
-        }
+        return switch (spotType.trim().toLowerCase()) {
+            case "calisthenics" -> SpotType.CALISTHENICS;
+            case "parkour" -> SpotType.PARKOUR;
+            case "freerunning" -> SpotType.FREERUNNING;
+            default -> throw new InvalidInputException("Invalid SpotType");
+        };
     }
 }

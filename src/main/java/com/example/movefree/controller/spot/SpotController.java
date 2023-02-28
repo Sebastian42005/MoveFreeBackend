@@ -2,7 +2,6 @@ package com.example.movefree.controller.spot;
 
 import com.example.movefree.database.spot.rating.Rating;
 import com.example.movefree.database.spot.spot.SpotDTO;
-import com.example.movefree.database.spot.spottype.SpotType;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidInputException;
 import com.example.movefree.port.spot.SpotPort;
