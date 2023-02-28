@@ -30,6 +30,12 @@ public class CompanyPostController {
         this.companyPort = companyPort;
     }
 
+    /**
+     * 200 - Success
+     * 403 - User is forbidden
+     * 404 - Company not found
+     * 415 - Invalid file type
+     */
     @PostMapping
     public ResponseEntity<String> createCompanyPost(@RequestParam("description") String description,
                                                     @RequestParam("images") List<MultipartFile> images, Principal principal) {
@@ -41,6 +47,10 @@ public class CompanyPostController {
         }
     }
 
+    /**
+     * 200 - Success
+     * 404 - Picture not found
+     */
     @GetMapping("/picture/{id}")
     public ResponseEntity<byte[]> getPicture(@PathVariable("id") int id) {
         try {

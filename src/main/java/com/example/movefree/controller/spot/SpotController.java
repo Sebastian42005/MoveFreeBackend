@@ -38,6 +38,7 @@ public class SpotController {
 
     /**
      * 200 - Success
+     * 400 - Invalid input
      */
     @GetMapping("/all")
     public ResponseEntity<List<SpotDTO>> searchSpot(@RequestParam(defaultValue = "") List<String> cities,

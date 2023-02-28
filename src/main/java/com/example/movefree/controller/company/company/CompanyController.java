@@ -29,7 +29,11 @@ public class CompanyController {
         this.companyPort = companyPort;
     }
 
-    //set address and phone number of user
+    /**
+     * 200 - Success
+     * 403 - User not found
+     * 403 - User is not a company
+     */
     @PutMapping("/edit")
     public ResponseEntity<CompanyDTO> editCompany(@RequestBody PostSpotRequestBody.CompanyEditRequestBody company, Principal principal) {
         try {
@@ -39,7 +43,12 @@ public class CompanyController {
         }
     }
 
-    //send request to become a company
+    /**
+     * 200 - Success
+     * 403 - User not found
+     * 409 - User is already a company
+     * 409 - User already sent a request
+     */
     @PostMapping("/request")
     public ResponseEntity<CompanyRequest> requestCompany(@RequestBody CompanyRequest.Request message, Principal principal) {
         try {

@@ -26,6 +26,10 @@ public class AuthenticationController {
         this.authenticationPort = authenticationPort;
     }
 
+    /**
+     * 200 - Success
+     * 401 - Wrong login credentials
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
@@ -35,6 +39,11 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * 200 - Success
+     * 400 - Invalid input
+     * 409 - User already exists
+     */
     @PostMapping(value = "/register")
     public ResponseEntity<UserDTO> register(@RequestBody RegisterRequest user) {
         try {
