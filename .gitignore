@@ -2,5 +2,4 @@
 target
 *.iml
 .idea
-/.idea
 .flattened-pom.xml
