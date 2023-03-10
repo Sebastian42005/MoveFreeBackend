@@ -1,23 +1,13 @@
 package com.example.movefree.exception;
 
-import com.example.movefree.exception.interfaces.CustomHttpException;
+import com.example.movefree.exception.superclass.CustomHttpException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 @Slf4j
-public class WrongLoginCredentialsException extends Exception implements CustomHttpException {
+public class WrongLoginCredentialsException extends CustomHttpException {
 
     public WrongLoginCredentialsException() {
-        super("Wrong login credentials");
-        log.warn(getMessage());
-    }
-    @Override
-    public ResponseEntity<String> getResponseEntityWithMessage() {
-        return ResponseEntity.status(401).body("Wrong login credentials");
-    }
-
-    @Override
-    public <T> ResponseEntity<T> getResponseEntity() {
-        return ResponseEntity.status(401).build();
+        super("Wrong login credentials", HttpStatus.UNAUTHORIZED, false);
     }
 }

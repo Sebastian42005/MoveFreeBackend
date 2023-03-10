@@ -1,16 +1,17 @@
 package com.example.movefree.database.spot.spot;
 
-import com.example.movefree.database.spot.location.LocationDTO;
+import com.example.movefree.database.spot.location.Location;
 import com.example.movefree.database.spot.spottype.SpotType;
 
 import java.util.List;
+import java.util.UUID;
 
 public record SpotDTO (
-        int id,
+        UUID id,
         String description,
-        LocationDTO locationDTO,
+        Location location,
         SpotType spotType,
         String user,
-        List<Integer> pictures
+        List<UUID> pictures
 ){
 }

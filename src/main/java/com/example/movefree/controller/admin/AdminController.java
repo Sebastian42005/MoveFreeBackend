@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
+import java.util.UUID;
 
 @Api(tags = "Admin")
 @RestController
@@ -41,7 +43,7 @@ public class AdminController {
 
     //decline company request
     @DeleteMapping("/company-requests/{id}/decline")
-    public ResponseEntity<String> declineRequest(@PathVariable int id) {
+    public ResponseEntity<String> declineRequest(@PathVariable UUID id) {
         //get company request by id
         CompanyRequest companyRequest = companyRequestRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Request not found"));
         //delete company request
@@ -52,7 +54,7 @@ public class AdminController {
 
     //accept company request
     @PatchMapping("/company-requests/{id}/accept")
-    public ResponseEntity<String> acceptRequest(@PathVariable int id) {
+    public ResponseEntity<String> acceptRequest(@PathVariable UUID id) {
         //get company request by id
         CompanyRequest companyRequest = companyRequestRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Request not found"));
         //get user from request

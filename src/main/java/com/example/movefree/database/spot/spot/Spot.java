@@ -1,7 +1,7 @@
 package com.example.movefree.database.spot.spot;
 
-import com.example.movefree.database.spot.image.SpotPictureDTO;
-import com.example.movefree.database.spot.location.LocationDTO;
+import com.example.movefree.database.spot.image.SpotPicture;
+import com.example.movefree.database.spot.location.Location;
 import com.example.movefree.database.spot.rating.Rating;
 import com.example.movefree.database.spot.spottype.SpotType;
 import com.example.movefree.database.user.User;
@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -27,6 +27,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -36,8 +37,9 @@ import java.util.List;
 public class Spot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID id;
 
     private String description;
 
@@ -48,7 +50,7 @@ public class Spot {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private LocationDTO location;
+    private Location location;
 
     SpotType spotType;
 
@@ -65,5 +67,5 @@ public class Spot {
 
     @JsonManagedReference("spot_pictures")
     @OneToMany(mappedBy = "spot")
-    private List<SpotPictureDTO> pictures;
+    private List<SpotPicture> pictures;
 }

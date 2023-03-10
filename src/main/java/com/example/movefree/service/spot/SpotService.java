@@ -1,6 +1,6 @@
 package com.example.movefree.service.spot;
 
-import com.example.movefree.database.spot.location.LocationDTO;
+import com.example.movefree.database.spot.location.Location;
 import com.example.movefree.database.spot.location.LocationRepository;
 import com.example.movefree.database.spot.rating.Rating;
 import com.example.movefree.database.spot.rating.RatingRepository;
@@ -13,7 +13,7 @@ import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidInputException;
-import com.example.movefree.exception.enums.enums.NotFoundType;
+import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.port.spot.SpotPort;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class SpotService implements SpotPort {
@@ -48,22 +49,22 @@ public class SpotService implements SpotPort {
         //find User
         User user = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
         //create Location
-        LocationDTO locationDTO = new LocationDTO();
-        locationDTO.setLatitude(postSpotRequestBody.getLatitude());
-        locationDTO.setLongitude(postSpotRequestBody.getLongitude());
-        locationDTO.setCity(postSpotRequestBody.getCity());
+        Location location = new Location();
+        location.setLatitude(postSpotRequestBody.getLatitude());
+        location.setLongitude(postSpotRequestBody.getLongitude());
+        location.setCity(postSpotRequestBody.getCity());
         //create Spot
         Spot spot = new Spot();
         spot.setRatings(new ArrayList<>());
         spot.setDescription(postSpotRequestBody.getDescription());
         spot.setUser(user);
-        spot.setLocation(locationRepository.save(locationDTO));
+        spot.setLocation(locationRepository.save(location));
         spot.setSpotType(postSpotRequestBody.getSpotType());
         return spotDTOMapper.apply(spotRepository.save(spot));
     }
 
     @Override
-    public Rating rateSpot(int id, RateSpotRequestBody rateSpotRequestBody, String name) throws IdNotFoundException {
+    public Rating rateSpot(UUID id, RateSpotRequestBody rateSpotRequestBody, String name) throws IdNotFoundException {
         //Get User and Spot
         User userDTO = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
         Spot spotDTO = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
@@ -79,7 +80,7 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public List<Rating> getSpotRatings(int spotId) throws IdNotFoundException {
+    public List<Rating> getSpotRatings(UUID spotId) throws IdNotFoundException {
         Spot spot = spotRepository.findById(spotId).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         return spot.getRatings();
     }

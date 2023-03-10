@@ -2,6 +2,8 @@ package com.example.movefree.database.company.member.role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CompanyMemberRoleRepository extends JpaRepository<CompanyMemberRole, Integer> {
+import java.util.UUID;
+
+public interface CompanyMemberRoleRepository extends JpaRepository<CompanyMemberRole, UUID> {
 
 }

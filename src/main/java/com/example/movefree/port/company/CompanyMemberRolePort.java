@@ -6,13 +6,14 @@ import com.example.movefree.exception.MemberAlreadyHasRoleException;
 import com.example.movefree.exception.UserForbiddenException;
 
 import java.security.Principal;
+import java.util.UUID;
 
 public interface CompanyMemberRolePort {
     CompanyMemberRoleDTO createRole(String role, Principal principal) throws IdNotFoundException, UserForbiddenException;
 
-    void addRoleToMember(int id, int memberId, Principal principal) throws IdNotFoundException, MemberAlreadyHasRoleException, UserForbiddenException;
+    void addRoleToMember(UUID id, UUID memberId, Principal principal) throws IdNotFoundException, MemberAlreadyHasRoleException, UserForbiddenException;
 
-    void deleteRole(int id, Principal principal) throws UserForbiddenException, IdNotFoundException;
+    void deleteRole(UUID id, Principal principal) throws UserForbiddenException, IdNotFoundException;
 
-    void removeMemberRole(int id, int memberId, Principal principal) throws IdNotFoundException, UserForbiddenException;
+    void removeMemberRole(UUID id, UUID memberId, Principal principal) throws IdNotFoundException, UserForbiddenException;
 }

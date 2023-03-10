@@ -9,9 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.UUID;
 
 public interface CompanyMemberPort {
     CompanyMemberDTO createMember(String member, Principal principal) throws UserForbiddenException;
-    Picture setProfilePicture(int id, MultipartFile image, Principal principal) throws NoCompanyException, UserForbiddenException, IdNotFoundException, IOException;
-    Picture getProfilePicture(int id) throws IdNotFoundException;
+    Picture setProfilePicture(UUID id, MultipartFile image, Principal principal) throws NoCompanyException, UserForbiddenException, IdNotFoundException, IOException;
+    Picture getProfilePicture(UUID id) throws IdNotFoundException;
 }

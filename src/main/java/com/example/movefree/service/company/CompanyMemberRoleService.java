@@ -13,11 +13,12 @@ import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.MemberAlreadyHasRoleException;
 import com.example.movefree.exception.UserForbiddenException;
-import com.example.movefree.exception.enums.enums.NotFoundType;
+import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.port.company.CompanyMemberRolePort;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.UUID;
 
 @Service
 public class CompanyMemberRoleService implements CompanyMemberRolePort {
@@ -56,7 +57,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
     }
 
     @Override
-    public void addRoleToMember(int id, int memberId, Principal principal) throws IdNotFoundException, MemberAlreadyHasRoleException, UserForbiddenException {
+    public void addRoleToMember(UUID id, UUID memberId, Principal principal) throws IdNotFoundException, MemberAlreadyHasRoleException, UserForbiddenException {
         // check
         checkForAuthorization(principal.getName(), id, memberId);
         CompanyMemberRole role = findRoleById(id);
@@ -73,7 +74,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
     }
 
     @Override
-    public void deleteRole(int id, Principal principal) throws UserForbiddenException, IdNotFoundException {
+    public void deleteRole(UUID id, Principal principal) throws UserForbiddenException, IdNotFoundException {
         // check
         checkForRoleAuthorization(principal.getName(), id);
 
@@ -82,7 +83,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
     }
 
     @Override
-    public void removeMemberRole(int id, int memberId, Principal principal) throws IdNotFoundException, UserForbiddenException {
+    public void removeMemberRole(UUID id, UUID memberId, Principal principal) throws IdNotFoundException, UserForbiddenException {
         //check
         checkForAuthorization(principal.getName(), id, memberId);
 
@@ -98,14 +99,14 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
         memberRepository.save(member);
     }
 
-    private void checkForAuthorization(String username, int roleId, int memberId) throws IdNotFoundException, UserForbiddenException {
+    private void checkForAuthorization(String username, UUID roleId, UUID memberId) throws IdNotFoundException, UserForbiddenException {
         User userDTO = findUserByUsername(username);
         if (userDTO.getCompany() == null) throw new UserForbiddenException();
         if (userDTO.getCompany().getMemberRoles().stream().noneMatch(role -> role.getId() == roleId)) throw new IdNotFoundException(NotFoundType.ROLE);
         if (userDTO.getCompany().getMembers().stream().noneMatch(member -> member.getId() == memberId)) throw new IdNotFoundException(NotFoundType.MEMBER);
     }
 
-    private void checkForRoleAuthorization(String username, int roleId) throws UserForbiddenException, IdNotFoundException {
+    private void checkForRoleAuthorization(String username, UUID roleId) throws UserForbiddenException, IdNotFoundException {
         User user = findUserByUsername(username);
         if (user.getCompany() == null) throw new UserForbiddenException();
         if (user.getCompany().getMemberRoles().stream().noneMatch(role -> role.getId() == roleId)) throw new IdNotFoundException(NotFoundType.ROLE);
@@ -115,11 +116,11 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
         return userRepository.findByUsername(username).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
     }
 
-    private CompanyMember findMemberById(int id) throws IdNotFoundException {
+    private CompanyMember findMemberById(UUID id) throws IdNotFoundException {
         return memberRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.MEMBER));
     }
 
-    private CompanyMemberRole findRoleById(int id) throws IdNotFoundException {
+    private CompanyMemberRole findRoleById(UUID id) throws IdNotFoundException {
         return roleRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.MEMBER));
     }
 }

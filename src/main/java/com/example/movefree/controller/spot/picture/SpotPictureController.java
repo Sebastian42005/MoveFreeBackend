@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Api(tags = "Spot Pictures")
 @RestController
@@ -37,7 +38,7 @@ public class SpotPictureController {
      * 413 - Too many pictures uploaded
      */
     @PutMapping("/{id}/pictures")
-    public ResponseEntity<Object> uploadPictures(@PathVariable int id, @RequestParam("images") List<MultipartFile> images, Principal principal) {
+    public ResponseEntity<Object> uploadPictures(@PathVariable UUID id, @RequestParam("images") List<MultipartFile> images, Principal principal) {
         try {
             spotPicturePort.uploadPicture(id, images, principal.getName());
             return ResponseEntity.ok().build();
@@ -51,7 +52,7 @@ public class SpotPictureController {
      * 404 - Spot not found
      */
     @GetMapping("/pictures/{id}")
-    public ResponseEntity<byte[]> getPicture(@PathVariable int id) {
+    public ResponseEntity<byte[]> getPicture(@PathVariable UUID id) {
         try {
             Picture picture = spotPicturePort.getPicture(id);
             return ResponseEntity.ok()

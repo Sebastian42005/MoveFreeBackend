@@ -2,10 +2,12 @@ package com.example.movefree.database.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query(value = "SELECT * FROM users u WHERE lower(u.username) LIKE lower(concat('%', :search,'%')) LIMIT :max", nativeQuery = true)
     List<User> search(String search, int max);

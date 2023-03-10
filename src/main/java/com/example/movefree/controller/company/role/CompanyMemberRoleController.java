@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.UUID;
 
 @Api(tags = "Company Member Role")
 @RestController
@@ -54,7 +55,7 @@ public class CompanyMemberRoleController {
      * 403 - User forbidden
      */
     @PutMapping("/{id}/add/{memberId}")
-    public ResponseEntity<String> addRoleToMember(@PathVariable int id, @PathVariable int memberId, Principal principal) {
+    public ResponseEntity<String> addRoleToMember(@PathVariable UUID id, @PathVariable UUID memberId, Principal principal) {
         try {
             companyMemberRolePort.addRoleToMember(id, memberId, principal);
             return ResponseEntity.ok("Added Role to Member");
@@ -70,7 +71,7 @@ public class CompanyMemberRoleController {
      * 403 - User forbidden
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteRole(@PathVariable int id, Principal principal) {
+    public ResponseEntity<String> deleteRole(@PathVariable UUID id, Principal principal) {
         try {
             companyMemberRolePort.deleteRole(id, principal);
         } catch (UserForbiddenException | IdNotFoundException e) {
@@ -86,7 +87,7 @@ public class CompanyMemberRoleController {
      * 403 - User forbidden
      */
     @DeleteMapping("/{id}/member/{memberId}")
-    public ResponseEntity<String> removeMemberRole(@PathVariable int id, @PathVariable int memberId, Principal principal) {
+    public ResponseEntity<String> removeMemberRole(@PathVariable UUID id, @PathVariable UUID memberId, Principal principal) {
         try {
             companyMemberRolePort.removeMemberRole(id, memberId, principal);
         } catch (IdNotFoundException | UserForbiddenException e) {

@@ -10,7 +10,7 @@ import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.NoCompanyException;
 import com.example.movefree.exception.UserForbiddenException;
-import com.example.movefree.exception.enums.enums.NotFoundType;
+import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.file.ImageReader;
 import com.example.movefree.port.company.CompanyMemberPort;
 import com.example.portclass.Picture;
@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.UUID;
 
 @Service
 public class CompanyMemberService implements CompanyMemberPort {
@@ -47,7 +48,7 @@ public class CompanyMemberService implements CompanyMemberPort {
     }
 
     @Override
-    public Picture setProfilePicture(int id, MultipartFile image, Principal principal) throws NoCompanyException, UserForbiddenException, IdNotFoundException, IOException {
+    public Picture setProfilePicture(UUID id, MultipartFile image, Principal principal) throws NoCompanyException, UserForbiddenException, IdNotFoundException, IOException {
         checkForAuthorization(principal.getName(), id);
         CompanyMember companyMemberDTO = getCompanyMember(id);
         companyMemberDTO.setProfilePicture(image.getBytes());
@@ -57,13 +58,13 @@ public class CompanyMemberService implements CompanyMemberPort {
     }
 
     @Override
-    public Picture getProfilePicture(int id) throws IdNotFoundException {
+    public Picture getProfilePicture(UUID id) throws IdNotFoundException {
         CompanyMember companyMember = getCompanyMember(id);
         if (companyMember.getProfilePicture() == null) return ImageReader.getProfilePicture();
         return new Picture(MediaType.valueOf(companyMember.getContentType()), companyMember.getProfilePicture());
     }
 
-    private void checkForAuthorization(String username, int memberId) throws NoCompanyException, UserForbiddenException {
+    private void checkForAuthorization(String username, UUID memberId) throws NoCompanyException, UserForbiddenException {
         User userDTO = getUser(username);
         if (userDTO.getCompany() == null) throw new NoCompanyException();
         if (userDTO.getCompany().getMembers().stream().noneMatch(member -> member.getId() == memberId)) throw new UserForbiddenException();
@@ -73,7 +74,7 @@ public class CompanyMemberService implements CompanyMemberPort {
         return userRepository.findByUsername(username).orElseThrow(UserForbiddenException::new);
     }
 
-    private CompanyMember getCompanyMember(int id) throws IdNotFoundException {
+    private CompanyMember getCompanyMember(UUID id) throws IdNotFoundException {
         return memberRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.MEMBER));
     }
 }

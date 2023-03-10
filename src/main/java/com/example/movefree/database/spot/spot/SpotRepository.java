@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface SpotRepository extends JpaRepository<Spot, Integer> {
+public interface SpotRepository extends JpaRepository<Spot, UUID> {
 
     @Query("select spot from Spot spot WHERE lower(spot.location.city) in :cities AND spot.spotType in (:spotTypes)")
     List<Spot> findSpotByFilter(List<String> cities, List<Integer> spotTypes);

@@ -1,11 +1,11 @@
-package com.example.movefree.exception.enums.enums;
+package com.example.movefree.exception.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum NotFoundType{
+public enum NotFoundType {
     USER("User"),
     COMPANY("Company"),
     ROLE("Role"),

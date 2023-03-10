@@ -19,7 +19,7 @@ import com.example.movefree.exception.InvalidMultipartFileException;
 import com.example.movefree.exception.NoCompanyException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.exception.enums.MultipartFileExceptionType;
-import com.example.movefree.exception.enums.enums.NotFoundType;
+import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.port.company.CompanyPort;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.role.Role;
@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CompanyService implements CompanyPort {
@@ -99,7 +100,7 @@ public class CompanyService implements CompanyPort {
     }
 
     @Override
-    public Picture getPicture(int id) throws IdNotFoundException {
+    public Picture getPicture(UUID id) throws IdNotFoundException {
         CompanyPostPicture companyPostPicture = companyPostPictureRepository.findById(id).orElseThrow(() -> new IdNotFoundException(NotFoundType.PICTURE));
         return new Picture(MediaType.valueOf(companyPostPicture.getContentType()), companyPostPicture.getContent());
     }

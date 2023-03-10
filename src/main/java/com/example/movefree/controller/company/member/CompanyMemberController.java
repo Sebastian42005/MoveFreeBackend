@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.UUID;
 
 @Api(tags = "Company Member")
 @RestController
@@ -57,7 +58,7 @@ public class CompanyMemberController {
      * 404 - Member not found
      */
     @PutMapping("/{id}/profile")
-    public ResponseEntity<byte[]> setProfilePicture(@PathVariable int id, @RequestParam("image") MultipartFile image, Principal principal) {
+    public ResponseEntity<byte[]> setProfilePicture(@PathVariable UUID id, @RequestParam("image") MultipartFile image, Principal principal) {
         try {
             Picture picture = memberPort.setProfilePicture(id, image, principal);
             return ResponseEntity.ok()
@@ -75,7 +76,7 @@ public class CompanyMemberController {
      * 404 - Member not found
      */
     @GetMapping("/{id}/profile")
-    public ResponseEntity<byte[]> getProfilePicture(@PathVariable int id) {
+    public ResponseEntity<byte[]> getProfilePicture(@PathVariable UUID id) {
         try {
             Picture picture = memberPort.getProfilePicture(id);
             return ResponseEntity.ok()

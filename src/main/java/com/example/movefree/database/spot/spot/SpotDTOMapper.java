@@ -1,6 +1,6 @@
 package com.example.movefree.database.spot.spot;
 
-import com.example.movefree.database.spot.image.SpotPictureDTO;
+import com.example.movefree.database.spot.image.SpotPicture;
 
 import java.util.function.Function;
 
@@ -13,7 +13,7 @@ public class SpotDTOMapper implements Function<Spot, SpotDTO> {
                 spot.getLocation(),
                 spot.getSpotType(),
                 spot.getUser().getUsername(),
-                spot.getPictures().stream().map(SpotPictureDTO::getId).toList()
+                spot.getPictures().stream().map(SpotPicture::getId).toList()
         );
     }
 }

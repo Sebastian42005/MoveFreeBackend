@@ -22,6 +22,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Api(tags = "Spot")
 @RestController
@@ -55,7 +56,7 @@ public class SpotController {
      * 404 - Spot not found
      */
     @GetMapping("{id}/ratings")
-    public ResponseEntity<List<Rating>> getRatings(@PathVariable int id) {
+    public ResponseEntity<List<Rating>> getRatings(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok(spotPort.getSpotRatings(id));
         }catch (IdNotFoundException e) {
@@ -82,7 +83,7 @@ public class SpotController {
      * 404 - User not found
      */
     @PutMapping("/{id}/rate")
-    public ResponseEntity<Rating> rateSpot(@PathVariable int id, @RequestBody RateSpotRequestBody rateSpotRequestBody, Principal principal) {
+    public ResponseEntity<Rating> rateSpot(@PathVariable UUID id, @RequestBody RateSpotRequestBody rateSpotRequestBody, Principal principal) {
         try {
             return ResponseEntity.ok(spotPort.rateSpot(id, rateSpotRequestBody, principal.getName()));
         }catch (IdNotFoundException e) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.UUID;
 
 @Api(tags = "Company Timetable")
 @RestController
@@ -46,7 +47,7 @@ public class TimetableController {
      * 404 - Timetable not found
      */
     @GetMapping("/{id}")
-    public ResponseEntity<TimeTable> getTimeTable(@PathVariable int id) {
+    public ResponseEntity<TimeTable> getTimeTable(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok(timetablePort.getTimeTable(id));
         }catch (IdNotFoundException e) {

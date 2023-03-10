@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 public interface CompanyPort {
 
@@ -22,6 +23,6 @@ public interface CompanyPort {
 
     void uploadPost(Principal principal, List<MultipartFile> images, String description) throws UserForbiddenException, InvalidMultipartFileException, NoCompanyException;
 
-    Picture getPicture(int id) throws IdNotFoundException;
+    Picture getPicture(UUID id) throws IdNotFoundException;
 
 }

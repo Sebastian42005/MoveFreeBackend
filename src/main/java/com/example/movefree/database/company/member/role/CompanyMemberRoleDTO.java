@@ -1,7 +1,9 @@
 package com.example.movefree.database.company.member.role;
 
+import java.util.UUID;
+
 public record CompanyMemberRoleDTO(
-        int id,
+        UUID id,
         String name
 ) {
 }
