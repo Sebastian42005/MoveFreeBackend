@@ -53,6 +53,7 @@ public class AuthenticationService implements AuthenticationPort {
         if (!Pattern.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$", registerRequest.getEmail())) throw new InvalidInputException("Email is not valid");
         if (registerRequest.getUsername().trim().isEmpty()) throw new InvalidInputException("Username cannot be empty");
         if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", registerRequest.getPassword())) throw new InvalidInputException("Password needs a number, a letter and must minimum eight characters");
+        user.setUsername(registerRequest.getUsername());
         user.setPassword(ShaUtils.decode(registerRequest.getPassword()));
         user.setRole(Role.USER);
         //save user

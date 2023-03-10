@@ -12,7 +12,8 @@ public enum NotFoundType {
     MEMBER("Member"),
     SPOT("Spot"),
     PICTURE("Picture"),
-    TIMETABLE("Timetable");
+    TIMETABLE("Timetable"),
+    COMPANY_REQUEST("Company Request");
 
     private final String name;
 }
