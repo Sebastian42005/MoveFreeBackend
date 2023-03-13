@@ -35,9 +35,19 @@ public class UserController {
      * 404 - User not found
      */
     @GetMapping("/{username}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable String username, Principal principal) {
         try {
-            return ResponseEntity.ok(userPort.getUser(username));
+            return ResponseEntity.ok(userPort.getUser(username, principal));
+        }catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
+    }
+
+    @PutMapping("/{username}/follow")
+    public ResponseEntity<String> follow(@PathVariable String username, Principal principal) {
+        try {
+            userPort.follow(username, principal);
+            return ResponseEntity.ok(username + " followed");
         }catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
@@ -47,7 +57,7 @@ public class UserController {
      * 200 - Success
      */
     @GetMapping("/search")
-    public ResponseEntity<List<UserDTO>> searchUser(
+    public ResponseEntity<List<String>> searchUser(
             @RequestParam(defaultValue = "") String search,
             @RequestParam(defaultValue = "5") @Max(99) int limit) {
         return ResponseEntity.ok(userPort.searchUsers(search, limit));
@@ -105,7 +115,7 @@ public class UserController {
     @GetMapping("/own")
     public ResponseEntity<UserDTO> getUser(Principal principal) {
         try {
-            return ResponseEntity.ok(userPort.getUser(principal.getName()));
+            return ResponseEntity.ok(userPort.getOwnUser(principal));
         }catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }

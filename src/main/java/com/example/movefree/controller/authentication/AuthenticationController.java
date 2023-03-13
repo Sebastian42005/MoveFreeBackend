@@ -3,7 +3,9 @@ package com.example.movefree.controller.authentication;
 import com.example.movefree.database.authentication.AuthenticationRequest;
 import com.example.movefree.database.authentication.AuthenticationResponse;
 import com.example.movefree.database.authentication.RegisterRequest;
+import com.example.movefree.database.company.company.CompanyDTO;
 import com.example.movefree.database.user.UserDTO;
+import com.example.movefree.exception.CompanyAlreadyExistsException;
 import com.example.movefree.exception.InvalidInputException;
 import com.example.movefree.exception.UserAlreadyExistsException;
 import com.example.movefree.exception.WrongLoginCredentialsException;
@@ -52,4 +54,18 @@ public class AuthenticationController {
             return e.getResponseEntity();
         }
     }
+
+    /**
+     * 200 - Success
+     */
+
+    @PostMapping(value = "/register-company")
+    public ResponseEntity<CompanyDTO> registerCompany(@RequestBody RegisterRequest user) {
+        try {
+            return ResponseEntity.ok(authenticationPort.registerCompany(user));
+        } catch (InvalidInputException | CompanyAlreadyExistsException e) {
+            return e.getResponseEntity();
+        }
+    }
+
 }

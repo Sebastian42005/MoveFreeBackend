@@ -1,16 +1,14 @@
 package com.example.movefree.database.user;
 
-import com.example.movefree.database.company.company.CompanyDTO;
 import com.example.movefree.database.spot.spot.SpotDTO;
 
 import java.util.List;
 
 public record UserDTO (
         String username,
-        String role,
         List<SpotDTO> spots,
+        boolean isFollowed,
         int follower,
-        int follows,
-        CompanyDTO companyDTO
+        int follows
 ) {
 }

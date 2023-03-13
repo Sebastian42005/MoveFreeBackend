@@ -2,7 +2,6 @@ package com.example.movefree.controller.company.member;
 
 import com.example.movefree.database.company.member.member.CompanyMemberDTO;
 import com.example.movefree.exception.IdNotFoundException;
-import com.example.movefree.exception.NoCompanyException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.port.company.CompanyMemberPort;
 import com.example.portclass.Picture;
@@ -48,7 +47,7 @@ public class CompanyMemberController {
     public ResponseEntity<CompanyMemberDTO> createMember(@RequestBody CompanyMemberRequest companyMemberRequest, Principal principal) {
         try {
             return ResponseEntity.ok(memberPort.createMember(companyMemberRequest.name, principal));
-        } catch (UserForbiddenException e) {
+        } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }
@@ -64,7 +63,7 @@ public class CompanyMemberController {
             return ResponseEntity.ok()
                     .contentType(picture.contentType())
                     .body(picture.content());
-        } catch (IdNotFoundException | NoCompanyException | UserForbiddenException e) {
+        } catch (IdNotFoundException | UserForbiddenException e) {
             return e.getResponseEntity();
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

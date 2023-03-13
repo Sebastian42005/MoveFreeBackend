@@ -1,10 +1,9 @@
 package com.example.movefree.controller.company.timetable;
 
-import com.example.movefree.database.timetable.TimeTable;
+import com.example.movefree.database.timetable.course.CourseDTO;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.port.company.TimetablePort;
 import io.swagger.annotations.Api;
-import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
-import java.util.UUID;
+import java.util.List;
 
 @Api(tags = "Company Timetable")
 @RestController
@@ -29,14 +28,12 @@ public class TimetableController {
 
     /**
      * 200 - Success
-     * 404 - User not found
+     * 404 - Company not found
      */
-    @PostMapping("/create")
-    @SneakyThrows
-    public ResponseEntity<Object> createTimeTable(@RequestBody TimeTable timeTable, Principal principal) {
+    @PostMapping
+    public ResponseEntity<List<CourseDTO>> createTimeTable(@RequestBody List<TimetableRequest> courses, Principal principal) {
         try {
-            timetablePort.createTimetable(timeTable, principal.getName());
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(timetablePort.createTimetable(courses, principal.getName()));
         }catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
@@ -46,10 +43,10 @@ public class TimetableController {
      * 200 - Success
      * 404 - Timetable not found
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<TimeTable> getTimeTable(@PathVariable UUID id) {
+    @GetMapping("/{name}")
+    public ResponseEntity<List<CourseDTO>> getTimeTable(@PathVariable String name) {
         try {
-            return ResponseEntity.ok(timetablePort.getTimeTable(id));
+            return ResponseEntity.ok(timetablePort.getTimeTable(name));
         }catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }

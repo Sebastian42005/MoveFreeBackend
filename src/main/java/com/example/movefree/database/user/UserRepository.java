@@ -9,8 +9,8 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-    @Query(value = "SELECT * FROM users u WHERE lower(u.username) LIKE lower(concat('%', :search,'%')) LIMIT :max", nativeQuery = true)
-    List<User> search(String search, int max);
+    @Query(value = "SELECT username FROM users u WHERE lower(u.username) LIKE lower(concat('%', :search,'%')) LIMIT :max", nativeQuery = true)
+    List<String> search(String search, int max);
 
     Optional<User> findByUsername(String username);
 

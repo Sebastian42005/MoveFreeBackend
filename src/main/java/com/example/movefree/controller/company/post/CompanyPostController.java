@@ -2,8 +2,6 @@ package com.example.movefree.controller.company.post;
 
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidMultipartFileException;
-import com.example.movefree.exception.NoCompanyException;
-import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.port.company.CompanyPort;
 import com.example.portclass.Picture;
 import io.swagger.annotations.Api;
@@ -43,7 +41,7 @@ public class CompanyPostController {
         try {
             companyPort.uploadPost(principal, images, description);
             return ResponseEntity.ok("Success");
-        } catch (UserForbiddenException | InvalidMultipartFileException | NoCompanyException e) {
+        } catch (InvalidMultipartFileException | IdNotFoundException e) {
             return e.getResponseEntityWithMessage();
         }
     }

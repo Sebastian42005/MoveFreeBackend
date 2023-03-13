@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -23,20 +24,27 @@ public class UserService implements UserPort {
 
     final UserRepository userRepository;
 
-    final UserDTOMapper userDTOMapper = new UserDTOMapper();
+    UserDTOMapper userDTOMapper;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public UserDTO getUser(String username) throws IdNotFoundException {
+    public UserDTO getUser(String username, Principal principal) throws IdNotFoundException {
+        userDTOMapper = new UserDTOMapper(principal.getName());
         return userDTOMapper.apply(findUser(username));
     }
 
     @Override
-    public List<UserDTO> searchUsers(String search, int limit) {
-        return userRepository.search(search, limit).stream().map(userDTOMapper).toList();
+    public UserDTO getOwnUser(Principal principal) throws IdNotFoundException {
+        userDTOMapper = new UserDTOMapper(principal.getName());
+        return userDTOMapper.apply(findUser(principal.getName()));
+    }
+
+    @Override
+    public List<String> searchUsers(String search, int limit) {
+        return userRepository.search(search, limit);
     }
 
     @Override
@@ -65,6 +73,20 @@ public class UserService implements UserPort {
             return ImageReader.getProfilePicture();
         }
         return new Picture(MediaType.valueOf(user.getContentType()), user.getProfilePicture());
+    }
+
+    @Override
+    public void follow(String username, Principal principal) throws IdNotFoundException {
+        User followUser = findUser(username);
+        User ownUser = findUser(principal.getName());
+
+        if (followUser.getFollower().contains(ownUser)) {
+            followUser.getFollower().remove(ownUser);
+        } else {
+            followUser.getFollower().add(ownUser);
+        }
+
+        userRepository.save(followUser);
     }
 
     private User findUser(String username) throws IdNotFoundException {

@@ -7,15 +7,20 @@ import com.example.portclass.Picture;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 public interface UserPort {
 
-    UserDTO getUser(String username) throws IdNotFoundException;
+    UserDTO getUser(String username, Principal principal) throws IdNotFoundException;
 
-    List<UserDTO> searchUsers(String search, int limit);
+    UserDTO getOwnUser(Principal principal) throws IdNotFoundException;
+
+    List<String> searchUsers(String search, int limit);
 
     Picture setProfilePicture(MultipartFile image, String username) throws IOException, IdNotFoundException, InvalidMultipartFileException;
 
     Picture getProfilePicture(String username) throws IdNotFoundException;
+
+    void follow(String username, Principal principal) throws IdNotFoundException;
 }

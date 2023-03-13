@@ -1,11 +1,12 @@
 package com.example.movefree.port.company;
 
-import com.example.movefree.database.timetable.TimeTable;
+import com.example.movefree.controller.company.timetable.TimetableRequest;
+import com.example.movefree.database.timetable.course.CourseDTO;
 import com.example.movefree.exception.IdNotFoundException;
 
-import java.util.UUID;
+import java.util.List;
 
 public interface TimetablePort {
-    void createTimetable(TimeTable timeTable, String name) throws IdNotFoundException;
-    TimeTable getTimeTable(UUID id) throws IdNotFoundException;
+    List<CourseDTO> createTimetable(List<TimetableRequest> courses, String name) throws IdNotFoundException;
+    List<CourseDTO> getTimeTable(String name) throws IdNotFoundException;
 }

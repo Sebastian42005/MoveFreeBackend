@@ -10,15 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +44,11 @@ public class User {
     @ManyToMany(mappedBy= "follows")
     private List<User> follower;
 
+    @ManyToMany(mappedBy = "follower", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Company> followCompanies = new ArrayList<>();
+
+
     @JsonManagedReference("user_spot")
     @OneToMany(mappedBy = "user")
     private List<Spot> spots;
@@ -61,8 +63,4 @@ public class User {
     @JsonManagedReference("user_ratings")
     @OneToMany(mappedBy = "user")
     List<Rating> ratings;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_company", referencedColumnName = "id")
-    private Company company;
 }

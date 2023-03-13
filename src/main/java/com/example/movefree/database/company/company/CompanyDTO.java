@@ -7,8 +7,12 @@ import java.util.UUID;
 
 public record CompanyDTO(
         UUID id,
+        String name,
+        String email,
+        String description,
         String phoneNumber,
         String address,
+        int followers,
         List<CompanyMemberDTO> members
 ) {
 }

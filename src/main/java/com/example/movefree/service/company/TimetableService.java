@@ -1,38 +1,54 @@
 package com.example.movefree.service.company;
 
-import com.example.movefree.database.timetable.TimeTable;
-import com.example.movefree.database.user.User;
-import com.example.movefree.database.user.UserRepository;
+import com.example.movefree.controller.company.timetable.TimetableRequest;
+import com.example.movefree.database.company.company.Company;
+import com.example.movefree.database.company.company.CompanyRepository;
+import com.example.movefree.database.timetable.course.Course;
+import com.example.movefree.database.timetable.course.CourseDTO;
+import com.example.movefree.database.timetable.course.CourseDTOMapper;
+import com.example.movefree.database.timetable.course.CourseRepository;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.enums.NotFoundType;
-import com.example.movefree.file.FileHandler;
 import com.example.movefree.port.company.TimetablePort;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TimetableService implements TimetablePort {
 
 
-    final UserRepository userRepository;
+    final CompanyRepository companyRepository;
+    final CourseRepository courseRepository;
 
-    private final FileHandler<TimeTable> fileHandler = FileHandler.getInstance();
-
-    public TimetableService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public TimetableService(CompanyRepository companyRepository, CourseRepository courseRepository) {
+        this.companyRepository = companyRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
-    public void createTimetable(TimeTable timeTable, String name) throws IdNotFoundException{
-        User user = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
-        fileHandler.writeFile(timeTable, "Company" + user.getCompany().getId());
+    public List<CourseDTO> createTimetable(List<TimetableRequest> courses, String name) throws IdNotFoundException{
+        Company company = getCompany(name);
+        List<Course> courseList = new ArrayList<>();
+        courses.stream().map(course -> new Course(
+                course.getName(),
+                course.getDay(),
+                course.getStart(),
+                course.getEnd())).forEach(course -> courseList.add(courseRepository.save(course)));
+        company.setTimetable(courseList);
+        companyRepository.save(company);
+        return courseList.stream().map(new CourseDTOMapper()).toList();
     }
 
     @Override
-    public TimeTable getTimeTable(UUID id) throws IdNotFoundException {
-        TimeTable timeTable = fileHandler.toObject("Company" + id, TimeTable.class);
-        if (timeTable == null) throw new IdNotFoundException(NotFoundType.TIMETABLE);
-        return timeTable;
+    public List<CourseDTO> getTimeTable(String name) throws IdNotFoundException {
+        Company company = getCompany(name);
+        if (company.getTimetable() == null) throw new IdNotFoundException(NotFoundType.TIMETABLE);
+        return company.getTimetable().stream().map(new CourseDTOMapper()).toList();
+    }
+
+    private Company getCompany(String name) throws IdNotFoundException {
+        return companyRepository.findByName(name).orElseThrow(IdNotFoundException.get(NotFoundType.COMPANY));
     }
 }
