@@ -86,17 +86,21 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public List<SpotDTO> searchSpot(List<String> cities, List<String> spotTypesAsString, int limit) throws InvalidInputException {
+    public List<SpotDTO> searchSpot(List<String> cities, List<String> spotTypesAsString, int limit, List<UUID> alreadySeenList) throws InvalidInputException {
         List<SpotType> spotTypes = getSpotTypeList(spotTypesAsString);
         Pageable pageable = PageRequest.of(0, limit);
+        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(UUID.randomUUID());
         List<Spot> spotDTOList;
         if (cities.isEmpty()) {
-            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithoutFilter(pageable);
-            else spotDTOList = spotRepository.findSpotBySpotTypes(spotTypes, pageable);
+            if (spotTypes.isEmpty()) spotDTOList = spotRepository.searchWithoutFilter(alreadySeenList, pageable);
+            else spotDTOList = spotRepository.findSpotBySpotTypes(spotTypes, alreadySeenList,  pageable);
         }else {
-            if (spotTypes.isEmpty()) spotDTOList = spotRepository.findSpotByCities(cities.stream().map(String::toLowerCase).toList(), pageable);
+            if (spotTypes.isEmpty()) spotDTOList = spotRepository.findSpotByCities(cities.stream().map(String::toLowerCase).toList(), alreadySeenList, pageable);
 
-            else spotDTOList = spotRepository.findSpotByFilter(cities.stream().map(String::toLowerCase).toList(), spotTypes.stream().map(Enum::ordinal).toList());
+            else spotDTOList = spotRepository.findSpotByFilter(cities.stream().map(String::toLowerCase).toList(),
+                    spotTypes.stream().map(Enum::ordinal).toList(),
+                    alreadySeenList,
+                    pageable);
         }
         return spotDTOList.stream().map(spotDTOMapper).toList();
     }

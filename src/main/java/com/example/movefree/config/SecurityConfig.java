@@ -52,6 +52,7 @@ public class SecurityConfig {
                     auth.antMatchers(allSpots).permitAll();
                     //Get Own profile as user
                     auth.antMatchers("/api/user/own/*").hasRole(Role.USER);
+                    auth.antMatchers("/api/user/own").hasRole(Role.USER);
                     //Request to get User
                     auth.antMatchers("/api/user/**").permitAll();
                     //Swagger

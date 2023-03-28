@@ -4,22 +4,21 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 @Component
+@Slf4j
 public class JwtTokenUtil {
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // 5 Stunden
-
-    final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
+    public static final long JWT_TOKEN_VALIDITY = 2592000; // 30 Tage
 
     @Value("${jwt.secret}")
     private String secret;
@@ -43,9 +42,9 @@ public class JwtTokenUtil {
         try {
             return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         }catch (SignatureException e) {
-            LOGGER.warn("Token was generated with the wrong key");
+            log.warn("Token was generated with the wrong key");
         }catch (Exception e) {
-            LOGGER.warn("Wrong Token");
+            log.warn("Wrong Token");
         }
         return null;
     }

@@ -42,10 +42,11 @@ public class SpotController {
      */
     @GetMapping("/all")
     public ResponseEntity<List<SpotDTO>> searchSpot(@RequestParam(defaultValue = "") List<String> cities,
-                                    @RequestParam(defaultValue = "") List<String> spotTypes,
-                                    @RequestParam(defaultValue = "5") @Min(1) @Max(5) int limit) {
+                                                    @RequestParam(defaultValue = "") List<String> spotTypes,
+                                                    @RequestParam(defaultValue = "5") @Min(1) @Max(5) int limit,
+                                                    @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
         try {
-            return ResponseEntity.ok(spotPort.searchSpot(cities, spotTypes, limit));
+            return ResponseEntity.ok(spotPort.searchSpot(cities, spotTypes, limit, alreadySeenList));
         } catch (InvalidInputException e) {
             return e.getResponseEntity();
         }
@@ -59,7 +60,7 @@ public class SpotController {
     public ResponseEntity<List<Rating>> getRatings(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok(spotPort.getSpotRatings(id));
-        }catch (IdNotFoundException e) {
+        } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }
@@ -72,7 +73,7 @@ public class SpotController {
     public ResponseEntity<SpotDTO> postSpot(@RequestBody PostSpotRequestBody spot, Principal principal) {
         try {
             return ResponseEntity.ok(spotPort.postSpot(spot, principal.getName()));
-        }catch (IdNotFoundException e) {
+        } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }
@@ -86,7 +87,7 @@ public class SpotController {
     public ResponseEntity<Rating> rateSpot(@PathVariable UUID id, @RequestBody RateSpotRequestBody rateSpotRequestBody, Principal principal) {
         try {
             return ResponseEntity.ok(spotPort.rateSpot(id, rateSpotRequestBody, principal.getName()));
-        }catch (IdNotFoundException e) {
+        } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }

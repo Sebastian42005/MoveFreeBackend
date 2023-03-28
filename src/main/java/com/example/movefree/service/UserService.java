@@ -32,7 +32,9 @@ public class UserService implements UserPort {
 
     @Override
     public UserDTO getUser(String username, Principal principal) throws IdNotFoundException {
-        userDTOMapper = new UserDTOMapper(principal.getName());
+        if (principal != null) {
+            userDTOMapper = new UserDTOMapper(principal.getName());
+        }else userDTOMapper = new UserDTOMapper();
         return userDTOMapper.apply(findUser(username));
     }
 
@@ -87,6 +89,13 @@ public class UserService implements UserPort {
         }
 
         userRepository.save(followUser);
+    }
+
+    @Override
+    public List<String> getTopUsers() {
+        List<User> users = new java.util.ArrayList<>(List.copyOf(userRepository.findAll()));
+        users.sort((o1, o2) -> o2.getFollower().size() - o1.getFollower().size());
+        return users.stream().map(User::getUsername).limit(5).toList();
     }
 
     private User findUser(String username) throws IdNotFoundException {

@@ -38,17 +38,17 @@ public class UserController {
     public ResponseEntity<UserDTO> getUser(@PathVariable String username, Principal principal) {
         try {
             return ResponseEntity.ok(userPort.getUser(username, principal));
-        }catch (IdNotFoundException e) {
+        } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }
 
-    @PutMapping("/{username}/follow")
+    @PutMapping("/own/follow/{username}")
     public ResponseEntity<String> follow(@PathVariable String username, Principal principal) {
         try {
             userPort.follow(username, principal);
             return ResponseEntity.ok(username + " followed");
-        }catch (IdNotFoundException e) {
+        } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }
@@ -68,12 +68,12 @@ public class UserController {
      * 404 - User not found
      * 400 - Image invalid
      */
-    @PutMapping("/profile")
+    @PutMapping("/own/profile")
     public ResponseEntity<byte[]> setProfilePicture(@RequestParam("image") MultipartFile image, Principal principal) throws IOException {
         try {
             Picture profilePicture = userPort.setProfilePicture(image, principal.getName());
             return ResponseEntity.ok().contentType(profilePicture.contentType()).body(profilePicture.content());
-        }catch (IdNotFoundException | InvalidMultipartFileException e) {
+        } catch (IdNotFoundException | InvalidMultipartFileException e) {
             return e.getResponseEntity();
         }
     }
@@ -93,19 +93,9 @@ public class UserController {
         }
     }
 
-    /**
-     * 200 - Success
-     * 404 - User not found
-     */
-    @GetMapping("/own/profile")
-    public ResponseEntity<byte[]> getOwnProfilePicture(Principal principal) {
-        Picture profilePicture;
-        try {
-            profilePicture = userPort.getProfilePicture(principal.getName());
-            return ResponseEntity.ok().contentType(profilePicture.contentType()).body(profilePicture.content());
-        } catch (IdNotFoundException e) {
-            return e.getResponseEntity();
-        }
+    @GetMapping("/topUsers")
+    public ResponseEntity<List<String>> getTopUsers() {
+        return ResponseEntity.ok(userPort.getTopUsers());
     }
 
     /**
@@ -116,7 +106,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getUser(Principal principal) {
         try {
             return ResponseEntity.ok(userPort.getOwnUser(principal));
-        }catch (IdNotFoundException e) {
+        } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }

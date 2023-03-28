@@ -23,4 +23,6 @@ public interface UserPort {
     Picture getProfilePicture(String username) throws IdNotFoundException;
 
     void follow(String username, Principal principal) throws IdNotFoundException;
+
+    List<String> getTopUsers();
 }

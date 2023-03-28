@@ -18,5 +18,5 @@ public interface SpotPort {
 
     List<Rating> getSpotRatings(UUID spotId) throws IdNotFoundException;
 
-    List<SpotDTO> searchSpot(List<String> cities, List<String> spotTypes, int limit) throws InvalidInputException;
+    List<SpotDTO> searchSpot(List<String> cities, List<String> spotTypes, int limit, List<UUID> alreadySeenList) throws InvalidInputException;
 }
