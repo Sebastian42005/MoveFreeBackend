@@ -41,12 +41,12 @@ public class SpotController {
      * 400 - Invalid input
      */
     @GetMapping("/all")
-    public ResponseEntity<List<SpotDTO>> searchSpot(@RequestParam(defaultValue = "") List<String> cities,
+    public ResponseEntity<List<SpotDTO>> searchSpot(@RequestParam(defaultValue = "") String search,
                                                     @RequestParam(defaultValue = "") List<String> spotTypes,
                                                     @RequestParam(defaultValue = "5") @Min(1) @Max(5) int limit,
                                                     @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
         try {
-            return ResponseEntity.ok(spotPort.searchSpot(cities, spotTypes, limit, alreadySeenList));
+            return ResponseEntity.ok(spotPort.searchSpot(search, spotTypes, limit, alreadySeenList));
         } catch (InvalidInputException e) {
             return e.getResponseEntity();
         }
