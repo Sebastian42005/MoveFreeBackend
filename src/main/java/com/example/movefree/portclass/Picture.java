@@ -1,4 +1,4 @@
-package com.example.portclass;
+package com.example.movefree.portclass;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;

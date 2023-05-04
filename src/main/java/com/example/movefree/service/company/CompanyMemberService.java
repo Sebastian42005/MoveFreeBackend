@@ -11,7 +11,7 @@ import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.file.ImageReader;
 import com.example.movefree.port.company.CompanyMemberPort;
-import com.example.portclass.Picture;
+import com.example.movefree.portclass.Picture;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

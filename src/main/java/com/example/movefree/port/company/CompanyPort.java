@@ -3,8 +3,8 @@ package com.example.movefree.port.company;
 import com.example.movefree.database.company.company.CompanyDTO;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidMultipartFileException;
+import com.example.movefree.portclass.Picture;
 import com.example.movefree.request_body.PostSpotRequestBody;
-import com.example.portclass.Picture;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;

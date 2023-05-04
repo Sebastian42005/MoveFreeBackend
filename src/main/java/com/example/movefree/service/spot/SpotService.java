@@ -9,10 +9,10 @@ import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.database.spot.spot.SpotDTOMapper;
 import com.example.movefree.database.spot.spot.SpotRepository;
 import com.example.movefree.database.spot.spottype.SpotType;
+import com.example.movefree.database.spot.spottype.SpotTypeRepository;
 import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
-import com.example.movefree.exception.InvalidInputException;
 import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.port.spot.SpotPort;
 import com.example.movefree.request_body.PostSpotRequestBody;
@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,21 +34,25 @@ public class SpotService implements SpotPort {
     final UserRepository userRepository;
     final LocationRepository locationRepository;
     final RatingRepository ratingRepository;
+    final SpotTypeRepository spotTypeRepository;
 
     final SpotDTOMapper spotDTOMapper = new SpotDTOMapper();
 
 
-    public SpotService(SpotRepository spotRepository, UserRepository userRepository, LocationRepository locationRepository, RatingRepository ratingRepository) {
+    public SpotService(SpotRepository spotRepository, UserRepository userRepository, LocationRepository locationRepository, RatingRepository ratingRepository, SpotTypeRepository spotTypeRepository) {
         this.spotRepository = spotRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
         this.ratingRepository = ratingRepository;
+        this.spotTypeRepository = spotTypeRepository;
     }
 
     @Override
     public SpotDTO postSpot(PostSpotRequestBody postSpotRequestBody, String name) throws IdNotFoundException {
         //find User
         User user = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
+        List<SpotType> spotTypes = new ArrayList<>();
+        postSpotRequestBody.getSpotTypes().forEach(spotType -> spotTypes.add(spotTypeRepository.findById(spotType).orElseThrow()));
         //create Location
         Location location = new Location();
         location.setLatitude(postSpotRequestBody.getLatitude());
@@ -59,7 +64,8 @@ public class SpotService implements SpotPort {
         spot.setDescription(postSpotRequestBody.getDescription());
         spot.setUser(user);
         spot.setLocation(locationRepository.save(location));
-        spot.setSpotType(postSpotRequestBody.getSpotType());
+        spot.setSpotTypes(spotTypes);
+        spot.setCreatedAt(Instant.now());
         return spotDTOMapper.apply(spotRepository.save(spot));
     }
 
@@ -86,32 +92,15 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public List<SpotDTO> searchSpot(String search, List<String> spotTypesAsString, int limit, List<UUID> alreadySeenList) throws InvalidInputException {
-        List<SpotType> spotTypes = getSpotTypeList(spotTypesAsString);
+    public List<SpotDTO> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList) {
         Pageable pageable = PageRequest.of(0, limit);
         if (alreadySeenList.isEmpty()) alreadySeenList = List.of(UUID.randomUUID());
         List<Spot> spotDTOList;
-        if (spotTypes.isEmpty()) {
+        if (spotType.equals("")) {
             spotDTOList = spotRepository.searchSpotNoSpotType(search, alreadySeenList, pageable);
         }else {
-            spotDTOList = spotRepository.searchSpot(search, spotTypes, alreadySeenList, pageable);
+            spotDTOList = spotRepository.searchSpot(search, spotType, alreadySeenList, pageable);
         }
         return spotDTOList.stream().map(spotDTOMapper).toList();
-    }
-
-    private List<SpotType> getSpotTypeList(List<String> spotTypesAsString) throws InvalidInputException {
-        List<SpotType> spotTypes = new ArrayList<>();
-        for (String spotType : spotTypesAsString) {
-            spotTypes.add(getSpotType(spotType));
-        }
-        return spotTypes;
-    }
-    private SpotType getSpotType(String spotType) throws InvalidInputException {
-        return switch (spotType.trim().toLowerCase()) {
-            case "calisthenics" -> SpotType.CALISTHENICS;
-            case "parkour" -> SpotType.PARKOUR;
-            case "freerunning" -> SpotType.FREERUNNING;
-            default -> throw new InvalidInputException("Invalid SpotType");
-        };
     }
 }

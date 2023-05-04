@@ -1,10 +1,11 @@
 package com.example.movefree.controller.spot.picture;
 
+import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.PictureOverflowException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.port.spot.SpotPicturePort;
-import com.example.portclass.Picture;
+import com.example.movefree.portclass.Picture;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,11 +38,10 @@ public class SpotPictureController {
      * 401 - Unauthorized
      * 413 - Too many pictures uploaded
      */
-    @PutMapping("/{id}/pictures")
-    public ResponseEntity<Object> uploadPictures(@PathVariable UUID id, @RequestParam("images") List<MultipartFile> images, Principal principal) {
+    @PutMapping("/{id}/images")
+    public ResponseEntity<SpotDTO> uploadPictures(@PathVariable UUID id, @RequestParam("images") List<MultipartFile> images, Principal principal) {
         try {
-            spotPicturePort.uploadPicture(id, images, principal.getName());
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(spotPicturePort.uploadPicture(id, images, principal.getName()));
         }catch (IdNotFoundException | UserForbiddenException | PictureOverflowException e) {
             return e.getResponseEntity();
         }
@@ -51,7 +51,7 @@ public class SpotPictureController {
      * 200 - Success
      * 404 - Spot not found
      */
-    @GetMapping("/pictures/{id}")
+    @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> getPicture(@PathVariable UUID id) {
         try {
             Picture picture = spotPicturePort.getPicture(id);

@@ -18,13 +18,18 @@ public class UserDTOMapper implements Function<User, UserDTO> {
         if (user.getSpots() == null) user.setSpots(List.of());
         if (user.getFollower() == null) user.setFollower(List.of());
         if (user.getFollows() == null) user.setFollows(List.of());
+        double rating = user.getSpots().stream().mapToDouble(spot ->
+                new SpotDTOMapper().apply(spot).rating()).average().orElse(0);
+        rating = Math.round(rating * 100.0) / 100.0;
         boolean isFollowed = false;
         if (username != null) {
             isFollowed = user.getFollower().stream().anyMatch(follower -> follower.getUsername().equals(username));
         }
         return new UserDTO(
                 user.getUsername(),
-                user.getSpots().stream().map(new SpotDTOMapper()).toList(),
+                user.getDescription(),
+                user.getSpots().size(),
+                rating,
                 isFollowed,
                 user.getFollower().size(),
                 user.getFollows().size()

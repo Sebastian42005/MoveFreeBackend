@@ -3,7 +3,6 @@ package com.example.movefree.controller.spot;
 import com.example.movefree.database.spot.rating.Rating;
 import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.exception.IdNotFoundException;
-import com.example.movefree.exception.InvalidInputException;
 import com.example.movefree.port.spot.SpotPort;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
@@ -42,14 +41,10 @@ public class SpotController {
      */
     @GetMapping("/all")
     public ResponseEntity<List<SpotDTO>> searchSpot(@RequestParam(defaultValue = "") String search,
-                                                    @RequestParam(defaultValue = "") List<String> spotTypes,
+                                                    @RequestParam(defaultValue = "") String spotType,
                                                     @RequestParam(defaultValue = "5") @Min(1) @Max(5) int limit,
                                                     @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
-        try {
-            return ResponseEntity.ok(spotPort.searchSpot(search, spotTypes, limit, alreadySeenList));
-        } catch (InvalidInputException e) {
-            return e.getResponseEntity();
-        }
+        return ResponseEntity.ok(spotPort.searchSpot(search, spotType, limit, alreadySeenList));
     }
 
     /**
@@ -68,6 +63,7 @@ public class SpotController {
     /**
      * 200 - Success
      * 404 - User not found
+     * 403 - User forbidden
      */
     @PostMapping("/post")
     public ResponseEntity<SpotDTO> postSpot(@RequestBody PostSpotRequestBody spot, Principal principal) {

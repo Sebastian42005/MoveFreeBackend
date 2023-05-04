@@ -3,7 +3,7 @@ package com.example.movefree.controller.company.post;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidMultipartFileException;
 import com.example.movefree.port.company.CompanyPort;
-import com.example.portclass.Picture;
+import com.example.movefree.portclass.Picture;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

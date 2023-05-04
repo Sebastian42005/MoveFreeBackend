@@ -1,6 +1,6 @@
 package com.example.movefree.file;
 
-import com.example.portclass.Picture;
+import com.example.movefree.portclass.Picture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;

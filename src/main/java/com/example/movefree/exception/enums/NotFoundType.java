@@ -11,6 +11,7 @@ public enum NotFoundType {
     ROLE("Role"),
     MEMBER("Member"),
     SPOT("Spot"),
+    SPOT_TYPE("Spot Type"),
     PICTURE("Picture"),
     TIMETABLE("Timetable");
 

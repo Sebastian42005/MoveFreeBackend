@@ -4,7 +4,7 @@ import com.example.movefree.database.company.member.member.CompanyMemberDTO;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.port.company.CompanyMemberPort;
-import com.example.portclass.Picture;
+import com.example.movefree.portclass.Picture;
 import io.swagger.annotations.Api;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

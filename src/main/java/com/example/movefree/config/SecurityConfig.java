@@ -37,6 +37,10 @@ public class SecurityConfig {
         return httpSecurity
                 .cors().and().csrf().disable()
                 .authorizeRequests(auth -> {
+                    //Spot Types
+                    auth.antMatchers(HttpMethod.POST, "/api/spot/type/**").hasRole(Role.ADMIN);
+                    auth.antMatchers(HttpMethod.DELETE, "/api/spot/type/**").hasRole(Role.ADMIN);
+                    auth.antMatchers(HttpMethod.GET, "/api/spot/type").permitAll();
                     //Authentication
                     auth.antMatchers("/api/authentication/**").permitAll();
                     //Only for Admins
@@ -52,7 +56,7 @@ public class SecurityConfig {
                     auth.antMatchers(allSpots).permitAll();
                     //Get Own profile as user
                     auth.antMatchers("/api/user/own/*").hasRole(Role.USER);
-                    auth.antMatchers("/api/user/own").hasRole(Role.USER);
+                    auth.antMatchers("/api/user/own").hasAnyRole(Role.USER, Role.COMPANY, Role.ADMIN);
                     //Request to get User
                     auth.antMatchers("/api/user/**").permitAll();
                     //Swagger

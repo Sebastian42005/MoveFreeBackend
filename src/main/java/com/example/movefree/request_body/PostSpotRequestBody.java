@@ -1,9 +1,10 @@
 package com.example.movefree.request_body;
 
-import com.example.movefree.database.spot.spottype.SpotType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 public class PostSpotRequestBody {
@@ -11,7 +12,7 @@ public class PostSpotRequestBody {
     private Double latitude;
     private Double longitude;
     private String city;
-    private SpotType spotType;
+    private List<String> spotTypes;
 
     @Data
     @AllArgsConstructor

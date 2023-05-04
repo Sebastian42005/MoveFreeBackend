@@ -3,7 +3,7 @@ package com.example.movefree.port.company;
 import com.example.movefree.database.company.member.member.CompanyMemberDTO;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.UserForbiddenException;
-import com.example.portclass.Picture;
+import com.example.movefree.portclass.Picture;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

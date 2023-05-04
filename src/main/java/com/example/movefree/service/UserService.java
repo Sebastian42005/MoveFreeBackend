@@ -1,5 +1,8 @@
 package com.example.movefree.service;
 
+import com.example.movefree.database.spot.spot.Spot;
+import com.example.movefree.database.spot.spot.SpotDTO;
+import com.example.movefree.database.spot.spot.SpotDTOMapper;
 import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserDTOMapper;
@@ -10,7 +13,7 @@ import com.example.movefree.exception.enums.MultipartFileExceptionType;
 import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.file.ImageReader;
 import com.example.movefree.port.user.UserPort;
-import com.example.portclass.Picture;
+import com.example.movefree.portclass.Picture;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserPort {
@@ -25,6 +29,8 @@ public class UserService implements UserPort {
     final UserRepository userRepository;
 
     UserDTOMapper userDTOMapper;
+
+    SpotDTOMapper spotDTOMapper = new SpotDTOMapper();
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -96,6 +102,15 @@ public class UserService implements UserPort {
         List<User> users = new java.util.ArrayList<>(List.copyOf(userRepository.findAll()));
         users.sort((o1, o2) -> o2.getFollower().size() - o1.getFollower().size());
         return users.stream().map(User::getUsername).limit(5).toList();
+    }
+
+    @Override
+    public List<SpotDTO> getUserSpots(String username, int limit, List<UUID> alreadySeenList) {
+        List<Spot> spots = userRepository.getUserSpots(username);
+        spots.sort((o1, o2) -> o2.getCreatedAt().compareTo(o1.getCreatedAt()));
+        return spots
+                .stream().filter(spot -> !alreadySeenList.contains(spot.getId()))
+                .limit(limit).map(spotDTOMapper).toList();
     }
 
     private User findUser(String username) throws IdNotFoundException {

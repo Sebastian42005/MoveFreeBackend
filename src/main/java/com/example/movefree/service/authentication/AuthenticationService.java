@@ -56,7 +56,7 @@ public class AuthenticationService implements AuthenticationPort {
         if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) throw new UserAlreadyExistsException();
         if (!Pattern.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$", registerRequest.getEmail())) throw new InvalidInputException("Email is not valid");
         if (registerRequest.getUsername().trim().isEmpty()) throw new InvalidInputException("Username cannot be empty");
-        if (registerRequest.getPassword().length() <= 8) throw new InvalidInputException("Password must be bigger than 8");
+        if (registerRequest.getPassword().length() < 8) throw new InvalidInputException("Password must be bigger than 8");
         user.setUsername(registerRequest.getUsername());
         user.setPassword(ShaUtils.decode(registerRequest.getPassword()));
         user.setEmail(registerRequest.getEmail());

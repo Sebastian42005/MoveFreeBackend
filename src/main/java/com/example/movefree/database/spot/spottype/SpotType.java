@@ -1,35 +1,34 @@
 package com.example.movefree.database.spot.spottype;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.example.movefree.database.spot.spot.Spot;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Locale;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.List;
 
-public enum SpotType {
-    PARKOUR("parkour"),
-    FREERUNNING("freerunning"),
-    CALISTHENICS("calisthenics");
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@Table(name = "spot_types")
+public class SpotType {
 
-    private final String value;
+    @Id
+    private String name;
 
-    SpotType(String value) { this.value = value; }
+    private byte[] image;
 
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
+    private String contentType;
 
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public SpotType fromValue() {
-        for (SpotType spotType : SpotType.values()) {
-            if (spotType.value.equals(value.toLowerCase(Locale.ROOT).trim())) return spotType;
-        }
-        throw new IllegalArgumentException("'" + value + "' is not a spot type");
-    }
+    @ManyToMany(mappedBy = "spotTypes", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<Spot> spots;
 }
 

@@ -1,10 +1,11 @@
 package com.example.movefree.controller.user;
 
+import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidMultipartFileException;
 import com.example.movefree.port.user.UserPort;
-import com.example.portclass.Picture;
+import com.example.movefree.portclass.Picture;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import javax.validation.constraints.Max;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Api(tags = "User")
 @RestController
@@ -41,6 +43,13 @@ public class UserController {
         } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
+    }
+
+    @GetMapping("/{username}/spots")
+    public ResponseEntity<List<SpotDTO>> getUserSpots(@PathVariable String username,
+                                                      @RequestParam(defaultValue = "5") @Max(99) int limit,
+                                                      @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
+        return ResponseEntity.ok(userPort.getUserSpots(username, limit, alreadySeenList));
     }
 
     @PutMapping("/own/follow/{username}")

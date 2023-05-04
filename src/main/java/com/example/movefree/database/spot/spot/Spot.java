@@ -25,6 +25,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,12 +48,19 @@ public class Spot {
     @OneToMany(mappedBy = "spot")
     private List<Rating> ratings;
 
+    private Instant createdAt;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
-    SpotType spotType;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "spot_spot_types",
+            joinColumns = { @JoinColumn(name = "spot_id", referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "spot_type_id", referencedColumnName = "name") })
+    @JsonIgnore
+    List<SpotType> spotTypes;
 
     @JsonBackReference("user_spot")
     @ManyToOne

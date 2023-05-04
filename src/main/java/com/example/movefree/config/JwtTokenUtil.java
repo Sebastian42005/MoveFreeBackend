@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Slf4j
 public class JwtTokenUtil {
 
-    public static final long JWT_TOKEN_VALIDITY = 2592000; // 30 Tage
+    public static final long JWT_TOKEN_VALIDITY = 3600; // 5 Stunden
 
     @Value("${jwt.secret}")
     private String secret;
@@ -63,7 +63,6 @@ public class JwtTokenUtil {
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
-
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject) //What's in the token

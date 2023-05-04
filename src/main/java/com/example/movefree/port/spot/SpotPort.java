@@ -3,7 +3,6 @@ package com.example.movefree.port.spot;
 import com.example.movefree.database.spot.rating.Rating;
 import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.exception.IdNotFoundException;
-import com.example.movefree.exception.InvalidInputException;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
 
@@ -18,5 +17,6 @@ public interface SpotPort {
 
     List<Rating> getSpotRatings(UUID spotId) throws IdNotFoundException;
 
-    List<SpotDTO> searchSpot(String search, List<String> spotTypes, int limit, List<UUID> alreadySeenList) throws InvalidInputException;
+    List<SpotDTO> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList);
+
 }
