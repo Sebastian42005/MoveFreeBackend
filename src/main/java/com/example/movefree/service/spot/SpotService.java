@@ -103,4 +103,9 @@ public class SpotService implements SpotPort {
         }
         return spotDTOList.stream().map(spotDTOMapper).toList();
     }
+
+    @Override
+    public SpotDTO getSpot(UUID id) throws IdNotFoundException {
+        return spotDTOMapper.apply(spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT)));
+    }
 }

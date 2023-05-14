@@ -50,7 +50,7 @@ public class SecurityConfig {
                     //Only for Companies
                     auth.antMatchers(HttpMethod.GET, "/api/company/**").permitAll();
                     auth.antMatchers("/api/company/**").hasRole(Role.COMPANY);
-                    //Security for Spot requests
+                    // Spot
                     auth.antMatchers(HttpMethod.POST, allSpots).hasRole(Role.USER);
                     auth.antMatchers(HttpMethod.PUT, allSpots).hasRole(Role.USER);
                     auth.antMatchers(allSpots).permitAll();

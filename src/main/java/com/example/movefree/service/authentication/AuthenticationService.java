@@ -47,16 +47,20 @@ public class AuthenticationService implements AuthenticationPort {
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) throws WrongLoginCredentialsException {
         final UserDetails userDetails = userDetailsService.verifyUser(authenticationRequest.getUsername(), ShaUtils.decode(authenticationRequest.getPassword()));
         final String token = tokenUtil.generateToken(userDetails);
-        return new AuthenticationResponse(token);
+        final User user = userRepository.findByUsername(authenticationRequest.getUsername()).orElseThrow(WrongLoginCredentialsException::new);
+        return new AuthenticationResponse(token, user.getRole());
     }
 
     @Override
     public UserDTO register(RegisterRequest registerRequest) throws InvalidInputException, UserAlreadyExistsException {
         User user = new User();
-        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) throw new UserAlreadyExistsException();
-        if (!Pattern.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$", registerRequest.getEmail())) throw new InvalidInputException("Email is not valid");
+        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent())
+            throw new UserAlreadyExistsException();
+        if (!Pattern.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$", registerRequest.getEmail()))
+            throw new InvalidInputException("Email is not valid");
         if (registerRequest.getUsername().trim().isEmpty()) throw new InvalidInputException("Username cannot be empty");
-        if (registerRequest.getPassword().length() < 8) throw new InvalidInputException("Password must be bigger than 8");
+        if (registerRequest.getPassword().length() < 8)
+            throw new InvalidInputException("Password must be bigger than 8");
         user.setUsername(registerRequest.getUsername());
         user.setPassword(ShaUtils.decode(registerRequest.getPassword()));
         user.setEmail(registerRequest.getEmail());
@@ -67,10 +71,13 @@ public class AuthenticationService implements AuthenticationPort {
     @Override
     public CompanyDTO registerCompany(RegisterRequest registerRequest) throws InvalidInputException, CompanyAlreadyExistsException {
         Company company = new Company();
-        if (companyRepository.findByName(registerRequest.getUsername()).isPresent()) throw new CompanyAlreadyExistsException();
-        if (!Pattern.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$", registerRequest.getEmail())) throw new InvalidInputException("Email is not valid");
+        if (companyRepository.findByName(registerRequest.getUsername()).isPresent())
+            throw new CompanyAlreadyExistsException();
+        if (!Pattern.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$", registerRequest.getEmail()))
+            throw new InvalidInputException("Email is not valid");
         if (registerRequest.getUsername().trim().isEmpty()) throw new InvalidInputException("Username cannot be empty");
-        if (registerRequest.getPassword().length() <= 8) throw new InvalidInputException("Password must be bigger than 8");
+        if (registerRequest.getPassword().length() <= 8)
+            throw new InvalidInputException("Password must be bigger than 8");
         company.setName(registerRequest.getUsername());
         company.setEmail(registerRequest.getEmail());
         company.setPassword(ShaUtils.decode(registerRequest.getPassword()));

@@ -27,6 +27,7 @@ public class UserDTOMapper implements Function<User, UserDTO> {
         }
         return new UserDTO(
                 user.getUsername(),
+                user.getRole(),
                 user.getDescription(),
                 user.getSpots().size(),
                 rating,

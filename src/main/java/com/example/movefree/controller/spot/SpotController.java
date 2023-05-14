@@ -47,6 +47,15 @@ public class SpotController {
         return ResponseEntity.ok(spotPort.searchSpot(search, spotType, limit, alreadySeenList));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<SpotDTO> getSpot(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(spotPort.getSpot(id));
+        } catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
+    }
+
     /**
      * 200 - Success
      * 404 - Spot not found

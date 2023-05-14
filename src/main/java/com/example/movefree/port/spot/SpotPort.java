@@ -19,4 +19,5 @@ public interface SpotPort {
 
     List<SpotDTO> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList);
 
+    SpotDTO getSpot(UUID id) throws IdNotFoundException;
 }

@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Slf4j
 public class JwtTokenUtil {
 
-    public static final long JWT_TOKEN_VALIDITY = 3600; // 5 Stunden
+    public static final long JWT_TOKEN_VALIDITY = 18000; // 5 Stunden in Sekunden
 
     @Value("${jwt.secret}")
     private String secret;
@@ -37,7 +37,6 @@ public class JwtTokenUtil {
         return claimsResolver.apply(claims);
     }
 
-    //retrieve data from the token with the secret key
     private Claims getAllClaimsFromToken(String token) {
         try {
             return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
