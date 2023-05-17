@@ -92,7 +92,7 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public List<SpotDTO> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList) {
+    public List<SpotDTO> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList) throws IdNotFoundException {
         Pageable pageable = PageRequest.of(0, limit);
         if (alreadySeenList.isEmpty()) alreadySeenList = List.of(UUID.randomUUID());
         List<Spot> spotDTOList;

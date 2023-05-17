@@ -17,7 +17,7 @@ public interface SpotPort {
 
     List<Rating> getSpotRatings(UUID spotId) throws IdNotFoundException;
 
-    List<SpotDTO> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList);
+    List<SpotDTO> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList) throws IdNotFoundException;
 
     SpotDTO getSpot(UUID id) throws IdNotFoundException;
 }

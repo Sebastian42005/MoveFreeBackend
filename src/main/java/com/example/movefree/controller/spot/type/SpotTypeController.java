@@ -4,6 +4,7 @@ import com.example.movefree.database.spot.spottype.SpotType;
 import com.example.movefree.database.spot.spottype.SpotTypeDTO;
 import com.example.movefree.database.spot.spottype.SpotTypeDTOMapper;
 import com.example.movefree.database.spot.spottype.SpotTypeRepository;
+import io.swagger.annotations.Api;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+
+@Api(tags = "Spot Type")
 
 @RestController
 @RequestMapping("/api/spot/type")

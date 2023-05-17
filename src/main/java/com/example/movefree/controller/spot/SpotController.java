@@ -44,7 +44,11 @@ public class SpotController {
                                                     @RequestParam(defaultValue = "") String spotType,
                                                     @RequestParam(defaultValue = "5") @Min(1) @Max(5) int limit,
                                                     @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
-        return ResponseEntity.ok(spotPort.searchSpot(search, spotType, limit, alreadySeenList));
+        try {
+            return ResponseEntity.ok(spotPort.searchSpot(search, spotType, limit, alreadySeenList));
+        } catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
     }
 
     @GetMapping("/{id}")
