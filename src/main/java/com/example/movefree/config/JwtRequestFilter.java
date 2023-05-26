@@ -1,6 +1,6 @@
 package com.example.movefree.config;
 
-import com.example.movefree.service.JwtUserDetailsService;
+import com.example.movefree.service.jwt.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -3,6 +3,8 @@ package com.example.movefree.service.spot;
 import com.example.movefree.database.spot.location.Location;
 import com.example.movefree.database.spot.location.LocationRepository;
 import com.example.movefree.database.spot.rating.Rating;
+import com.example.movefree.database.spot.rating.RatingDTO;
+import com.example.movefree.database.spot.rating.RatingMapper;
 import com.example.movefree.database.spot.rating.RatingRepository;
 import com.example.movefree.database.spot.spot.Spot;
 import com.example.movefree.database.spot.spot.SpotDTO;
@@ -23,7 +25,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,6 +39,8 @@ public class SpotService implements SpotPort {
     final LocationRepository locationRepository;
     final RatingRepository ratingRepository;
     final SpotTypeRepository spotTypeRepository;
+
+    final RatingMapper ratingMapper = new RatingMapper();
 
     final SpotDTOMapper spotDTOMapper = new SpotDTOMapper();
 
@@ -70,7 +76,7 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public Rating rateSpot(UUID id, RateSpotRequestBody rateSpotRequestBody, String name) throws IdNotFoundException {
+    public RatingDTO rateSpot(UUID id, RateSpotRequestBody rateSpotRequestBody, String name) throws IdNotFoundException {
         //Get User and Spot
         User userDTO = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
         Spot spotDTO = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
@@ -82,26 +88,31 @@ public class SpotService implements SpotPort {
         Rating savedRating = ratingRepository.save(rating);
         spotDTO.getRatings().add(savedRating);
         spotRepository.save(spotDTO);
-        return savedRating;
+        return ratingMapper.apply(savedRating);
     }
 
     @Override
-    public List<Rating> getSpotRatings(UUID spotId) throws IdNotFoundException {
+    public List<RatingDTO> getSpotRatings(UUID spotId) throws IdNotFoundException {
         Spot spot = spotRepository.findById(spotId).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
-        return spot.getRatings();
+        return spot.getRatings().stream().map(ratingMapper).toList();
     }
 
     @Override
-    public List<SpotDTO> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList) throws IdNotFoundException {
-        Pageable pageable = PageRequest.of(0, limit);
+    public Map<String, Object> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList) {
+        Pageable pageable = PageRequest.of(0, limit + 1);
         if (alreadySeenList.isEmpty()) alreadySeenList = List.of(UUID.randomUUID());
-        List<Spot> spotDTOList;
+        List<Spot> spotList;
         if (spotType.equals("")) {
-            spotDTOList = spotRepository.searchSpotNoSpotType(search, alreadySeenList, pageable);
+            spotList = spotRepository.searchSpotNoSpotType(search, alreadySeenList, pageable);
         }else {
-            spotDTOList = spotRepository.searchSpot(search, spotType, alreadySeenList, pageable);
+            spotList = spotRepository.searchSpot(search, spotType, alreadySeenList, pageable);
         }
-        return spotDTOList.stream().map(spotDTOMapper).toList();
+        Map<String, Object> map = new HashMap<>();
+        Boolean hasMore = spotList.size() > limit;
+        if (Boolean.TRUE.equals(hasMore)) spotList.remove(spotList.size() - 1);
+        map.put("spots", spotList.stream().map(spotDTOMapper).toList());
+        map.put("hasMore", hasMore);
+        return map;
     }
 
     @Override

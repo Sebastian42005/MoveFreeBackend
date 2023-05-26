@@ -51,7 +51,7 @@ public class User {
 
 
     @JsonManagedReference("user_spot")
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Spot> spots;
 
     @ManyToMany(mappedBy = "savedBy", fetch = FetchType.LAZY)

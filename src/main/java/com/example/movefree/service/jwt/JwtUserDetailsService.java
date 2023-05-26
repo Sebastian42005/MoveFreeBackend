@@ -1,4 +1,4 @@
-package com.example.movefree.service;
+package com.example.movefree.service.jwt;
 
 import com.example.movefree.database.company.company.Company;
 import com.example.movefree.database.company.company.CompanyRepository;
@@ -27,11 +27,11 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<com.example.movefree.database.user.User> user = userRepository.findByUsername(username);
+        Optional<JwtUser> user = userRepository.findUserDetailsByUsername(username);
         if (user.isPresent()) {
-            return User.withUsername(user.get().getUsername())
-                    .password(user.get().getPassword())
-                    .roles(user.get().getRole()).build();
+            return User.withUsername(user.get().username())
+                    .password(user.get().password())
+                    .roles(user.get().role()).build();
         } else {
             Optional<Company> company = companyRepository.findByName(username);
             if (company.isPresent()) {

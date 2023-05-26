@@ -1,6 +1,6 @@
 package com.example.movefree.controller.spot;
 
-import com.example.movefree.database.spot.rating.Rating;
+import com.example.movefree.database.spot.rating.RatingDTO;
 import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.port.spot.SpotPort;
@@ -21,6 +21,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Api(tags = "Spot")
@@ -40,10 +41,10 @@ public class SpotController {
      * 400 - Invalid input
      */
     @GetMapping("/all")
-    public ResponseEntity<List<SpotDTO>> searchSpot(@RequestParam(defaultValue = "") String search,
-                                                    @RequestParam(defaultValue = "") String spotType,
-                                                    @RequestParam(defaultValue = "5") @Min(1) @Max(5) int limit,
-                                                    @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
+    public ResponseEntity<Map<String, Object>> searchSpot(@RequestParam(defaultValue = "") String search,
+                                                          @RequestParam(defaultValue = "") String spotType,
+                                                          @RequestParam(defaultValue = "5") @Min(1) @Max(5) int limit,
+                                                          @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
         try {
             return ResponseEntity.ok(spotPort.searchSpot(search, spotType, limit, alreadySeenList));
         } catch (IdNotFoundException e) {
@@ -55,19 +56,6 @@ public class SpotController {
     public ResponseEntity<SpotDTO> getSpot(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok(spotPort.getSpot(id));
-        } catch (IdNotFoundException e) {
-            return e.getResponseEntity();
-        }
-    }
-
-    /**
-     * 200 - Success
-     * 404 - Spot not found
-     */
-    @GetMapping("{id}/ratings")
-    public ResponseEntity<List<Rating>> getRatings(@PathVariable UUID id) {
-        try {
-            return ResponseEntity.ok(spotPort.getSpotRatings(id));
         } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
@@ -90,10 +78,23 @@ public class SpotController {
     /**
      * 200 - Success
      * 404 - Spot not found
+     */
+    @GetMapping("{id}/ratings")
+    public ResponseEntity<List<RatingDTO>> getRatings(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(spotPort.getSpotRatings(id));
+        } catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
+    }
+
+    /**
+     * 200 - Success
+     * 404 - Spot not found
      * 404 - User not found
      */
     @PutMapping("/{id}/rate")
-    public ResponseEntity<Rating> rateSpot(@PathVariable UUID id, @RequestBody RateSpotRequestBody rateSpotRequestBody, Principal principal) {
+    public ResponseEntity<RatingDTO> rateSpot(@PathVariable UUID id, @RequestBody RateSpotRequestBody rateSpotRequestBody, Principal principal) {
         try {
             return ResponseEntity.ok(spotPort.rateSpot(id, rateSpotRequestBody, principal.getName()));
         } catch (IdNotFoundException e) {

@@ -19,7 +19,7 @@ import com.example.movefree.exception.UserAlreadyExistsException;
 import com.example.movefree.exception.WrongLoginCredentialsException;
 import com.example.movefree.port.authentication.AuthenticationPort;
 import com.example.movefree.role.Role;
-import com.example.movefree.service.JwtUserDetailsService;
+import com.example.movefree.service.jwt.JwtUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -47,14 +47,14 @@ public class AuthenticationService implements AuthenticationPort {
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) throws WrongLoginCredentialsException {
         final UserDetails userDetails = userDetailsService.verifyUser(authenticationRequest.getUsername(), ShaUtils.decode(authenticationRequest.getPassword()));
         final String token = tokenUtil.generateToken(userDetails);
-        final User user = userRepository.findByUsername(authenticationRequest.getUsername()).orElseThrow(WrongLoginCredentialsException::new);
-        return new AuthenticationResponse(token, user.getRole());
+        final String role = userRepository.findRoleByUsername(authenticationRequest.getUsername()).orElseThrow(WrongLoginCredentialsException::new);
+        return new AuthenticationResponse(token, role);
     }
 
     @Override
     public UserDTO register(RegisterRequest registerRequest) throws InvalidInputException, UserAlreadyExistsException {
         User user = new User();
-        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent())
+        if (userRepository.findDTOByUsername(registerRequest.getUsername()).isPresent())
             throw new UserAlreadyExistsException();
         if (!Pattern.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$", registerRequest.getEmail()))
             throw new InvalidInputException("Email is not valid");

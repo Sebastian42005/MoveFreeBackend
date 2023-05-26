@@ -1,7 +1,7 @@
 package com.example.movefree.controller.user;
 
-import com.example.movefree.database.spot.spot.SpotDTO;
 import com.example.movefree.database.user.UserDTO;
+import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidMultipartFileException;
 import com.example.movefree.port.user.UserPort;
@@ -20,6 +20,7 @@ import javax.validation.constraints.Max;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Api(tags = "User")
@@ -28,8 +29,11 @@ import java.util.UUID;
 public class UserController {
     final UserPort userPort;
 
-    public UserController(UserPort userPort) {
+    final UserRepository userRepository;
+
+    public UserController(UserPort userPort, UserRepository userRepository) {
         this.userPort = userPort;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -39,16 +43,17 @@ public class UserController {
     @GetMapping("/{username}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String username, Principal principal) {
         try {
-            return ResponseEntity.ok(userPort.getUser(username, principal));
+            UserDTO user = userPort.getUser(username, principal);
+            return ResponseEntity.ok(user);
         } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
     }
 
     @GetMapping("/{username}/spots")
-    public ResponseEntity<List<SpotDTO>> getUserSpots(@PathVariable String username,
-                                                      @RequestParam(defaultValue = "5") @Max(99) int limit,
-                                                      @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
+    public ResponseEntity<Map<String, Object>> getUserSpots(@PathVariable String username,
+                                                            @RequestParam(defaultValue = "5") @Max(99) int limit,
+                                                            @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
         return ResponseEntity.ok(userPort.getUserSpots(username, limit, alreadySeenList));
     }
 
@@ -102,8 +107,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/topUsers")
-    public ResponseEntity<List<String>> getTopUsers() {
+    @GetMapping("/top")
+    public ResponseEntity<List<Map<String, String>>> getTopUsers() {
         return ResponseEntity.ok(userPort.getTopUsers());
     }
 
@@ -118,5 +123,14 @@ public class UserController {
         } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
+    }
+
+    /**
+     * 200 - Success
+     * 404 - User not found
+     */
+    @GetMapping("/own/name")
+    public ResponseEntity<Map<String, String>> getUsername(Principal principal) {
+        return ResponseEntity.ok(Map.of("username", principal.getName()));
     }
 }
