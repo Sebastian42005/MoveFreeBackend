@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("SELECT spot FROM User user JOIN user.spots spot WHERE user.username = :username AND spot.id NOT IN(:alreadySeenList) ORDER BY spot.createdAt DESC")
     List<Spot> getUserSpots(String username, List<UUID> alreadySeenList, Pageable pageable);
 
-    @Query("SELECT new com.example.movefree.database.user.UserDTO(user.username, user.role, user.description, user.spots.size, user.follower.size, (user.follows.size + user.followCompanies.size))" +
+    @Query("SELECT new com.example.movefree.database.user.UserDTO(user.username, user.role, user.description, size(user.spots), size(user.follower), (size(user.follows) + size(user.followCompanies)))" +
             " FROM User user WHERE user.username = :username")
     Optional<UserDTO> findDTOByUsername(String username);
 
