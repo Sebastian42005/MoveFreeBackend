@@ -40,4 +40,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("SELECT follower.username FROM User user JOIN user.follower follower WHERE user.username = :username")
     List<String> getUserFollowers(String username);
+
+    @Query("SELECT spots FROM User user JOIN user.savedSpots spots WHERE user.username = :username AND spots.id NOT IN(:alreadySeenList)")
+    List<Spot> getUserSavedSpots(String username, List<UUID> alreadySeenList, Pageable pageable);
 }

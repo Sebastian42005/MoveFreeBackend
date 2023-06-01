@@ -21,4 +21,7 @@ public interface SpotRepository extends JpaRepository<Spot, UUID> {
             "OR lower(spot.description) LIKE lower(concat('%', :search,'%'))) " +
             "AND spot.id NOT IN(:alreadySeenList) ORDER BY function('RAND')")
     List<Spot> searchSpotNoSpotType(String search, List<UUID> alreadySeenList, Pageable pageable);
+
+    @Query("SELECT CASE WHEN COUNT(savedByUsers) > 0 THEN true ELSE false END FROM Spot spot JOIN spot.savedBy savedByUsers WHERE spot.id = :spotId AND :username = savedByUsers.username")
+    boolean isSaved(UUID spotId, String username);
 }

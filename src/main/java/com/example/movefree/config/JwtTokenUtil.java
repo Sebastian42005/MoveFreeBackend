@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Slf4j
 public class JwtTokenUtil {
 
-    public static final long JWT_TOKEN_VALIDITY = 18000; // 5 Stunden in Sekunden
+    public static final long JWT_TOKEN_VALIDITY = 432000; // 5 Tage in Sekunden
 
     @Value("${jwt.secret}")
     private String secret;

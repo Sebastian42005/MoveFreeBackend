@@ -51,6 +51,9 @@ public class SecurityConfig {
                     auth.antMatchers(HttpMethod.GET, "/api/company/**").permitAll();
                     auth.antMatchers("/api/company/**").hasRole(Role.COMPANY);
                     // Spot
+                    auth.antMatchers("/api/spot/{id}/save").hasRole(Role.USER);
+                    auth.antMatchers("/api/spot/{id}/rate").hasRole(Role.USER);
+                    auth.antMatchers("/api/spot/saved").hasRole(Role.USER);
                     auth.antMatchers(HttpMethod.POST, allSpots).hasRole(Role.USER);
                     auth.antMatchers(HttpMethod.PUT, allSpots).hasRole(Role.USER);
                     auth.antMatchers(allSpots).permitAll();

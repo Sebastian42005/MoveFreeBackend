@@ -1,5 +1,6 @@
 package com.example.movefree.service.spot;
 
+import com.example.movefree.database.spot.image.SpotPictureRepository;
 import com.example.movefree.database.spot.location.Location;
 import com.example.movefree.database.spot.location.LocationRepository;
 import com.example.movefree.database.spot.rating.Rating;
@@ -15,6 +16,7 @@ import com.example.movefree.database.spot.spottype.SpotTypeRepository;
 import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
+import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.port.spot.SpotPort;
 import com.example.movefree.request_body.PostSpotRequestBody;
@@ -23,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +38,7 @@ import java.util.UUID;
 public class SpotService implements SpotPort {
 
     final SpotRepository spotRepository;
+    final SpotPictureRepository spotPictureRepository;
     final UserRepository userRepository;
     final LocationRepository locationRepository;
     final RatingRepository ratingRepository;
@@ -45,8 +49,9 @@ public class SpotService implements SpotPort {
     final SpotDTOMapper spotDTOMapper = new SpotDTOMapper();
 
 
-    public SpotService(SpotRepository spotRepository, UserRepository userRepository, LocationRepository locationRepository, RatingRepository ratingRepository, SpotTypeRepository spotTypeRepository) {
+    public SpotService(SpotRepository spotRepository, SpotPictureRepository spotPictureRepository, UserRepository userRepository, LocationRepository locationRepository, RatingRepository ratingRepository, SpotTypeRepository spotTypeRepository) {
         this.spotRepository = spotRepository;
+        this.spotPictureRepository = spotPictureRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
         this.ratingRepository = ratingRepository;
@@ -104,19 +109,59 @@ public class SpotService implements SpotPort {
         List<Spot> spotList;
         if (spotType.equals("")) {
             spotList = spotRepository.searchSpotNoSpotType(search, alreadySeenList, pageable);
-        }else {
+        } else {
             spotList = spotRepository.searchSpot(search, spotType, alreadySeenList, pageable);
         }
-        Map<String, Object> map = new HashMap<>();
-        Boolean hasMore = spotList.size() > limit;
-        if (Boolean.TRUE.equals(hasMore)) spotList.remove(spotList.size() - 1);
-        map.put("spots", spotList.stream().map(spotDTOMapper).toList());
-        map.put("hasMore", hasMore);
-        return map;
+        return spotListToMap(spotList, limit);
     }
 
     @Override
     public SpotDTO getSpot(UUID id) throws IdNotFoundException {
         return spotDTOMapper.apply(spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT)));
+    }
+
+    @Override
+    public void deleteSpot(UUID id, Principal principal) throws IdNotFoundException, UserForbiddenException {
+        Spot spot = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
+        if (!spot.getUser().getUsername().equals(principal.getName())) throw new UserForbiddenException();
+        spotPictureRepository.deleteAll(spot.getPictures());
+        spotRepository.delete(spot);
+    }
+
+    @Override
+    public void saveSpot(UUID id, Principal principal) throws IdNotFoundException {
+        Spot spot = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
+        User user = userRepository.findByUsername(principal.getName()).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
+        if (user.getSavedSpots().stream().anyMatch(savedSpot -> savedSpot.getId().equals(id))) {
+            spot.getSavedBy().remove(user);
+            user.getSavedSpots().remove(spotRepository.save(spot));
+            userRepository.save(user);
+        } else {
+            spot.getSavedBy().add(user);
+            user.getSavedSpots().add(spotRepository.save(spot));
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public Map<String, Object> getSavedSpots(Principal principal, List<UUID> alreadySeenList, int limit) {
+        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(UUID.randomUUID());
+        Pageable pageable = PageRequest.of(0, limit + 1);
+        List<Spot> spots = userRepository.getUserSavedSpots(principal.getName(), alreadySeenList, pageable);
+        return spotListToMap(spots, limit);
+    }
+
+    @Override
+    public boolean isSaved(UUID id, Principal principal) {
+        return spotRepository.isSaved(id, principal.getName());
+    }
+
+    private Map<String, Object> spotListToMap(List<Spot> spots, int limit) {
+        Map<String, Object> map = new HashMap<>();
+        Boolean hasMore = spots.size() > limit;
+        if (Boolean.TRUE.equals(hasMore)) spots.remove(spots.size() - 1);
+        map.put("spots", spots.stream().map(spotDTOMapper).toList());
+        map.put("hasMore", hasMore);
+        return map;
     }
 }
