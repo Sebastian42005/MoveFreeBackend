@@ -31,13 +31,13 @@ public class JwtUserDetailsService implements UserDetailsService {
         if (user.isPresent()) {
             return User.withUsername(user.get().username())
                     .password(user.get().password())
-                    .roles(user.get().role()).build();
+                    .roles(user.get().role().getName()).build();
         } else {
             Optional<Company> company = companyRepository.findByName(username);
             if (company.isPresent()) {
                 return User.withUsername(company.get().getName())
                         .password(company.get().getPassword())
-                        .roles(Role.COMPANY).build();
+                        .roles(Role.COMPANY.getName()).build();
             }else {
                 throw new UsernameNotFoundException("User/Company not found with username: " + username);
             }
@@ -49,13 +49,13 @@ public class JwtUserDetailsService implements UserDetailsService {
         if (user.isPresent()) {
             return User.withUsername(user.get().getUsername())
                     .password(user.get().getPassword())
-                    .roles(user.get().getRole()).build();
+                    .roles(user.get().getRole().getName()).build();
         } else {
             Optional<Company> company = companyRepository.login(username, password);
             if (company.isPresent()) {
                 return User.withUsername(company.get().getName())
                         .password(company.get().getPassword())
-                        .roles(Role.COMPANY).build();
+                        .roles(Role.COMPANY.getName()).build();
             }else {
                 throw new WrongLoginCredentialsException();
             }

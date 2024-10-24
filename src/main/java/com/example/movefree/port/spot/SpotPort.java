@@ -10,25 +10,24 @@ import com.example.movefree.request_body.RateSpotRequestBody;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public interface SpotPort {
 
     SpotDTO postSpot(PostSpotRequestBody spot, String name) throws IdNotFoundException;
 
-    RatingDTO rateSpot(UUID id, RateSpotRequestBody rating, String name) throws IdNotFoundException;
+    RatingDTO rateSpot(Integer id, RateSpotRequestBody rating, String name) throws IdNotFoundException;
 
-    List<RatingDTO> getSpotRatings(UUID spotId) throws IdNotFoundException;
+    List<RatingDTO> getSpotRatings(Integer spotId) throws IdNotFoundException;
 
-    Map<String, Object> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList) throws IdNotFoundException;
+    Map<String, Object> searchSpot(String search, String spotType, int limit, List<Integer> alreadySeenList) throws IdNotFoundException;
 
-    SpotDTO getSpot(UUID id) throws IdNotFoundException;
+    SpotDTO getSpot(Integer id) throws IdNotFoundException;
 
-    void deleteSpot(UUID id, Principal principal) throws IdNotFoundException, UserForbiddenException;
+    void deleteSpot(Integer id, Principal principal) throws IdNotFoundException, UserForbiddenException;
 
-    void saveSpot(UUID id, Principal principal) throws IdNotFoundException;
+    void saveSpot(Integer id, Principal principal) throws IdNotFoundException;
 
-    Map<String, Object> getSavedSpots(Principal principal, List<UUID> alreadySeenList, int limit);
+    Map<String, Object> getSavedSpots(Principal principal, List<Integer> alreadySeenList, int limit);
 
-    boolean isSaved(UUID id, Principal principal);
+    boolean isSaved(Integer id, Principal principal);
 }

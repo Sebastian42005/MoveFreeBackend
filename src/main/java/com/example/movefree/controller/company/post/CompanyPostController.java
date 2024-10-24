@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 @Api(tags = "Company Post Controller")
 @RestController
@@ -51,7 +50,7 @@ public class CompanyPostController {
      * 404 - Picture not found
      */
     @GetMapping("/picture/{id}")
-    public ResponseEntity<byte[]> getPicture(@PathVariable("id") UUID id) {
+    public ResponseEntity<byte[]> getPicture(@PathVariable("id") Integer id) {
         try {
             Picture picture = companyPort.getPicture(id);
             return ResponseEntity.ok()

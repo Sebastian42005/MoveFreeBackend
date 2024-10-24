@@ -8,9 +8,8 @@ import com.example.movefree.portclass.Picture;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface SpotPicturePort {
-    Picture getPicture(UUID id) throws IdNotFoundException;
-    SpotDTO uploadPicture(UUID id, List<MultipartFile> images, String name) throws UserForbiddenException, IdNotFoundException, PictureOverflowException;
+    Picture getPicture(Integer id) throws IdNotFoundException;
+    SpotDTO uploadPicture(Integer id, List<MultipartFile> images, String name) throws UserForbiddenException, IdNotFoundException, PictureOverflowException;
 }

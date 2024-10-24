@@ -1,6 +1,9 @@
 package com.example.movefree.config;
 
+import com.example.movefree.database.user.User;
+import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.role.Role;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,16 +18,27 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @ComponentScan("com.example.movefree")
 public class SecurityConfig {
 
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final JwtRequestFilter jwtRequestFilter;
+    private final UserRepository userRepository;
 
-    public SecurityConfig(CustomAuthenticationEntryPoint authenticationEntryPoint, JwtRequestFilter jwtRequestFilter) {
-        this.authenticationEntryPoint = authenticationEntryPoint;
-        this.jwtRequestFilter = jwtRequestFilter;
+    @Bean
+    public User setUpAdminUser() {
+        return userRepository.findByUsername("administrator").orElseGet(() ->
+                userRepository.save(
+                        User.builder()
+                                .email("administrator@gmail.com")
+                                .description("Admin of the Application")
+                                .username("administrator")
+                                .password(ShaUtils.decode("tollesadminpasswort"))
+                                .role(Role.ADMIN)
+                                .build()));
     }
+
 
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
@@ -38,28 +52,26 @@ public class SecurityConfig {
                 .cors().and().csrf().disable()
                 .authorizeRequests(auth -> {
                     //Spot Types
-                    auth.antMatchers(HttpMethod.POST, "/api/spot/type/**").hasRole(Role.ADMIN);
-                    auth.antMatchers(HttpMethod.DELETE, "/api/spot/type/**").hasRole(Role.ADMIN);
+                    auth.antMatchers(HttpMethod.POST, "/api/spot/type/**").hasRole(Role.ADMIN.getName());
+                    auth.antMatchers(HttpMethod.DELETE, "/api/spot/type/**").hasRole(Role.ADMIN.getName());
                     auth.antMatchers(HttpMethod.GET, "/api/spot/type").permitAll();
                     //Authentication
                     auth.antMatchers("/api/authentication/**").permitAll();
                     //Only for Admins
-                    auth.antMatchers("/api/admin/**").hasRole(Role.ADMIN);
+                    auth.antMatchers("/api/admin/**").hasRole(Role.ADMIN.getName());
                     //User -> Company
-                    auth.antMatchers("/api/company/request").hasRole(Role.USER);
+                    auth.antMatchers("/api/company/request").hasRole(Role.USER.getName());
                     //Only for Companies
                     auth.antMatchers(HttpMethod.GET, "/api/company/**").permitAll();
-                    auth.antMatchers("/api/company/**").hasRole(Role.COMPANY);
+                    auth.antMatchers("/api/company/**").hasRole(Role.COMPANY.getName());
                     // Spot
-                    auth.antMatchers("/api/spot/{id}/save").hasRole(Role.USER);
-                    auth.antMatchers("/api/spot/{id}/rate").hasRole(Role.USER);
-                    auth.antMatchers("/api/spot/saved").hasRole(Role.USER);
-                    auth.antMatchers(HttpMethod.POST, allSpots).hasRole(Role.USER);
-                    auth.antMatchers(HttpMethod.PUT, allSpots).hasRole(Role.USER);
+                    auth.antMatchers("/api/spot/saved").authenticated();
+                    auth.antMatchers(HttpMethod.POST, allSpots).authenticated();
+                    auth.antMatchers(HttpMethod.PUT, allSpots).authenticated();
                     auth.antMatchers(allSpots).permitAll();
-                    //Get Own profile as user
-                    auth.antMatchers("/api/user/own/*").hasRole(Role.USER);
-                    auth.antMatchers("/api/user/own").hasAnyRole(Role.USER, Role.COMPANY, Role.ADMIN);
+                    //Get Own profile as
+                    auth.antMatchers("/api/user/own/*").authenticated();
+                    auth.antMatchers("/api/user/own").authenticated();
                     //Request to get User
                     auth.antMatchers("/api/user/**").permitAll();
                     //Swagger

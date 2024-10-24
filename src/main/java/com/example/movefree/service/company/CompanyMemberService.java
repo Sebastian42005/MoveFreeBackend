@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.UUID;
 
 @Service
 public class CompanyMemberService implements CompanyMemberPort {
@@ -45,7 +44,7 @@ public class CompanyMemberService implements CompanyMemberPort {
     }
 
     @Override
-    public Picture setProfilePicture(UUID id, MultipartFile image, Principal principal) throws UserForbiddenException, IdNotFoundException, IOException {
+    public Picture setProfilePicture(Integer id, MultipartFile image, Principal principal) throws UserForbiddenException, IdNotFoundException, IOException {
         checkForAuthorization(principal.getName(), id);
         CompanyMember companyMemberDTO = getCompanyMember(id);
         companyMemberDTO.setProfilePicture(image.getBytes());
@@ -55,13 +54,13 @@ public class CompanyMemberService implements CompanyMemberPort {
     }
 
     @Override
-    public Picture getProfilePicture(UUID id) throws IdNotFoundException {
+    public Picture getProfilePicture(Integer id) throws IdNotFoundException {
         CompanyMember companyMember = getCompanyMember(id);
         if (companyMember.getProfilePicture() == null) return ImageReader.getProfilePicture();
         return new Picture(MediaType.valueOf(companyMember.getContentType()), companyMember.getProfilePicture());
     }
 
-    private void checkForAuthorization(String username, UUID memberId) throws UserForbiddenException, IdNotFoundException {
+    private void checkForAuthorization(String username, Integer memberId) throws UserForbiddenException, IdNotFoundException {
         Company company = getCompany(username);
         if (company.getMembers().stream().noneMatch(member -> member.getId() == memberId)) throw new UserForbiddenException();
     }
@@ -70,7 +69,7 @@ public class CompanyMemberService implements CompanyMemberPort {
         return companyRepository.findByName(name).orElseThrow(IdNotFoundException.get(NotFoundType.COMPANY));
     }
 
-    private CompanyMember getCompanyMember(UUID id) throws IdNotFoundException {
+    private CompanyMember getCompanyMember(Integer id) throws IdNotFoundException {
         return memberRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.MEMBER));
     }
 }

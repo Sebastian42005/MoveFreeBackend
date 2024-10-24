@@ -27,12 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class SpotService implements SpotPort {
@@ -81,7 +76,7 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public RatingDTO rateSpot(UUID id, RateSpotRequestBody rateSpotRequestBody, String name) throws IdNotFoundException {
+    public RatingDTO rateSpot(Integer id, RateSpotRequestBody rateSpotRequestBody, String name) throws IdNotFoundException {
         //Get User and Spot
         User userDTO = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
         Spot spotDTO = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
@@ -97,15 +92,15 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public List<RatingDTO> getSpotRatings(UUID spotId) throws IdNotFoundException {
+    public List<RatingDTO> getSpotRatings(Integer spotId) throws IdNotFoundException {
         Spot spot = spotRepository.findById(spotId).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         return spot.getRatings().stream().map(ratingMapper).toList();
     }
 
     @Override
-    public Map<String, Object> searchSpot(String search, String spotType, int limit, List<UUID> alreadySeenList) {
+    public Map<String, Object> searchSpot(String search, String spotType, int limit, List<Integer> alreadySeenList) {
         Pageable pageable = PageRequest.of(0, limit + 1);
-        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(UUID.randomUUID());
+        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(0);
         List<Spot> spotList;
         if (spotType.equals("")) {
             spotList = spotRepository.searchSpotNoSpotType(search, alreadySeenList, pageable);
@@ -116,12 +111,12 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public SpotDTO getSpot(UUID id) throws IdNotFoundException {
+    public SpotDTO getSpot(Integer id) throws IdNotFoundException {
         return spotDTOMapper.apply(spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT)));
     }
 
     @Override
-    public void deleteSpot(UUID id, Principal principal) throws IdNotFoundException, UserForbiddenException {
+    public void deleteSpot(Integer id, Principal principal) throws IdNotFoundException, UserForbiddenException {
         Spot spot = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         if (!spot.getUser().getUsername().equals(principal.getName())) throw new UserForbiddenException();
         spotPictureRepository.deleteAll(spot.getPictures());
@@ -129,7 +124,7 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public void saveSpot(UUID id, Principal principal) throws IdNotFoundException {
+    public void saveSpot(Integer id, Principal principal) throws IdNotFoundException {
         Spot spot = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         User user = userRepository.findByUsername(principal.getName()).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
         if (user.getSavedSpots().stream().anyMatch(savedSpot -> savedSpot.getId().equals(id))) {
@@ -144,15 +139,15 @@ public class SpotService implements SpotPort {
     }
 
     @Override
-    public Map<String, Object> getSavedSpots(Principal principal, List<UUID> alreadySeenList, int limit) {
-        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(UUID.randomUUID());
+    public Map<String, Object> getSavedSpots(Principal principal, List<Integer> alreadySeenList, int limit) {
+        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(0);
         Pageable pageable = PageRequest.of(0, limit + 1);
         List<Spot> spots = userRepository.getUserSavedSpots(principal.getName(), alreadySeenList, pageable);
         return spotListToMap(spots, limit);
     }
 
     @Override
-    public boolean isSaved(UUID id, Principal principal) {
+    public boolean isSaved(Integer id, Principal principal) {
         return spotRepository.isSaved(id, principal.getName());
     }
 

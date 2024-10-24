@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CompanyService implements CompanyPort {
@@ -72,7 +71,7 @@ public class CompanyService implements CompanyPort {
     }
 
     @Override
-    public Picture getPicture(UUID id) throws IdNotFoundException {
+    public Picture getPicture(Integer id) throws IdNotFoundException {
         CompanyPostPicture companyPostPicture = companyPostPictureRepository.findById(id).orElseThrow(() -> new IdNotFoundException(NotFoundType.PICTURE));
         return new Picture(MediaType.valueOf(companyPostPicture.getContentType()), companyPostPicture.getContent());
     }

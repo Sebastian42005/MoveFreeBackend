@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class UserService implements UserPort {
@@ -110,9 +109,9 @@ public class UserService implements UserPort {
     }
 
     @Override
-    public Map<String, Object> getUserSpots(String username, int limit, List<UUID> alreadySeenList) {
+    public Map<String, Object> getUserSpots(String username, int limit, List<Integer> alreadySeenList) {
         Pageable pageable = PageRequest.of(0, limit + 1);
-        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(UUID.randomUUID());
+        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(0);
         List<SpotDTO> spotDTOList = new ArrayList<>(userRepository.getUserSpots(username, alreadySeenList, pageable).stream().map(spotDTOMapper).toList());
         Map<String, Object> map = new HashMap<>();
         Boolean hasMore = spotDTOList.size() > limit;

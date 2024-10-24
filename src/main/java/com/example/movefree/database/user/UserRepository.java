@@ -9,9 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT username FROM users u WHERE lower(u.username) LIKE lower(concat('%', :search,'%')) LIMIT :max", nativeQuery = true)
     List<String> search(String search, int max);
@@ -21,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> login(String username, String password);
 
     @Query("SELECT spot FROM User user JOIN user.spots spot WHERE user.username = :username AND spot.id NOT IN(:alreadySeenList) ORDER BY spot.createdAt DESC")
-    List<Spot> getUserSpots(String username, List<UUID> alreadySeenList, Pageable pageable);
+    List<Spot> getUserSpots(String username, List<Integer> alreadySeenList, Pageable pageable);
 
     @Query("SELECT new com.example.movefree.database.user.UserDTO(user.username, user.role, user.description, size(user.spots), size(user.follower), (size(user.follows) + size(user.followCompanies)))" +
             " FROM User user WHERE user.username = :username")
@@ -42,5 +41,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     List<String> getUserFollowers(String username);
 
     @Query("SELECT spots FROM User user JOIN user.savedSpots spots WHERE user.username = :username AND spots.id NOT IN(:alreadySeenList)")
-    List<Spot> getUserSavedSpots(String username, List<UUID> alreadySeenList, Pageable pageable);
+    List<Spot> getUserSavedSpots(String username, List<Integer> alreadySeenList, Pageable pageable);
 }

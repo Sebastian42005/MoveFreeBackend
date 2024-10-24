@@ -16,7 +16,6 @@ import com.example.movefree.port.company.CompanyMemberRolePort;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.UUID;
 
 @Service
 public class CompanyMemberRoleService implements CompanyMemberRolePort {
@@ -50,7 +49,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
     }
 
     @Override
-    public void addRoleToMember(UUID id, UUID memberId, Principal principal) throws IdNotFoundException, MemberAlreadyHasRoleException {
+    public void addRoleToMember(Integer id, Integer memberId, Principal principal) throws IdNotFoundException, MemberAlreadyHasRoleException {
         // check
         checkForAuthorization(principal.getName(), id, memberId);
         CompanyMemberRole role = findRoleById(id);
@@ -67,7 +66,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
     }
 
     @Override
-    public void deleteRole(UUID id, Principal principal) throws IdNotFoundException {
+    public void deleteRole(Integer id, Principal principal) throws IdNotFoundException {
         // check
         checkForRoleAuthorization(principal.getName(), id);
 
@@ -76,7 +75,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
     }
 
     @Override
-    public void removeMemberRole(UUID id, UUID memberId, Principal principal) throws IdNotFoundException {
+    public void removeMemberRole(Integer id, Integer memberId, Principal principal) throws IdNotFoundException {
         //check
         checkForAuthorization(principal.getName(), id, memberId);
 
@@ -92,13 +91,13 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
         memberRepository.save(member);
     }
 
-    private void checkForAuthorization(String name, UUID roleId, UUID memberId) throws IdNotFoundException {
+    private void checkForAuthorization(String name, Integer roleId, Integer memberId) throws IdNotFoundException {
         Company company = findCompany(name);
         if (company.getMemberRoles().stream().noneMatch(role -> role.getId() == roleId)) throw new IdNotFoundException(NotFoundType.ROLE);
         if (company.getMembers().stream().noneMatch(member -> member.getId() == memberId)) throw new IdNotFoundException(NotFoundType.MEMBER);
     }
 
-    private void checkForRoleAuthorization(String name, UUID roleId) throws IdNotFoundException {
+    private void checkForRoleAuthorization(String name, Integer roleId) throws IdNotFoundException {
         Company company = findCompany(name);
         if (company.getMemberRoles().stream().noneMatch(role -> role.getId() == roleId)) throw new IdNotFoundException(NotFoundType.ROLE);
     }
@@ -107,11 +106,11 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
         return companyRepository.findByName(name).orElseThrow(IdNotFoundException.get(NotFoundType.COMPANY));
     }
 
-    private CompanyMember findMemberById(UUID id) throws IdNotFoundException {
+    private CompanyMember findMemberById(Integer id) throws IdNotFoundException {
         return memberRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.MEMBER));
     }
 
-    private CompanyMemberRole findRoleById(UUID id) throws IdNotFoundException {
+    private CompanyMemberRole findRoleById(Integer id) throws IdNotFoundException {
         return roleRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.MEMBER));
     }
 }

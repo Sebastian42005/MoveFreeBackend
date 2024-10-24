@@ -8,12 +8,7 @@ import com.example.movefree.port.user.UserPort;
 import com.example.movefree.portclass.Picture;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Max;
@@ -21,7 +16,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Api(tags = "User")
 @RestController
@@ -53,7 +47,7 @@ public class UserController {
     @GetMapping("/{username}/spots")
     public ResponseEntity<Map<String, Object>> getUserSpots(@PathVariable String username,
                                                             @RequestParam(defaultValue = "5") @Max(99) int limit,
-                                                            @RequestParam(defaultValue = "") List<UUID> alreadySeenList) {
+                                                            @RequestParam(defaultValue = "") List<Integer> alreadySeenList) {
         return ResponseEntity.ok(userPort.getUserSpots(username, limit, alreadySeenList));
     }
 

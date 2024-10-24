@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -37,13 +36,13 @@ public class SpotPictureService implements SpotPicturePort {
     }
 
     @Override
-    public Picture getPicture(UUID id) throws IdNotFoundException {
+    public Picture getPicture(Integer id) throws IdNotFoundException {
         SpotPicture spotPicture = findPicture(id);
         return new Picture(MediaType.valueOf(spotPicture.getContentType()), spotPicture.getPicture());
     }
 
     @Override
-    public SpotDTO uploadPicture(UUID id, List<MultipartFile> images, String name) throws PictureOverflowException, IdNotFoundException, UserForbiddenException {
+    public SpotDTO uploadPicture(Integer id, List<MultipartFile> images, String name) throws PictureOverflowException, IdNotFoundException, UserForbiddenException {
         Spot spot = getSpot(id, name);
         if (spot.getPictures().size() + images.size() > 10) throw new PictureOverflowException();
         for (MultipartFile image : images) {
@@ -60,10 +59,10 @@ public class SpotPictureService implements SpotPicturePort {
         return spotDTOMapper.apply(spotRepository.save(spot));
     }
 
-    private SpotPicture findPicture(UUID id) throws IdNotFoundException{
+    private SpotPicture findPicture(Integer id) throws IdNotFoundException{
         return spotPictureRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.PICTURE));
     }
-    private Spot getSpot(UUID id, String username) throws IdNotFoundException, UserForbiddenException {
+    private Spot getSpot(Integer id, String username) throws IdNotFoundException, UserForbiddenException {
         Spot spotDTO = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         if (!spotDTO.getUser().getUsername().equals(username)) throw new UserForbiddenException();
         return spotDTO;

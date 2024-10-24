@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 @Api(tags = "Spot Pictures")
 @RestController
@@ -39,7 +38,7 @@ public class SpotPictureController {
      * 413 - Too many pictures uploaded
      */
     @PutMapping("/{id}/images")
-    public ResponseEntity<SpotDTO> uploadPictures(@PathVariable UUID id, @RequestParam("images") List<MultipartFile> images, Principal principal) {
+    public ResponseEntity<SpotDTO> uploadPictures(@PathVariable Integer id, @RequestParam("images") List<MultipartFile> images, Principal principal) {
         try {
             return ResponseEntity.ok(spotPicturePort.uploadPicture(id, images, principal.getName()));
         }catch (IdNotFoundException | UserForbiddenException | PictureOverflowException e) {
@@ -52,7 +51,7 @@ public class SpotPictureController {
      * 404 - Spot not found
      */
     @GetMapping("/images/{id}")
-    public ResponseEntity<byte[]> getPicture(@PathVariable UUID id) {
+    public ResponseEntity<byte[]> getPicture(@PathVariable Integer id) {
         try {
             Picture picture = spotPicturePort.getPicture(id);
             return ResponseEntity.ok()

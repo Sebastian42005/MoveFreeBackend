@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public interface UserPort {
 
@@ -28,5 +27,5 @@ public interface UserPort {
 
     List<Map<String, String>> getTopUsers();
 
-    Map<String, Object> getUserSpots(String username, int limit, List<UUID> alreadySeenList);
+    Map<String, Object> getUserSpots(String username, int limit, List<Integer> alreadySeenList);
 }
