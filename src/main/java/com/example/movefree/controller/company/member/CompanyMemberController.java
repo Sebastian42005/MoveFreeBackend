@@ -3,11 +3,12 @@ package com.example.movefree.controller.company.member;
 import com.example.movefree.database.company.member.member.CompanyMemberDTO;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.UserForbiddenException;
-import com.example.movefree.port.company.CompanyMemberPort;
 import com.example.movefree.portclass.Picture;
+import com.example.movefree.service.company.CompanyMemberService;
 import io.swagger.annotations.Api;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +26,12 @@ import java.security.Principal;
 
 @Api(tags = "Company Member")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/company/members")
 public class CompanyMemberController {
 
-    final CompanyMemberPort memberPort;
-
-    public CompanyMemberController(CompanyMemberPort memberPort) {
-        this.memberPort = memberPort;
-    }
-
+    final CompanyMemberService companyMemberService;
+    
     @NoArgsConstructor
     @Getter
     private static class CompanyMemberRequest {String name;}
@@ -45,7 +43,7 @@ public class CompanyMemberController {
     @PostMapping("/create")
     public ResponseEntity<CompanyMemberDTO> createMember(@RequestBody CompanyMemberRequest companyMemberRequest, Principal principal) {
         try {
-            return ResponseEntity.ok(memberPort.createMember(companyMemberRequest.name, principal));
+            return ResponseEntity.ok(companyMemberService.createMember(companyMemberRequest.name, principal));
         } catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
@@ -58,7 +56,7 @@ public class CompanyMemberController {
     @PutMapping("/{id}/profile")
     public ResponseEntity<byte[]> setProfilePicture(@PathVariable Integer id, @RequestParam("image") MultipartFile image, Principal principal) {
         try {
-            Picture picture = memberPort.setProfilePicture(id, image, principal);
+            Picture picture = companyMemberService.setProfilePicture(id, image, principal);
             return ResponseEntity.ok()
                     .contentType(picture.contentType())
                     .body(picture.content());
@@ -74,9 +72,10 @@ public class CompanyMemberController {
      * 404 - Member not found
      */
     @GetMapping("/{id}/profile")
-    public ResponseEntity<byte[]> getProfilePicture(@PathVariable Integer id) {
+    public ResponseEntity<byte[]> getProfilePicture(@PathVariable Integer id,
+                                                    @RequestParam(defaultValue = "false") boolean dark) {
         try {
-            Picture picture = memberPort.getProfilePicture(id);
+            Picture picture = companyMemberService.getProfilePicture(id, dark);
             return ResponseEntity.ok()
                     .contentType(picture.contentType())
                     .body(picture.content());

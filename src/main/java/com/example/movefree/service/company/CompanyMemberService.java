@@ -10,7 +10,6 @@ import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.file.ImageReader;
-import com.example.movefree.port.company.CompanyMemberPort;
 import com.example.movefree.portclass.Picture;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.security.Principal;
 
 @Service
-public class CompanyMemberService implements CompanyMemberPort {
+public class CompanyMemberService {
 
     final CompanyRepository companyRepository;
     final CompanyMemberRepository memberRepository;
@@ -32,7 +31,7 @@ public class CompanyMemberService implements CompanyMemberPort {
         this.memberRepository = memberRepository;
     }
 
-    @Override
+    
     public CompanyMemberDTO createMember(String member, Principal principal) throws IdNotFoundException {
         CompanyMember companyMember = new CompanyMember();
         companyMember.setName(member);
@@ -43,7 +42,7 @@ public class CompanyMemberService implements CompanyMemberPort {
         return companyMemberDTOMapper.apply(savedMember);
     }
 
-    @Override
+    
     public Picture setProfilePicture(Integer id, MultipartFile image, Principal principal) throws UserForbiddenException, IdNotFoundException, IOException {
         checkForAuthorization(principal.getName(), id);
         CompanyMember companyMemberDTO = getCompanyMember(id);
@@ -53,10 +52,10 @@ public class CompanyMemberService implements CompanyMemberPort {
         return new Picture(MediaType.valueOf(companyMemberDTO.getContentType()), companyMemberDTO.getProfilePicture());
     }
 
-    @Override
-    public Picture getProfilePicture(Integer id) throws IdNotFoundException {
+    
+    public Picture getProfilePicture(Integer id, boolean dark) throws IdNotFoundException {
         CompanyMember companyMember = getCompanyMember(id);
-        if (companyMember.getProfilePicture() == null) return ImageReader.getProfilePicture();
+        if (companyMember.getProfilePicture() == null) return ImageReader.getProfilePicture(dark);
         return new Picture(MediaType.valueOf(companyMember.getContentType()), companyMember.getProfilePicture());
     }
 

@@ -21,9 +21,13 @@ public class ImageReader {
         return StreamUtils.copyToByteArray(inputStream);
     }
 
-    public static Picture getProfilePicture() {
+    public static Picture getProfilePicture(boolean dark) {
         try {
-            return new Picture(MediaType.IMAGE_PNG, readImageBytes("images/profile.png"));
+            if (dark) {
+                return new Picture(MediaType.IMAGE_PNG, readImageBytes("images/profile.png"));
+            } else {
+                return new Picture(MediaType.IMAGE_PNG, readImageBytes("images/profile_dark.png"));
+            }
         }catch (IOException exception) {
             log.error("IOException: " + exception.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);

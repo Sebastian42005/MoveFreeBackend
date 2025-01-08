@@ -2,8 +2,8 @@ package com.example.movefree.controller.company.post;
 
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidMultipartFileException;
-import com.example.movefree.port.company.CompanyPort;
 import com.example.movefree.portclass.Picture;
+import com.example.movefree.service.company.CompanyService;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +22,10 @@ import java.util.List;
 @RequestMapping("/api/company/post")
 public class CompanyPostController {
 
-    final CompanyPort companyPort;
+    final CompanyService companyService;
 
-    public CompanyPostController(CompanyPort companyPort) {
-        this.companyPort = companyPort;
+    public CompanyPostController(CompanyService companyService) {
+        this.companyService = companyService;
     }
 
     /**
@@ -38,7 +38,7 @@ public class CompanyPostController {
     public ResponseEntity<String> createCompanyPost(@RequestParam("description") String description,
                                                     @RequestParam("images") List<MultipartFile> images, Principal principal) {
         try {
-            companyPort.uploadPost(principal, images, description);
+            companyService.uploadPost(principal, images, description);
             return ResponseEntity.ok("Success");
         } catch (InvalidMultipartFileException | IdNotFoundException e) {
             return e.getResponseEntityWithMessage();
@@ -52,7 +52,7 @@ public class CompanyPostController {
     @GetMapping("/picture/{id}")
     public ResponseEntity<byte[]> getPicture(@PathVariable("id") Integer id) {
         try {
-            Picture picture = companyPort.getPicture(id);
+            Picture picture = companyService.getPicture(id);
             return ResponseEntity.ok()
                     .contentType(picture.contentType())
                     .body(picture.content());

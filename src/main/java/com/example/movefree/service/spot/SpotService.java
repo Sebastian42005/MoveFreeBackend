@@ -18,7 +18,6 @@ import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.exception.enums.NotFoundType;
-import com.example.movefree.port.spot.SpotPort;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
 import org.springframework.data.domain.PageRequest;
@@ -27,10 +26,14 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
-public class SpotService implements SpotPort {
+public class SpotService {
 
     final SpotRepository spotRepository;
     final SpotPictureRepository spotPictureRepository;
@@ -53,7 +56,7 @@ public class SpotService implements SpotPort {
         this.spotTypeRepository = spotTypeRepository;
     }
 
-    @Override
+    
     public SpotDTO postSpot(PostSpotRequestBody postSpotRequestBody, String name) throws IdNotFoundException {
         //find User
         User user = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
@@ -75,7 +78,7 @@ public class SpotService implements SpotPort {
         return spotDTOMapper.apply(spotRepository.save(spot));
     }
 
-    @Override
+    
     public RatingDTO rateSpot(Integer id, RateSpotRequestBody rateSpotRequestBody, String name) throws IdNotFoundException {
         //Get User and Spot
         User userDTO = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
@@ -91,13 +94,13 @@ public class SpotService implements SpotPort {
         return ratingMapper.apply(savedRating);
     }
 
-    @Override
+    
     public List<RatingDTO> getSpotRatings(Integer spotId) throws IdNotFoundException {
         Spot spot = spotRepository.findById(spotId).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         return spot.getRatings().stream().map(ratingMapper).toList();
     }
 
-    @Override
+    
     public Map<String, Object> searchSpot(String search, String spotType, int limit, List<Integer> alreadySeenList) {
         Pageable pageable = PageRequest.of(0, limit + 1);
         if (alreadySeenList.isEmpty()) alreadySeenList = List.of(0);
@@ -110,12 +113,12 @@ public class SpotService implements SpotPort {
         return spotListToMap(spotList, limit);
     }
 
-    @Override
+    
     public SpotDTO getSpot(Integer id) throws IdNotFoundException {
         return spotDTOMapper.apply(spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT)));
     }
 
-    @Override
+    
     public void deleteSpot(Integer id, Principal principal) throws IdNotFoundException, UserForbiddenException {
         Spot spot = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         if (!spot.getUser().getUsername().equals(principal.getName())) throw new UserForbiddenException();
@@ -123,7 +126,7 @@ public class SpotService implements SpotPort {
         spotRepository.delete(spot);
     }
 
-    @Override
+    
     public void saveSpot(Integer id, Principal principal) throws IdNotFoundException {
         Spot spot = spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         User user = userRepository.findByUsername(principal.getName()).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
@@ -138,7 +141,7 @@ public class SpotService implements SpotPort {
         }
     }
 
-    @Override
+    
     public Map<String, Object> getSavedSpots(Principal principal, List<Integer> alreadySeenList, int limit) {
         if (alreadySeenList.isEmpty()) alreadySeenList = List.of(0);
         Pageable pageable = PageRequest.of(0, limit + 1);
@@ -146,7 +149,7 @@ public class SpotService implements SpotPort {
         return spotListToMap(spots, limit);
     }
 
-    @Override
+    
     public boolean isSaved(Integer id, Principal principal) {
         return spotRepository.isSaved(id, principal.getName());
     }

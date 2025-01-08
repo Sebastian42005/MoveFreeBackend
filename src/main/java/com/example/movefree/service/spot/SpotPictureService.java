@@ -10,7 +10,6 @@ import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.PictureOverflowException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.exception.enums.NotFoundType;
-import com.example.movefree.port.spot.SpotPicturePort;
 import com.example.movefree.portclass.Picture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -22,7 +21,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class SpotPictureService implements SpotPicturePort {
+public class SpotPictureService {
 
     final SpotPictureRepository spotPictureRepository;
 
@@ -35,13 +34,13 @@ public class SpotPictureService implements SpotPicturePort {
         this.spotRepository = spotRepository;
     }
 
-    @Override
+    
     public Picture getPicture(Integer id) throws IdNotFoundException {
         SpotPicture spotPicture = findPicture(id);
         return new Picture(MediaType.valueOf(spotPicture.getContentType()), spotPicture.getPicture());
     }
 
-    @Override
+    
     public SpotDTO uploadPicture(Integer id, List<MultipartFile> images, String name) throws PictureOverflowException, IdNotFoundException, UserForbiddenException {
         Spot spot = getSpot(id, name);
         if (spot.getPictures().size() + images.size() > 10) throw new PictureOverflowException();

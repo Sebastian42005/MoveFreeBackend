@@ -28,7 +28,7 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private String description;
+    private String description = "";
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -51,7 +51,9 @@ public class User {
     @JsonIgnore
     private List<Spot> savedSpots = new ArrayList<>();
 
+    @JsonIgnore
     private byte[] profilePicture;
+    @JsonIgnore
     private String contentType;
 
     @JsonManagedReference("user_ratings")

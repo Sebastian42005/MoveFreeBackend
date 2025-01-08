@@ -5,6 +5,7 @@ import com.example.movefree.config.ShaUtils;
 import com.example.movefree.database.authentication.AuthenticationRequest;
 import com.example.movefree.database.authentication.AuthenticationResponse;
 import com.example.movefree.database.authentication.RegisterRequest;
+import com.example.movefree.database.authentication.VerifyDto;
 import com.example.movefree.database.company.company.Company;
 import com.example.movefree.database.company.company.CompanyDTO;
 import com.example.movefree.database.company.company.CompanyDTOMapper;
@@ -17,16 +18,19 @@ import com.example.movefree.exception.CompanyAlreadyExistsException;
 import com.example.movefree.exception.InvalidInputException;
 import com.example.movefree.exception.UserAlreadyExistsException;
 import com.example.movefree.exception.WrongLoginCredentialsException;
-import com.example.movefree.port.authentication.AuthenticationPort;
 import com.example.movefree.role.Role;
 import com.example.movefree.service.jwt.JwtUserDetailsService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
-public class AuthenticationService implements AuthenticationPort {
+public class AuthenticationService {
 
     //Repositories
     final JwtTokenUtil tokenUtil;
@@ -43,15 +47,15 @@ public class AuthenticationService implements AuthenticationPort {
         this.companyRepository = companyRepository;
     }
 
-    @Override
+    
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) throws WrongLoginCredentialsException {
         final UserDetails userDetails = userDetailsService.verifyUser(authenticationRequest.getUsername(), ShaUtils.decode(authenticationRequest.getPassword()));
         final String token = tokenUtil.generateToken(userDetails);
-        final String role = userRepository.findRoleByUsername(authenticationRequest.getUsername()).orElseThrow(WrongLoginCredentialsException::new);
-        return new AuthenticationResponse(token, role);
+        final User user = userRepository.findByUsername(authenticationRequest.getUsername()).orElseThrow(WrongLoginCredentialsException::new);
+        return new AuthenticationResponse(token, userDTOMapper.apply(user));
     }
 
-    @Override
+    
     public UserDTO register(RegisterRequest registerRequest) throws InvalidInputException, UserAlreadyExistsException {
         User user = new User();
         if (userRepository.findDTOByUsername(registerRequest.getUsername()).isPresent())
@@ -68,7 +72,7 @@ public class AuthenticationService implements AuthenticationPort {
         return userDTOMapper.apply(userRepository.save(user));
     }
 
-    @Override
+    
     public CompanyDTO registerCompany(RegisterRequest registerRequest) throws InvalidInputException, CompanyAlreadyExistsException {
         Company company = new Company();
         if (companyRepository.findByName(registerRequest.getUsername()).isPresent())
@@ -82,5 +86,14 @@ public class AuthenticationService implements AuthenticationPort {
         company.setEmail(registerRequest.getEmail());
         company.setPassword(ShaUtils.decode(registerRequest.getPassword()));
         return companyDTOMapper.apply(companyRepository.save(company));
+    }
+
+    public Map<String, Boolean> checkLogin(String username) {
+        return Map.of("loggedIn", userRepository.existsByUsername(username));
+    }
+
+    public VerifyDto verifyToken(Principal principal) {
+        Optional<User> user = userRepository.findByUsername(principal.getName());
+        return user.map(current -> new VerifyDto(true, userDTOMapper.apply(current))).orElseGet(() -> new VerifyDto(false, null));
     }
 }

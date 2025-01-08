@@ -12,7 +12,6 @@ import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.InvalidMultipartFileException;
 import com.example.movefree.exception.enums.MultipartFileExceptionType;
 import com.example.movefree.exception.enums.NotFoundType;
-import com.example.movefree.port.company.CompanyPort;
 import com.example.movefree.portclass.Picture;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import org.springframework.http.MediaType;
@@ -24,7 +23,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Service
-public class CompanyService implements CompanyPort {
+public class CompanyService {
 
     final CompanyRepository companyRepository;
     final CompanyPostPictureRepository companyPostPictureRepository;
@@ -40,7 +39,7 @@ public class CompanyService implements CompanyPort {
         this.companyPostRepository = companyPostRepository;
     }
 
-    @Override
+    
     public CompanyDTO editCompany(PostSpotRequestBody.CompanyEditRequestBody company, Principal principal) throws IdNotFoundException {
         String phoneNumber = company.getPhoneNumber();
         String address = company.getAddress();
@@ -50,7 +49,7 @@ public class CompanyService implements CompanyPort {
         return companyDTOMapper.apply(companyRepository.save(userCompany));
     }
 
-    @Override
+    
     public void uploadPost(Principal principal, List<MultipartFile> pictures, String description) throws InvalidMultipartFileException, IdNotFoundException {
         Company company = getCompany(principal);
         CompanyPost companyPost = new CompanyPost();
@@ -70,7 +69,7 @@ public class CompanyService implements CompanyPort {
         }
     }
 
-    @Override
+    
     public Picture getPicture(Integer id) throws IdNotFoundException {
         CompanyPostPicture companyPostPicture = companyPostPictureRepository.findById(id).orElseThrow(() -> new IdNotFoundException(NotFoundType.PICTURE));
         return new Picture(MediaType.valueOf(companyPostPicture.getContentType()), companyPostPicture.getContent());

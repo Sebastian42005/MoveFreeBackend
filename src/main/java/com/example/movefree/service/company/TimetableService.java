@@ -9,14 +9,13 @@ import com.example.movefree.database.timetable.course.CourseDTOMapper;
 import com.example.movefree.database.timetable.course.CourseRepository;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.enums.NotFoundType;
-import com.example.movefree.port.company.TimetablePort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TimetableService implements TimetablePort {
+public class TimetableService {
 
 
     final CompanyRepository companyRepository;
@@ -27,7 +26,7 @@ public class TimetableService implements TimetablePort {
         this.courseRepository = courseRepository;
     }
 
-    @Override
+    
     public List<CourseDTO> createTimetable(List<TimetableRequest> courses, String name) throws IdNotFoundException{
         Company company = getCompany(name);
         List<Course> courseList = new ArrayList<>();
@@ -41,7 +40,7 @@ public class TimetableService implements TimetablePort {
         return courseList.stream().map(new CourseDTOMapper()).toList();
     }
 
-    @Override
+    
     public List<CourseDTO> getTimeTable(String name) throws IdNotFoundException {
         Company company = getCompany(name);
         if (company.getTimetable() == null) throw new IdNotFoundException(NotFoundType.TIMETABLE);

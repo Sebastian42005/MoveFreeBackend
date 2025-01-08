@@ -12,13 +12,12 @@ import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.MemberAlreadyHasRoleException;
 import com.example.movefree.exception.enums.NotFoundType;
-import com.example.movefree.port.company.CompanyMemberRolePort;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 
 @Service
-public class CompanyMemberRoleService implements CompanyMemberRolePort {
+public class CompanyMemberRoleService {
 
     final CompanyMemberRoleRepository roleRepository;
     final CompanyRepository companyRepository;
@@ -34,7 +33,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
         this.memberRepository = memberRepository;
     }
 
-    @Override
+    
     public CompanyMemberRoleDTO createRole(String role, Principal principal) throws IdNotFoundException {
         CompanyMemberRole companyMemberRole = new CompanyMemberRole();
         companyMemberRole.setName(role);
@@ -48,7 +47,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
         return companyMemberRoleDTOMapper.apply(savedRole);
     }
 
-    @Override
+    
     public void addRoleToMember(Integer id, Integer memberId, Principal principal) throws IdNotFoundException, MemberAlreadyHasRoleException {
         // check
         checkForAuthorization(principal.getName(), id, memberId);
@@ -65,7 +64,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
         memberRepository.save(member);
     }
 
-    @Override
+    
     public void deleteRole(Integer id, Principal principal) throws IdNotFoundException {
         // check
         checkForRoleAuthorization(principal.getName(), id);
@@ -74,7 +73,7 @@ public class CompanyMemberRoleService implements CompanyMemberRolePort {
         roleRepository.deleteById(id);
     }
 
-    @Override
+    
     public void removeMemberRole(Integer id, Integer memberId, Principal principal) throws IdNotFoundException {
         //check
         checkForAuthorization(principal.getName(), id, memberId);

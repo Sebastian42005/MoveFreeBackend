@@ -42,4 +42,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT spots FROM User user JOIN user.savedSpots spots WHERE user.username = :username AND spots.id NOT IN(:alreadySeenList)")
     List<Spot> getUserSavedSpots(String username, List<Integer> alreadySeenList, Pageable pageable);
+    
+    Boolean existsByUsername(String email);
 }

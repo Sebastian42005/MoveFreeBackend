@@ -1,6 +1,8 @@
 package com.example.movefree.database.authentication;
 
 
+import com.example.movefree.database.user.User;
+import com.example.movefree.database.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,5 +10,5 @@ import lombok.Data;
 @Data
 public class AuthenticationResponse {
     private String token;
-    private String role;
+    private UserDTO user;
 }

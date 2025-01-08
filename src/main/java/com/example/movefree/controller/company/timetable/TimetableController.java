@@ -2,7 +2,7 @@ package com.example.movefree.controller.company.timetable;
 
 import com.example.movefree.database.timetable.course.CourseDTO;
 import com.example.movefree.exception.IdNotFoundException;
-import com.example.movefree.port.company.TimetablePort;
+import com.example.movefree.service.company.TimetableService;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +20,10 @@ import java.util.List;
 @RequestMapping("/api/company/timetable")
 public class TimetableController {
 
-    final TimetablePort timetablePort;
+    final TimetableService timetableService;
 
-    public TimetableController(TimetablePort timetablePort) {
-        this.timetablePort = timetablePort;
+    public TimetableController(TimetableService timetableService) {
+        this.timetableService = timetableService;
     }
 
     /**
@@ -33,7 +33,7 @@ public class TimetableController {
     @PostMapping
     public ResponseEntity<List<CourseDTO>> createTimeTable(@RequestBody List<TimetableRequest> courses, Principal principal) {
         try {
-            return ResponseEntity.ok(timetablePort.createTimetable(courses, principal.getName()));
+            return ResponseEntity.ok(timetableService.createTimetable(courses, principal.getName()));
         }catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
@@ -46,7 +46,7 @@ public class TimetableController {
     @GetMapping("/{name}")
     public ResponseEntity<List<CourseDTO>> getTimeTable(@PathVariable String name) {
         try {
-            return ResponseEntity.ok(timetablePort.getTimeTable(name));
+            return ResponseEntity.ok(timetableService.getTimeTable(name));
         }catch (IdNotFoundException e) {
             return e.getResponseEntity();
         }
