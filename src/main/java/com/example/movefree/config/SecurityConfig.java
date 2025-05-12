@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .cors().and().csrf().disable()
                 .authorizeRequests(auth -> {
                     //Spot Types
+                    auth.antMatchers(HttpMethod.GET, "/api/locations/**").permitAll();
                     auth.antMatchers(HttpMethod.POST, "/api/spot/type/**").hasRole(Role.ADMIN.getName());
                     auth.antMatchers(HttpMethod.DELETE, "/api/spot/type/**").hasRole(Role.ADMIN.getName());
                     auth.antMatchers(HttpMethod.GET, "/api/spot/type").permitAll();
@@ -74,6 +75,8 @@ public class SecurityConfig {
                     auth.antMatchers("/api/user/own").authenticated();
                     //Request to get User
                     auth.antMatchers("/api/user/**").permitAll();
+                    auth.antMatchers(HttpMethod.GET, "/api/sports/**").permitAll();
+                    auth.antMatchers(HttpMethod.GET, "/api/attributes/**").permitAll();
                     //Swagger
                     auth.antMatchers("/v3/api-docs/**",
                             "/swagger-ui/**",

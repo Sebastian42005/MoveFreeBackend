@@ -10,6 +10,7 @@ import com.example.movefree.database.company.company.Company;
 import com.example.movefree.database.company.company.CompanyDTO;
 import com.example.movefree.database.company.company.CompanyDTOMapper;
 import com.example.movefree.database.company.company.CompanyRepository;
+import com.example.movefree.database.spot.sport.Sport;
 import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserDTO;
 import com.example.movefree.database.user.UserDTOMapper;
@@ -49,6 +50,7 @@ public class AuthenticationService {
 
     
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) throws WrongLoginCredentialsException {
+        authenticationRequest.setUsername(authenticationRequest.getUsername().trim());
         final UserDetails userDetails = userDetailsService.verifyUser(authenticationRequest.getUsername(), ShaUtils.decode(authenticationRequest.getPassword()));
         final String token = tokenUtil.generateToken(userDetails);
         final User user = userRepository.findByUsername(authenticationRequest.getUsername()).orElseThrow(WrongLoginCredentialsException::new);
@@ -65,10 +67,11 @@ public class AuthenticationService {
         if (registerRequest.getUsername().trim().isEmpty()) throw new InvalidInputException("Username cannot be empty");
         if (registerRequest.getPassword().length() < 8)
             throw new InvalidInputException("Password must be bigger than 8");
-        user.setUsername(registerRequest.getUsername());
+        user.setUsername(registerRequest.getUsername().trim());
         user.setPassword(ShaUtils.decode(registerRequest.getPassword()));
         user.setEmail(registerRequest.getEmail());
         user.setRole(Role.USER);
+        user.setFavoriteSports(registerRequest.getFavoriteSports().stream().map(Sport::new).toList());
         return userDTOMapper.apply(userRepository.save(user));
     }
 

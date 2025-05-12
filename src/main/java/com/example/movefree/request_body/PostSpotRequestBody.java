@@ -4,15 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class PostSpotRequestBody {
+    private String title;
     private String description;
     private Double latitude;
     private Double longitude;
     private String city;
-    private List<String> spotTypes;
+    private List<String> attributes = new ArrayList<>();
+    private String sport;
 
     @Data
     @AllArgsConstructor

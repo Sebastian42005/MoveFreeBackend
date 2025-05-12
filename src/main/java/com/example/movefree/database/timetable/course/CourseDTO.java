@@ -1,10 +1,10 @@
 package com.example.movefree.database.timetable.course;
 
-import com.example.movefree.database.timetable.CourseDay;
+import com.example.movefree.database.timetable.DayOfWeek;
 
 public record CourseDTO(
         Integer id,
         String name,
-        CourseDay day,
+        DayOfWeek day,
         String start,
         String end) {}

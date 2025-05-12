@@ -32,7 +32,9 @@ public class UserDTOMapper implements Function<User, UserDTO> {
                 user.getDescription(),
                 user.getSpots().size(),
                 user.getFollower().size(),
-                user.getFollows().size() + user.getFollowCompanies().size()
+                user.getFollows().size() + user.getFollowCompanies().size(),
+                isFollowed,
+                rating
         );
     }
 }

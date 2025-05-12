@@ -2,6 +2,7 @@ package com.example.movefree.database.user;
 
 import com.example.movefree.database.company.company.Company;
 import com.example.movefree.database.spot.rating.Rating;
+import com.example.movefree.database.spot.sport.Sport;
 import com.example.movefree.database.spot.spot.Spot;
 import com.example.movefree.role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -59,4 +60,12 @@ public class User {
     @JsonManagedReference("user_ratings")
     @OneToMany(mappedBy = "user")
     List<Rating> ratings;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_favorite_sports",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "sport_name")
+    )
+    private List<Sport> favoriteSports = new ArrayList<>();
 }

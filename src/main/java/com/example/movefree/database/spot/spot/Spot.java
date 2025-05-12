@@ -1,9 +1,10 @@
 package com.example.movefree.database.spot.spot;
 
+import com.example.movefree.database.spot.sport.Sport;
 import com.example.movefree.database.spot.image.SpotPicture;
 import com.example.movefree.database.spot.location.Location;
 import com.example.movefree.database.spot.rating.Rating;
-import com.example.movefree.database.spot.spottype.SpotType;
+import com.example.movefree.database.spot.spottype.Attribute;
 import com.example.movefree.database.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +29,8 @@ public class Spot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String title;
+
     private String description;
 
     @JsonManagedReference("spot_rating")
@@ -42,11 +45,11 @@ public class Spot {
     private Location location;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "spot_spot_types",
+    @JoinTable(name = "spot_attributes",
             joinColumns = { @JoinColumn(name = "spot_id", referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "spot_type_id", referencedColumnName = "name") })
+            inverseJoinColumns = { @JoinColumn(name = "attribute_id", referencedColumnName = "id") })
     @JsonIgnore
-    List<SpotType> spotTypes;
+    List<Attribute> attributes;
 
     @JsonBackReference("user_spot")
     @ManyToOne
@@ -59,7 +62,10 @@ public class Spot {
     @JsonIgnore
     private List<User> savedBy = new ArrayList<>();
 
-    @JsonManagedReference("spot_pictures")
     @OneToMany(mappedBy = "spot")
+    @JsonIgnore
     private List<SpotPicture> pictures;
+
+    @ManyToOne
+    private Sport sport;
 }

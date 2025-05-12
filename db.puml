@@ -1,0 +1,193 @@
+@startuml
+
+class Sport {
+    - String name
+    - String symbol
+    - String color
+    + List<Attribute> attributes
+    + List<Spot> spots
+}
+
+class Attribute {
+    - Long id
+    - String name
+    - byte[] image
+    - String contentType
+    + Sport sport
+    + List<Spot> spots
+}
+
+class Spot {
+    - String title,
+    - String description
+    - LocalDateTime createdAt
+    + List<Attribute> attributes
+    + List<SpotPicture> pictures
+    + List<Rating> ratings
+    + Location location
+}
+
+class Location {
+    - Integer id
+    - Double latitude
+    - Double longitude
+    - String city
+}
+
+class SpotPicture {
+    - Integer id
+    - byte[] picture
+    - String contentType
+    + Spot spot
+}
+
+class Rating {
+    - Integer id
+    - String message
+    - int stars
+    + User user
+    + Spot spot
+}
+
+class User {
+    - Integer id
+    - String username
+    - String email
+    - String password
+    - String description
+    - byte[] profilePicture
+    - String contentType
+    + List<Spot> spots
+    + List<Rating> ratings
+    + List<User> follows
+    + List<User> follower
+    + List<Company> followCompanies
+    + List<Spot> savedSpots
+    + List<Meetup> meetups
+}
+
+class UserSport {
+    - Integer id
+    - Integer priority
+    + Sport sport
+    + User user
+}
+
+class Company {
+    - Integer id
+    - String name
+    - String email
+    - String password
+    - String description
+    - String phoneNumber
+    - String address
+    - byte[] profilePicture
+    - String contentType
+    + List<User> follower
+    + List<Course> timetable
+    + List<CompanyMember> members
+    + List<CompanyMemberRole> memberRoles
+    + List<CompanyPost> companyPosts
+}
+
+class CompanyMember {
+    - Integer id
+    - String name
+    - byte[] profilePicture
+    - String contentType
+    + Company company
+    + List<CompanyMemberRole> roles
+}
+
+class CompanyMemberRole {
+    - Integer id
+    - String name
+    + Company company
+    + List<CompanyMember> members
+}
+
+class CompanyPost {
+    - Integer id
+    - byte[] content
+    - String contentType
+    - String description
+    + Company company
+    + List<CompanyPostPicture> pictures
+}
+
+class CompanyPostPicture {
+    - Integer id
+    - byte[] content
+    - String contentType
+    + CompanyPost post
+}
+
+class Course {
+    - Integer id
+    - String name
+    - DayOfWeek day
+    - LocalTime startTime
+    - LocalTime endTime
+}
+
+class Meetup {
+    - Integer id
+    - String title
+    - String description
+    - Integer maxParticipants
+    - LocalDateTime start
+    - LocalDateTime end
+    - Integer peopleAlreadyJoined
+    - Level level
+    + Sport sport
+    + Location location
+    + List<User> participants
+}
+
+class Event {
+    - Integer id
+    - String title
+    - String description
+    - Integer maxParticipants
+    - LocalDateTime start
+    - LocalDateTime end
+    - Level level
+    + Location location
+    + Sport sport
+    + List<User> participants
+    + List<EventTimetableEntry> timetable
+}
+
+class EventTimetableEntry {
+    - Integer id
+    - String title
+    - String description
+    - DayOfWeek day
+    - Time start
+    - Time end
+}
+
+Sport "1" -- "*" Attribute
+Sport "1" -- "*" Spot
+Spot "1" -- "*" SpotPicture
+Spot "1" -- "*" Rating
+Spot "*" -- "*" Attribute
+Spot "1" -- "*" Location
+User "1" -- "*" Spot : spots
+User "1" -- "*" Spot : savedSpots
+User "1" -- "*" Rating
+User "*" -- "*" User : follows
+User "*" -- "*" Company : follows
+User "1" -- "*" Meetup: participants
+User "1" -- "*" Event: participants
+Company "1" -- "*" Course : timetable
+Company "1" -- "*" CompanyMember : members
+Company "1" -- "*" CompanyMemberRole : memberRoles
+Company "1" -- "*" CompanyPost : companyPosts
+CompanyMember "*" -- "*" CompanyMemberRole : roles
+CompanyPost "1" -- "*" CompanyPostPicture : pictures
+Meetup "1" -- "1" Location
+Event "1" -- "*" EventTimetableEntry
+Event "1" -- "1" Location
+
+@enduml

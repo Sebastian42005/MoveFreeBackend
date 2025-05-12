@@ -12,6 +12,7 @@ public enum NotFoundType {
     MEMBER("Member"),
     SPOT("Spot"),
     SPOT_TYPE("Spot Type"),
+    SPORT("Sport"),
     PICTURE("Picture"),
     TIMETABLE("Timetable");
 

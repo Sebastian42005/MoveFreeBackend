@@ -39,7 +39,7 @@ public class SpotPictureController {
     public ResponseEntity<SpotDTO> uploadPictures(@PathVariable Integer id, @RequestParam("images") List<MultipartFile> images, Principal principal) {
         try {
             return ResponseEntity.ok(spotPictureService.uploadPicture(id, images, principal.getName()));
-        }catch (IdNotFoundException | UserForbiddenException | PictureOverflowException e) {
+        } catch (IdNotFoundException | UserForbiddenException | PictureOverflowException e) {
             return e.getResponseEntity();
         }
     }
@@ -52,6 +52,18 @@ public class SpotPictureController {
     public ResponseEntity<byte[]> getPicture(@PathVariable Integer id) {
         try {
             Picture picture = spotPictureService.getPicture(id);
+            return ResponseEntity.ok()
+                    .contentType(picture.contentType())
+                    .body(picture.content());
+        }catch (IdNotFoundException e) {
+            return e.getResponseEntity();
+        }
+    }
+
+    @GetMapping("/images/{id}/low-res")
+    public ResponseEntity<byte[]> getLowResPicture(@PathVariable Integer id) {
+        try {
+            Picture picture = spotPictureService.getLowResPicture(id);
             return ResponseEntity.ok()
                     .contentType(picture.contentType())
                     .body(picture.content());

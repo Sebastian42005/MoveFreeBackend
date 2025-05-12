@@ -7,12 +7,10 @@ import com.example.movefree.database.spot.rating.Rating;
 import com.example.movefree.database.spot.rating.RatingDTO;
 import com.example.movefree.database.spot.rating.RatingMapper;
 import com.example.movefree.database.spot.rating.RatingRepository;
-import com.example.movefree.database.spot.spot.Spot;
-import com.example.movefree.database.spot.spot.SpotDTO;
-import com.example.movefree.database.spot.spot.SpotDTOMapper;
-import com.example.movefree.database.spot.spot.SpotRepository;
-import com.example.movefree.database.spot.spottype.SpotType;
-import com.example.movefree.database.spot.spottype.SpotTypeRepository;
+import com.example.movefree.database.spot.sport.SportRepository;
+import com.example.movefree.database.spot.spot.*;
+import com.example.movefree.database.spot.spottype.Attribute;
+import com.example.movefree.database.spot.spottype.AttributeRepository;
 import com.example.movefree.database.user.User;
 import com.example.movefree.database.user.UserRepository;
 import com.example.movefree.exception.IdNotFoundException;
@@ -20,19 +18,17 @@ import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.exception.enums.NotFoundType;
 import com.example.movefree.request_body.PostSpotRequestBody;
 import com.example.movefree.request_body.RateSpotRequestBody;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class SpotService {
 
     final SpotRepository spotRepository;
@@ -40,28 +36,18 @@ public class SpotService {
     final UserRepository userRepository;
     final LocationRepository locationRepository;
     final RatingRepository ratingRepository;
-    final SpotTypeRepository spotTypeRepository;
-
+    final AttributeRepository attributeRepository;
+    final SportRepository sportRepository;
     final RatingMapper ratingMapper = new RatingMapper();
 
     final SpotDTOMapper spotDTOMapper = new SpotDTOMapper();
-
-
-    public SpotService(SpotRepository spotRepository, SpotPictureRepository spotPictureRepository, UserRepository userRepository, LocationRepository locationRepository, RatingRepository ratingRepository, SpotTypeRepository spotTypeRepository) {
-        this.spotRepository = spotRepository;
-        this.spotPictureRepository = spotPictureRepository;
-        this.userRepository = userRepository;
-        this.locationRepository = locationRepository;
-        this.ratingRepository = ratingRepository;
-        this.spotTypeRepository = spotTypeRepository;
-    }
 
     
     public SpotDTO postSpot(PostSpotRequestBody postSpotRequestBody, String name) throws IdNotFoundException {
         //find User
         User user = userRepository.findByUsername(name).orElseThrow(IdNotFoundException.get(NotFoundType.USER));
-        List<SpotType> spotTypes = new ArrayList<>();
-        postSpotRequestBody.getSpotTypes().forEach(spotType -> spotTypes.add(spotTypeRepository.findById(spotType).orElseThrow()));
+        List<Attribute> attributes = new ArrayList<>();
+        postSpotRequestBody.getAttributes().forEach(attributeId -> attributes.add(attributeRepository.findByName(attributeId).orElseThrow()));
         //create Location
         Location location = new Location();
         location.setLatitude(postSpotRequestBody.getLatitude());
@@ -70,10 +56,12 @@ public class SpotService {
         //create Spot
         Spot spot = new Spot();
         spot.setRatings(new ArrayList<>());
+        spot.setTitle(postSpotRequestBody.getTitle());
         spot.setDescription(postSpotRequestBody.getDescription());
         spot.setUser(user);
         spot.setLocation(locationRepository.save(location));
-        spot.setSpotTypes(spotTypes);
+        spot.setSport(sportRepository.findById(postSpotRequestBody.getSport()).orElseThrow());
+        spot.setAttributes(attributes);
         spot.setCreatedAt(Instant.now());
         return spotDTOMapper.apply(spotRepository.save(spot));
     }
@@ -99,20 +87,6 @@ public class SpotService {
         Spot spot = spotRepository.findById(spotId).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT));
         return spot.getRatings().stream().map(ratingMapper).toList();
     }
-
-    
-    public Map<String, Object> searchSpot(String search, String spotType, int limit, List<Integer> alreadySeenList) {
-        Pageable pageable = PageRequest.of(0, limit + 1);
-        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(0);
-        List<Spot> spotList;
-        if (spotType.equals("")) {
-            spotList = spotRepository.searchSpotNoSpotType(search, alreadySeenList, pageable);
-        } else {
-            spotList = spotRepository.searchSpot(search, spotType, alreadySeenList, pageable);
-        }
-        return spotListToMap(spotList, limit);
-    }
-
     
     public SpotDTO getSpot(Integer id) throws IdNotFoundException {
         return spotDTOMapper.apply(spotRepository.findById(id).orElseThrow(IdNotFoundException.get(NotFoundType.SPOT)));
@@ -161,5 +135,25 @@ public class SpotService {
         map.put("spots", spots.stream().map(spotDTOMapper).toList());
         map.put("hasMore", hasMore);
         return map;
+    }
+
+    public Map<String, Object> searchSpot(Double minRating, String search, String sport, String city, List<Long> attributeIds, int limit, List<Integer> alreadySeenList) {
+        Pageable pageable = PageRequest.of(0, limit + 1);
+        if (alreadySeenList.isEmpty()) alreadySeenList = List.of(0);
+        List<Spot> spotList;
+        if (attributeIds == null || attributeIds.isEmpty()) {
+            spotList = spotRepository.getSpotsWithoutAttributes(minRating, sport, search, city, alreadySeenList, pageable);
+        } else {
+            spotList = spotRepository.getSpotsWithAttributes(minRating, sport, search, city, attributeIds, alreadySeenList, pageable);
+        }
+        return spotListToMap(spotList, limit);
+    }
+
+    public List<MarkerDto> getSpotMarkers(Double minRating, String sport, List<Long> attributeIds, String search, String city) {
+        if (attributeIds == null || attributeIds.isEmpty()) {
+            return spotRepository.getMarkersWithoutAttributes(minRating, sport, search, city);
+        } else {
+            return spotRepository.getMarkersWithAttributes(minRating, sport, search, city, attributeIds);
+        }
     }
 }

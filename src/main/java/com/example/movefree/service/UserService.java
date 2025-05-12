@@ -100,6 +100,9 @@ public class UserService {
         userRepository.save(followUser);
     }
 
+    public User getUser(Principal principal) throws IdNotFoundException {
+        return userRepository.findByUsername(principal.getName()).orElseThrow(() -> new IdNotFoundException(NotFoundType.USER));
+    }
     
     public List<Map<String, String>> getTopUsers() {
         List<User> users = new java.util.ArrayList<>(List.copyOf(userRepository.findAll()));

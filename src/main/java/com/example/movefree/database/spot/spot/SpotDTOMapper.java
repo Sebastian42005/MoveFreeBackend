@@ -2,7 +2,7 @@ package com.example.movefree.database.spot.spot;
 
 import com.example.movefree.database.spot.image.SpotPicture;
 import com.example.movefree.database.spot.rating.Rating;
-import com.example.movefree.database.spot.spottype.SpotType;
+import com.example.movefree.database.spot.spottype.AttributeDTOMapper;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -18,9 +18,11 @@ public class SpotDTOMapper implements Function<Spot, SpotDTO> {
         String createdAt = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm").withZone(ZoneId.systemDefault()).format(spot.getCreatedAt());
         return new SpotDTO(
                 spot.getId(),
+                spot.getTitle(),
                 spot.getDescription(),
                 spot.getLocation(),
-                spot.getSpotTypes().stream().map(SpotType::getName).toList(),
+                spot.getAttributes().stream().map(attr -> new AttributeDTOMapper().apply(attr)).toList(),
+                spot.getSport().getName(),
                 spot.getUser().getUsername(),
                 createdAt,
                 rating,

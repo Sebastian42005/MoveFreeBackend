@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Locale;
 
-public enum CourseDay {
+public enum DayOfWeek {
     MONDAY("monday"),
     TUESDAY("tuesday"),
     WEDNESDAY("wednesday"),
@@ -16,7 +16,7 @@ public enum CourseDay {
 
     private final String value;
 
-    CourseDay(String value) { this.value = value; }
+    DayOfWeek(String value) { this.value = value; }
 
     @JsonValue
     public String getValue() {
@@ -29,9 +29,9 @@ public enum CourseDay {
     }
 
     @JsonCreator
-    public CourseDay fromValue() {
-        for (CourseDay courseDay : CourseDay.values()) {
-            if (courseDay.value.equals(value.toLowerCase(Locale.ROOT).trim())) return courseDay;
+    public DayOfWeek fromValue() {
+        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+            if (dayOfWeek.value.equals(value.toLowerCase(Locale.ROOT).trim())) return dayOfWeek;
         }
         throw new IllegalArgumentException("'" + value + "' is not a valid day");
     }

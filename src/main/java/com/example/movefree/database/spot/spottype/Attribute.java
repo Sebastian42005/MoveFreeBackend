@@ -1,33 +1,42 @@
 package com.example.movefree.database.spot.spottype;
 
+import com.example.movefree.database.spot.sport.Sport;
 import com.example.movefree.database.spot.spot.Spot;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "spot_types")
-public class SpotType {
+@Table(name = "attributes")
+public class Attribute {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
     private String name;
 
+    @JsonIgnore
     private byte[] image;
 
+    @Column(length = 7)
+    private String color;
+
+    @JsonIgnore
     private String contentType;
 
-    @ManyToMany(mappedBy = "spotTypes", fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
+    Sport sport;
+
+    @ManyToMany(mappedBy = "attributes", fetch = FetchType.LAZY)
     @JsonIgnore
     List<Spot> spots;
 }

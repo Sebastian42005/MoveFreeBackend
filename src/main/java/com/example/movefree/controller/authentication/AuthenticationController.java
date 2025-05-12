@@ -76,7 +76,7 @@ public class AuthenticationController {
 
     @GetMapping("/check-login/{username}")
     public ResponseEntity<Map<String, Boolean>> checkLogin(@PathVariable String username) {
-        return ResponseEntity.ok(authenticationService.checkLogin(username));
+        return ResponseEntity.ok(authenticationService.checkLogin(username.trim()));
     }
     
     @GetMapping("/verify-token")

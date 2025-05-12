@@ -1,5 +1,6 @@
 package com.example.movefree.service.spot;
 
+import com.example.movefree.database.spot.image.LowResPicture;
 import com.example.movefree.database.spot.image.SpotPicture;
 import com.example.movefree.database.spot.image.SpotPictureRepository;
 import com.example.movefree.database.spot.spot.Spot;
@@ -10,6 +11,7 @@ import com.example.movefree.exception.IdNotFoundException;
 import com.example.movefree.exception.PictureOverflowException;
 import com.example.movefree.exception.UserForbiddenException;
 import com.example.movefree.exception.enums.NotFoundType;
+import com.example.movefree.helper.ImageUtil;
 import com.example.movefree.portclass.Picture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -40,6 +42,12 @@ public class SpotPictureService {
         return new Picture(MediaType.valueOf(spotPicture.getContentType()), spotPicture.getPicture());
     }
 
+    public Picture getLowResPicture(Integer id) throws IdNotFoundException {
+        LowResPicture spotPicture = spotPictureRepository.getLowResPicture(id);
+        if (spotPicture == null) return getPicture(id);
+        return new Picture(MediaType.valueOf(spotPicture.getContentType()), spotPicture.getPicture());
+    }
+
     
     public SpotDTO uploadPicture(Integer id, List<MultipartFile> images, String name) throws PictureOverflowException, IdNotFoundException, UserForbiddenException {
         Spot spot = getSpot(id, name);
@@ -48,6 +56,7 @@ public class SpotPictureService {
             try {
                 SpotPicture pictureDTO = new SpotPicture();
                 pictureDTO.setPicture(image.getBytes());
+                pictureDTO.setLowResPicture(ImageUtil.pixelateImage(image, 30));
                 pictureDTO.setContentType(image.getContentType());
                 pictureDTO.setSpot(spot);
                 spot.getPictures().add(spotPictureRepository.save(pictureDTO));

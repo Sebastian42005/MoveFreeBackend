@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface SpotTypeRepository extends JpaRepository<SpotType, String> {
+public interface AttributeRepository extends JpaRepository<Attribute, Long> {
 
-    Optional<SpotType> findByName(String name);
+    Optional<Attribute> findByName(String name);
 }

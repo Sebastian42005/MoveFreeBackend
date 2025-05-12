@@ -15,7 +15,6 @@ import javax.persistence.*;
 @Table(name = "spot_images")
 public class SpotPicture {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -24,7 +23,14 @@ public class SpotPicture {
 
     private String contentType;
 
+    private byte[] lowResPicture;
+
     @JsonBackReference("spot_pictures")
     @ManyToOne
     private Spot spot;
+
+    public SpotPicture(String contentType, byte[] lowResPicture) {
+        this.contentType = contentType;
+        this.lowResPicture = lowResPicture;
+    }
 }

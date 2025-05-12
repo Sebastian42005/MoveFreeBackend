@@ -45,7 +45,7 @@ public class UserController {
 
     @GetMapping("/{username}/spots")
     public ResponseEntity<Map<String, Object>> getUserSpots(@PathVariable String username,
-                                                            @RequestParam(defaultValue = "5") @Max(99) int limit,
+                                                            @RequestParam(defaultValue = "20") @Max(99) int limit,
                                                             @RequestParam(defaultValue = "") List<Integer> alreadySeenList) {
         return ResponseEntity.ok(userService.getUserSpots(username, limit, alreadySeenList));
     }
